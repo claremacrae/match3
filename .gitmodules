@@ -2,8 +2,11 @@
 	path = externals/di
 	url = git@github.com:krzysztof-jusiak/di.git
 [submodule "externals/gmockgen"]
-	path = externals/gmock
+	path = externals/gmockgen
 	url = git@github.com:krzysztof-jusiak/gmock.git
 [submodule "externals/gtest"]
 	path = externals/gtest
 	url = https://github.com/tommysanterre/gtest.git
+[submodule "externals/gmock"]
+	path = externals/gmock
+	url = https://github.com/mydrive/gmock.git
