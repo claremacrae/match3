@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "board.hpp"
-#include "mocks/random_mock.hpp"
+#include "mocks/irandom_mock.hpp"
 #include <gtest/gtest.h>
 
 namespace game {
@@ -61,15 +61,15 @@ class board_test : public GT::Test
 {
 public:
     board_test()
-        : random_mock_(new GT::StrictMock<mocks::random_mock>())
+        : irandom_mock_(new GT::StrictMock<mocks::irandom_mock>())
     { }
 
-    boost::shared_ptr<mocks::random_mock> random_mock_;
+    boost::shared_ptr<mocks::irandom_mock> irandom_mock_;
 };
 
 TEST_F(board_test, is_within_board) {
     //given
-    board b(4, 4, 3, random_mock_);
+    board b(4, 4, 3, irandom_mock_);
 
     //when and then
     EXPECT_TRUE(b.is_within_board(detail::position(0, 0)));
@@ -80,7 +80,7 @@ TEST_F(board_test, is_within_board) {
 
 TEST_F(board_test, is_neighbor) {
     //given
-    board b(4, 4, 3, random_mock_);
+    board b(4, 4, 3, irandom_mock_);
 
     //when and then
     b.select(detail::position(2, 2));
@@ -98,7 +98,7 @@ TEST_F(board_test, is_swap_winning_no) {
     using namespace detail;
 
     //given
-    board b(4, 4, 2, random_mock_);
+    board b(4, 4, 2, irandom_mock_);
     fill_board(b,
         {
             blue   , blue , black , purple
@@ -122,7 +122,7 @@ TEST_F(board_test, is_swap_winning_yes_simple) {
     using namespace detail;
 
     //given
-    board b(4, 4, 2, random_mock_);
+    board b(4, 4, 2, irandom_mock_);
     fill_board(b,
         {
             blue   , blue , black , blue
@@ -146,7 +146,7 @@ TEST_F(board_test, is_swap_winning_yes_complex) {
     using namespace detail;
 
     //given
-    board b(4, 4, 3, random_mock_);
+    board b(4, 4, 3, irandom_mock_);
     fill_board(b,
         {
             blue   , yellow , green  , purple
@@ -170,10 +170,10 @@ TEST_F(board_test, matches) {
     using namespace detail;
 
     //expect
-    EXPECT_CALL(*random_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(detail::black));
+    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(detail::black));
 
     //given
-    board b(4, 4, 3, random_mock_);
+    board b(4, 4, 3, irandom_mock_);
     std::vector<detail::position> m{detail::position(1, 1), detail::position(1, 2), detail::position(1, 3)};
     fill_board(b,
         {
@@ -202,10 +202,10 @@ TEST_F(board_test, scroll_down) {
     using namespace detail;
 
     //expect
-    EXPECT_CALL(*random_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(detail::black));
+    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(detail::black));
 
     //given
-    board b(4, 4, 3, random_mock_);
+    board b(4, 4, 3, irandom_mock_);
 
     fill_board(b,
         {
@@ -216,7 +216,7 @@ TEST_F(board_test, scroll_down) {
         }
     );
 
-    board expected(4, 4, 3, random_mock_);
+    board expected(4, 4, 3, irandom_mock_);
     fill_board(expected,
         {
             blue   , black   , green  , purple

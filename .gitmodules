@@ -1,3 +1,12 @@
 [submodule "externals/di"]
 	path = externals/di
 	url = git@github.com:krzysztof-jusiak/di.git
+[submodule "externals/gmock"]
+	path = externals/gmock
+	url = git@github.com:krzysztof-jusiak/gmock.git
+[submodule "externals/googlemock"]
+	path = externals/googlemock
+	url = https://github.com/bref/googlemock
+[submodule "externals/gtest"]
+	path = externals/gtest
+	url = https://github.com/tommysanterre/gtest.git
