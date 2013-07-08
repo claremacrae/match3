@@ -24,7 +24,7 @@ $(TEST):
 	LD_LIBRARY_PATH="$(LD_LIBRARY_PATH):$(EXTERNALS)/$(GMOCK)/gtest/lib/.libs:$(EXTERNALS)/$(GMOCK)/lib/.libs" ./$(TEST)
 
 mocks:
-	find include -iname *.hpp | xargs $(EXTERNALS)/gmock/gmock.py -c test/config/gmock.conf -l game -d test/mocks
+	find include -iname *.hpp | xargs $(EXTERNALS)/gmockgen/gmock.py -c test/config/gmock.conf -l game -d test/mocks
 
 clean:
 	rm -f bin/*.o $(BIN) $(TEST)
