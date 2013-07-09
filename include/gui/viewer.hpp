@@ -29,6 +29,7 @@ public:
     );
 
     virtual void init() override;
+    virtual void stop() override;
     virtual void refresh() override;
     virtual void show_grid(const detail::position&, detail::color_t) override;
     virtual void show_match(const detail::position&) override;

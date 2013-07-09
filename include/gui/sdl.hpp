@@ -16,6 +16,7 @@ public:
     virtual boost::shared_ptr<SDL_Surface> load_image(const std::string&) const override;
     virtual void apply_surface(boost::shared_ptr<SDL_Surface> surface, int x, int y) override;
     virtual void refresh() override;
+    virtual void stop() override;
 
 private:
     SDL_Surface* screen_ = nullptr; // cant be used within boost::shared_ptr

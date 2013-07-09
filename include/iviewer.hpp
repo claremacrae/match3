@@ -11,6 +11,7 @@ class iviewer
 public:
     virtual ~iviewer() { }
     virtual void init() = 0;
+    virtual void stop() = 0;
     virtual void refresh() = 0;
     virtual void show_grid(const detail::position&, detail::color_t) = 0;
     virtual void show_match(const detail::position&) = 0;

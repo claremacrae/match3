@@ -89,14 +89,5 @@ void controller::scroll_board(const msm::front::none&) {
     show_board();
 }
 
-void controller::finish_game(const game_timeout&) {
-    is_finished = true;
-    viewer_->refresh();
-}
-
-bool controller::finished() const {
-    return is_finished;
-}
-
 } // namespace game
 
