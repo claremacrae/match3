@@ -13,7 +13,7 @@ sdl::sdl(int width, int height, int bpp, const std::string& caption) {
 
     screen_ = SDL_SetVideoMode(width, height, bpp, SDL_DOUBLEBUF | SDL_HWSURFACE);
 
-    if (screen_ == nullptr) {
+    if (!screen_) {
         throw std::runtime_error("failed SDL_SetVideoMode: " + std::string(SDL_GetError()));
     }
 
