@@ -27,7 +27,7 @@ public:
       , boost::di::named<int, rows>
       , boost::di::named<int, cols>
       , boost::di::named<int, to_win>
-      , const boost::shared_ptr<irandom>&);
+      , boost::shared_ptr<irandom>);
 
     void init_with_randoms();
     bool is_within_board(const detail::position& pos) const;

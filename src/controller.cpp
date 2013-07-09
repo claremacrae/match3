@@ -6,8 +6,8 @@
 namespace game {
 
 controller::controller(
-    const boost::shared_ptr<board>& b
-  , const boost::shared_ptr<iviewer>& v
+    boost::shared_ptr<board> b
+  , boost::shared_ptr<iviewer> v
 )
     : board_(b), viewer_(v)
 { }
@@ -20,7 +20,7 @@ void controller::show_board() {
             viewer_->show_grid(pos, board_->get_grid_color(pos));
         }
     }
-    viewer_->refresh();
+    viewer_->render();
 }
 
 void controller::init_board(const msm::front::none&) {
@@ -55,7 +55,7 @@ bool controller::is_swap_items_incorrect(const msm::front::none& event) {
 void controller::select_item(const item_selected& event) {
     board_->select(event.pos);
     viewer_->select_item(event.pos);
-    viewer_->refresh();
+    viewer_->render();
 }
 
 void controller::unselect_item(const item_selected&) {
@@ -80,7 +80,7 @@ void controller::show_matches(const msm::front::none&) {
         viewer_->show_match(pos);
     }
     board_->unselect_all();
-    viewer_->refresh();
+    viewer_->render();
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
 }
 

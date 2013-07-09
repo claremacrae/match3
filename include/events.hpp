@@ -15,8 +15,8 @@ struct item_selected
 };
 
 struct game_timeout { };
-
 struct key_pressed { };
+struct window_close { };
 
 } // namespace game
 

@@ -1,5 +1,5 @@
 #include <SDL/SDL.h>
-#include "gui/client.hpp"
+#include "gui/user.hpp"
 #include "gui/common.hpp"
 #include "detail/position.hpp"
 #include "events.hpp"
@@ -7,15 +7,17 @@
 namespace game {
 namespace gui {
 
-client::client(const boost::shared_ptr<controller_t>& c)
+user::user(boost::shared_ptr<controller_t> c)
     : controller_(c)
 { }
 
-void client::run() {
+void user::run() {
     SDL_Event event;
 
     while (!controller_->is_flag_active<flags::game_over>()) {
+        std::cout << "a" << std::endl;
         while (SDL_PollEvent(&event)) {
+        std::cout << "b" << std::endl;
             switch (event.type) {
                 default: break;
 
@@ -33,6 +35,10 @@ void client::run() {
                     if (event.key.keysym.sym == SDLK_ESCAPE) {
                         controller_->process_event(key_pressed());
                     }
+                    break;
+
+                case SDL_QUIT: //user closes window
+                    controller_->process_event(window_close());
                     break;
             }
         }

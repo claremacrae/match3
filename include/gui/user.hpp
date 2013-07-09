@@ -1,5 +1,5 @@
-#ifndef CLIENT_ZJZFAXBM
-#define CLIENT_ZJZFAXBM
+#ifndef USER_ZJZFAXBM
+#define USER_ZJZFAXBM
 
 #include <boost/di/ctor.hpp>
 #include "iclient.hpp"
@@ -8,10 +8,10 @@
 namespace game {
 namespace gui {
 
-class client : public iclient
+class user : public iclient
 {
 public:
-    BOOST_DI_CTOR(explicit client, const boost::shared_ptr<controller_t>&);
+    BOOST_DI_CTOR(explicit user, boost::shared_ptr<controller_t>);
     virtual void run() override;
 
 private:

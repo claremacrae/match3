@@ -43,7 +43,7 @@ class controller : public msm::front::state_machine_def<controller>
 
     template<typename Event>
     void finish_game(const Event&) {
-        viewer_->stop();
+        viewer_->quit();
     }
 
     bool is_within_board(const item_selected&);
@@ -55,8 +55,8 @@ class controller : public msm::front::state_machine_def<controller>
 
 public:
     BOOST_DI_CTOR(controller
-        , const boost::shared_ptr<board>&
-        , const boost::shared_ptr<iviewer>&
+        , boost::shared_ptr<board>
+        , boost::shared_ptr<iviewer>
     );
 
     typedef mpl::vector<idle, wait_for_user> initial_state;
@@ -74,6 +74,7 @@ public:
 
       , a_row< wait_for_user       , game_timeout     , game_over                , &controller::finish_game                                                 >
       , a_row< wait_for_user       , key_pressed      , game_over                , &controller::finish_game                                                 >
+      , a_row< wait_for_user       , window_close     , game_over                , &controller::finish_game                                                 >
 
     > transition_table;
 
