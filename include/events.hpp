@@ -14,7 +14,7 @@ struct item_selected
     detail::position pos;
 };
 
-struct game_timeout { };
+struct time_tick { };
 struct key_pressed { };
 struct window_close { };
 

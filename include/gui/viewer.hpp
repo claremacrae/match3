@@ -14,21 +14,20 @@ namespace gui {
 
 class win_width { };
 class win_height { };
-class images_dir { };
 
 class viewer : public iviewer
 {
+    const std::string images_dir          = "images/";
     const std::string background_image    = "background.png";
     const std::string select_image        = "select.png";
     const std::string match_image         = "match.png";
 
 public:
     BOOST_DI_CTOR(viewer
-        , boost::di::named<std::string, images_dir>
         , boost::shared_ptr<iwindow>
     );
 
-    virtual void init() override;
+    virtual void set_background() override;
     virtual void quit() override;
     virtual void render() override;
     virtual void show_grid(const detail::position&, detail::color_t) override;
@@ -36,10 +35,10 @@ public:
     virtual void select_item(const detail::position&) override;
 
 private:
-    std::string images_dir_;
     boost::shared_ptr<gui::iwindow> window_;
     boost::shared_ptr<SDL_Texture> background_image_;
     boost::shared_ptr<SDL_Texture> match_image_;
+    boost::shared_ptr<SDL_Texture> select_image_;
     std::map<detail::color_t, boost::shared_ptr<SDL_Texture>> grid_images_;
 };
 

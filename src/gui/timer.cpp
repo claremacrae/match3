@@ -6,13 +6,15 @@
 namespace game {
 namespace gui {
 
-timer::timer(boost::shared_ptr<controller_t> c, boost::di::named<int, game_time_in_sec> t)
-    : controller_(c), time_in_sec_(t)
+timer::timer(boost::shared_ptr<controller_t> c)
+    : controller_(c)
 { }
 
 void timer::run() {
-    std::this_thread::sleep_for(std::chrono::seconds(time_in_sec_));
-    controller_->process_event(game_timeout());
+    while (!controller_->is_flag_active<flags::game_over>()) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        controller_->process_event(time_tick());
+    }
 }
 
 } // namespace gui

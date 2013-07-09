@@ -8,12 +8,13 @@ namespace game {
 controller::controller(
     boost::shared_ptr<board> b
   , boost::shared_ptr<iviewer> v
+  , boost::di::named<int, game_time_in_sec> t
 )
-    : board_(b), viewer_(v)
+    : board_(b), viewer_(v), game_time_in_sec_(t)
 { }
 
 void controller::show_board() {
-    viewer_->init();
+    viewer_->set_background();
     for (int y = 0; y < board_->get_rows(); y++) {
         for (int x = 0; x < board_->get_cols(); x++) {
             detail::position pos(x, y);
@@ -50,6 +51,10 @@ bool controller::is_swap_items_correct(const msm::front::none&) {
 
 bool controller::is_swap_items_incorrect(const msm::front::none& event) {
     return !is_swap_items_correct(event);
+}
+
+bool controller::is_game_timeout(const time_tick&) {
+    return ++time_ticks_ >= game_time_in_sec_;
 }
 
 void controller::select_item(const item_selected& event) {

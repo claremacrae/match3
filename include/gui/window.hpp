@@ -18,10 +18,11 @@ public:
 
     virtual boost::shared_ptr<SDL_Texture> load_image(const std::string&) const override;
     virtual void apply(boost::shared_ptr<SDL_Texture>, int, int) override;
+    virtual void clear() override;
     virtual void render() override;
     virtual void quit() override;
 
-private:
+//private:
     boost::shared_ptr<SDL_Window> window_;
     boost::shared_ptr<SDL_Renderer> renderer_;
 };

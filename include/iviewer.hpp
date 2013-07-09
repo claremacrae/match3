@@ -10,7 +10,7 @@ class iviewer
 {
 public:
     virtual ~iviewer() { }
-    virtual void init() = 0;
+    virtual void set_background() = 0;
     virtual void quit() = 0;
     virtual void render() = 0;
     virtual void show_grid(const detail::position&, detail::color_t) = 0;

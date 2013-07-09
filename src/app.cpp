@@ -1,6 +1,7 @@
 #include <thread>
 #include <functional>
 #include "app.hpp"
+#include "gui/user.hpp"
 
 namespace game {
 

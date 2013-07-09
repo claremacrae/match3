@@ -57,6 +57,10 @@ void window::apply(boost::shared_ptr<SDL_Texture> texture, int x, int y) {
     SDL_RenderCopy(renderer_.get(), texture.get(), nullptr, &pos);
 }
 
+void window::clear() {
+    SDL_RenderClear(renderer_.get());
+}
+
 void window::render() {
     SDL_RenderPresent(renderer_.get());
 }

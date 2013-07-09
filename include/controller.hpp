@@ -5,6 +5,7 @@
 #include <boost/msm/back/state_machine.hpp>
 #include <boost/msm/front/state_machine_def.hpp>
 #include <boost/di/ctor.hpp>
+#include <boost/di/named.hpp>
 #include "detail/position.hpp"
 #include "events.hpp"
 #include "board.hpp"
@@ -14,6 +15,8 @@ namespace msm = boost::msm;
 namespace mpl = boost::mpl;
 
 namespace game {
+
+class game_time_in_sec { };
 
 namespace flags {
 class game_over { };
@@ -52,11 +55,13 @@ class controller : public msm::front::state_machine_def<controller>
     bool is_the_same_item(const item_selected&);
     bool is_swap_items_correct(const msm::front::none&);
     bool is_swap_items_incorrect(const msm::front::none&);
+    bool is_game_timeout(const time_tick&);
 
 public:
     BOOST_DI_CTOR(controller
         , boost::shared_ptr<board>
         , boost::shared_ptr<iviewer>
+        , boost::di::named<int, game_time_in_sec>
     );
 
     typedef mpl::vector<idle, wait_for_user> initial_state;
@@ -72,7 +77,7 @@ public:
       ,   row< try_swap_items       , msm::front::none , board_scrolling         , &controller::show_matches       , &controller::is_swap_items_correct     >
       , a_row< board_scrolling      , msm::front::none , wait_for_first_item     , &controller::scroll_board                                                >
 
-      , a_row< wait_for_user       , game_timeout     , game_over                , &controller::finish_game                                                 >
+      ,   row< wait_for_user       , time_tick        , game_over                , &controller::finish_game        , &controller::is_game_timeout           >
       , a_row< wait_for_user       , key_pressed      , game_over                , &controller::finish_game                                                 >
       , a_row< wait_for_user       , window_close     , game_over                , &controller::finish_game                                                 >
 
@@ -86,6 +91,8 @@ private:
 
     boost::shared_ptr<board> board_;
     boost::shared_ptr<iviewer> viewer_;
+    int game_time_in_sec_ = 0;
+    int time_ticks_ = 0;
 };
 
 typedef msm::back::state_machine<controller> controller_t;

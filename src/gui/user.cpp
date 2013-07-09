@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "gui/user.hpp"
 #include "gui/common.hpp"
 #include "detail/position.hpp"
@@ -13,11 +13,8 @@ user::user(boost::shared_ptr<controller_t> c)
 
 void user::run() {
     SDL_Event event;
-
     while (!controller_->is_flag_active<flags::game_over>()) {
-        std::cout << "a" << std::endl;
         while (SDL_PollEvent(&event)) {
-        std::cout << "b" << std::endl;
             switch (event.type) {
                 default: break;
 
@@ -37,7 +34,7 @@ void user::run() {
                     }
                     break;
 
-                case SDL_QUIT: //user closes window
+                case SDL_QUIT: //user closes the window
                     controller_->process_event(window_close());
                     break;
             }
