@@ -14,8 +14,9 @@ class iviewer_mock : public iviewer
 public:
     virtual ~iviewer_mock();
 
-    MOCK_METHOD0(init, void());
-    MOCK_METHOD0(refresh, void());
+    MOCK_METHOD0(set_background, void());
+    MOCK_METHOD0(quit, void());
+    MOCK_METHOD0(render, void());
     MOCK_METHOD2(show_grid, void(const detail::position &, detail::color_t));
     MOCK_METHOD1(show_match, void(const detail::position &));
     MOCK_METHOD1(select_item, void(const detail::position &));
