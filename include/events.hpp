@@ -16,6 +16,8 @@ struct item_selected
 
 struct game_timeout { };
 
+struct key_pressed { };
+
 } // namespace game
 
 #endif

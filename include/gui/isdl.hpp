@@ -15,6 +15,7 @@ public:
     virtual boost::shared_ptr<SDL_Surface> load_image(const std::string&) const = 0;
     virtual void apply_surface(boost::shared_ptr<SDL_Surface> surface, int x = 0, int y = 0) = 0;
     virtual void refresh() = 0;
+    virtual void stop() = 0;
 };
 
 } // namespace gui

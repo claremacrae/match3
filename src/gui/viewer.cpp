@@ -54,6 +54,10 @@ void viewer::select_item(const detail::position& pos) {
     );
 }
 
+void viewer::stop() {
+    sdl_->stop();
+}
+
 } // namespace gui
 } // namespace game
 

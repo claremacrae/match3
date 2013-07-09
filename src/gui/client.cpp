@@ -13,9 +13,12 @@ client::client(const boost::shared_ptr<controller_t>& c)
 
 void client::run() {
     SDL_Event event;
-    while (!controller_->finished()) {
+
+    while (!controller_->is_flag_active<flags::game_over>()) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
+                default: break;
+
                 case SDL_MOUSEBUTTONDOWN:
                     if (event.button.button == SDL_BUTTON_LEFT) {
                         detail::position pos(
@@ -28,12 +31,9 @@ void client::run() {
 
                 case SDL_KEYDOWN:
                     if (event.key.keysym.sym == SDLK_ESCAPE) {
-                        exit(0);
+                        controller_->process_event(key_pressed());
                     }
                     break;
-
-                case SDL_QUIT:
-                    exit(0);
             }
         }
     }

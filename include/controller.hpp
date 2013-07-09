@@ -15,16 +15,23 @@ namespace mpl = boost::mpl;
 
 namespace game {
 
+namespace flags {
+class game_over { };
+} // namespace flags
+
 class controller : public msm::front::state_machine_def<controller>
 {
     struct idle : public msm::front::state<> { };
     struct wait_for_first_item : public msm::front::state<> { };
     struct wait_for_second_item: public msm::front::state<> { };
-    struct game_over: public msm::front::state<> { };
-    struct wait_for_timer : public msm::front::state<> { };
+    struct wait_for_user : public msm::front::state<> { };
     struct let_swap_items : public msm::front::state<> { };
     struct try_swap_items : public msm::front::state<> { };
     struct board_scrolling : public msm::front::state<> { };
+    struct game_over : public msm::front::state<>
+    {
+        typedef boost::mpl::vector1<flags::game_over> flag_list;
+    };
 
     void init_board(const msm::front::none&);
     void select_item(const item_selected&);
@@ -33,7 +40,11 @@ class controller : public msm::front::state_machine_def<controller>
     void revert_swap_items(const msm::front::none&);
     void show_matches(const msm::front::none&);
     void scroll_board(const msm::front::none&);
-    void finish_game(const game_timeout&);
+
+    template<typename Event>
+    void finish_game(const Event&) {
+        viewer_->stop();
+    }
 
     bool is_within_board(const item_selected&);
     bool is_neighbor(const item_selected&);
@@ -48,7 +59,7 @@ public:
         , const boost::shared_ptr<iviewer>&
     );
 
-    typedef mpl::vector<idle, wait_for_timer> initial_state;
+    typedef mpl::vector<idle, wait_for_user> initial_state;
 
     typedef mpl::vector<
          //    Start                , Event            , Target                  , Action                          , Guard
@@ -61,11 +72,10 @@ public:
       ,   row< try_swap_items       , msm::front::none , board_scrolling         , &controller::show_matches       , &controller::is_swap_items_correct     >
       , a_row< board_scrolling      , msm::front::none , wait_for_first_item     , &controller::scroll_board                                                >
 
-      , a_row< wait_for_timer       , game_timeout     , game_over               , &controller::finish_game                                                 >
+      , a_row< wait_for_user       , game_timeout     , game_over                , &controller::finish_game                                                 >
+      , a_row< wait_for_user       , key_pressed      , game_over                , &controller::finish_game                                                 >
 
     > transition_table;
-
-    bool finished() const;
 
     template<class T, class Event>
     void no_transition(const Event&, T&, int) { }
@@ -74,8 +84,7 @@ private:
     void show_board();
 
     boost::shared_ptr<board> board_;
-    boost::shared_ptr<iviewer>  viewer_;
-    bool is_finished = false;
+    boost::shared_ptr<iviewer> viewer_;
 };
 
 typedef msm::back::state_machine<controller> controller_t;

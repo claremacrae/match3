@@ -21,6 +21,10 @@ sdl::sdl(int width, int height, int bpp, const std::string& caption) {
 }
 
 sdl::~sdl() {
+    stop();
+}
+
+void sdl::stop() {
     SDL_FreeSurface(screen_);
     SDL_Quit();
 }
