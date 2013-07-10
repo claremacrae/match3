@@ -79,8 +79,8 @@ public:
       ,   row< try_swap_items       , msm::front::none , board_scrolling         , &controller::show_matches       , &controller::is_swap_items_correct     >
       , a_row< board_scrolling      , msm::front::none , wait_for_first_item     , &controller::scroll_board                                                >
 
-      ,   row< wait_for_client      , time_tick        , game_over                , &controller::finish_game        , &controller::is_game_timeout          >
-      ,   row< wait_for_client      , time_tick        , wait_for_client          , &controller::show_time          , &controller::is_not_game_timeout      >
+      ,   row< wait_for_client      , time_tick        , game_over                , &controller::finish_game       , &controller::is_game_timeout           >
+      ,   row< wait_for_client      , time_tick        , wait_for_client          , &controller::show_time         , &controller::is_not_game_timeout       >
       , a_row< wait_for_client      , key_pressed      , game_over                , &controller::finish_game                                                >
       , a_row< wait_for_client      , window_close     , game_over                , &controller::finish_game                                                >
 
