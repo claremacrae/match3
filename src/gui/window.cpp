@@ -55,12 +55,11 @@ boost::shared_ptr<SDL_Texture> window::load_image(const std::string& file) const
 boost::shared_ptr<SDL_Texture> window::render_text(const std::string& str, const std::string& font_file, SDL_Color color, int font_size) const {
     boost::shared_ptr<TTF_Font> font(TTF_OpenFont(font_file.c_str(), font_size), TTF_CloseFont);
     boost::shared_ptr<SDL_Surface> surface(TTF_RenderText_Blended(font.get(), str.c_str(), color), SDL_FreeSurface);
-    boost::shared_ptr<SDL_Texture> texture(SDL_CreateTextureFromSurface(renderer_.get(), surface.get()), SDL_DestroyTexture);
-	return texture;
+    return boost::shared_ptr<SDL_Texture>(SDL_CreateTextureFromSurface(renderer_.get(), surface.get()), SDL_DestroyTexture);
 }
 
 void window::draw(boost::shared_ptr<SDL_Texture> texture, int x, int y) {
-    SDL_Rect pos = { x, y, 0, 0 };
+    SDL_Rect pos = {x, y, 0, 0};
     SDL_QueryTexture(texture.get(), nullptr, nullptr, &pos.w, &pos.h);
     SDL_RenderCopy(renderer_.get(), texture.get(), nullptr, &pos);
 }
