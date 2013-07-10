@@ -22,8 +22,10 @@ typedef di::generic_module<
     >
 
   , di::singletons<
-        di::bind<iclient, gui::timer>::in_name<user>
-      , di::bind<iclient, gui::user>::in_name<timer>
+   gui::user
+
+        //di::bind<iclient, gui::timer>::in_name<user>
+      //, di::bind<iclient, gui::user>::in_name<timer>
       , gui::viewer
       , gui::window
       , random

@@ -6,7 +6,6 @@
 #include <boost/di/named.hpp>
 #include "controller.hpp"
 #include "iclient.hpp"
-#include "iviewer.hpp"
 
 namespace game {
 
@@ -18,8 +17,9 @@ class app
 public:
     BOOST_DI_CTOR(app
         , boost::shared_ptr<controller_t>
-        , boost::di::named<boost::shared_ptr<iclient>, user>
-        , boost::di::named<boost::shared_ptr<iclient>, timer>
+        , boost::shared_ptr<iclient>
+        //, boost::di::named<boost::shared_ptr<iclient>, user>
+        //, boost::di::named<boost::shared_ptr<iclient>, timer>
     );
 
     void play();

@@ -1,6 +1,6 @@
 #include <boost/shared_ptr.hpp>
+#include <boost/thread.hpp>
 #include <cassert>
-#include <thread>
 #include "controller.hpp"
 
 namespace game {
@@ -74,7 +74,7 @@ void controller::swap_items(const msm::front::none&) {
 }
 
 void controller::revert_swap_items(const msm::front::none&) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
     board_->swap(); // just swap again
     board_->unselect_all();
     show_board();
@@ -86,7 +86,7 @@ void controller::show_matches(const msm::front::none&) {
     }
     board_->unselect_all();
     viewer_->render();
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(300));
 }
 
 void controller::scroll_board(const msm::front::none&) {

@@ -1,4 +1,4 @@
-#include <thread>
+#include <boost/thread.hpp>
 #include <iostream>
 #include "gui/timer.hpp"
 #include "events.hpp"
@@ -12,7 +12,7 @@ timer::timer(boost::shared_ptr<controller_t> c)
 
 void timer::run() {
     while (!controller_->is_flag_active<flags::game_over>()) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        boost::this_thread::sleep_for(boost::chrono::seconds(1));
         controller_->process_event(time_tick());
     }
 }

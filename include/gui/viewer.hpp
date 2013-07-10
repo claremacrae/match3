@@ -2,6 +2,7 @@
 #define VIEWER_ZTZFA603
 
 #include <map>
+#include <boost/shared_ptr.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include "gui/iwindow.hpp"

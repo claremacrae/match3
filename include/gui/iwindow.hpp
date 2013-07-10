@@ -1,5 +1,5 @@
-#ifndef I_407FC3ZE
-#define I_407FC3ZE
+#ifndef IWINDOW_407FC3ZE
+#define IWINDOW_407FC3ZE
 
 #include <boost/shared_ptr.hpp>
 #include <SDL.h>

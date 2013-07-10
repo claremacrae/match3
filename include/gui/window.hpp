@@ -22,7 +22,7 @@ public:
     virtual void render() override;
     virtual void quit() override;
 
-//private:
+private:
     boost::shared_ptr<SDL_Window> window_;
     boost::shared_ptr<SDL_Renderer> renderer_;
 };
