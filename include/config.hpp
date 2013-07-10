@@ -6,7 +6,8 @@
 #include "gui/viewer.hpp"
 #include "gui/user.hpp"
 #include "gui/timer.hpp"
-#include "random.hpp"
+#include "random_mt19937.hpp"
+#include "random_rand.hpp"
 
 namespace di  = boost::di;
 namespace mpl = boost::mpl;
@@ -26,7 +27,7 @@ typedef di::generic_module<
       , di::bind<iclient, gui::timer>::in_name<timer>
       , gui::viewer
       , gui::window
-      , random
+      , random_rand
       , controller_t
     >
 > config;

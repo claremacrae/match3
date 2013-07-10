@@ -4,13 +4,13 @@ GMOCK 			?= gmock-1.6.0
 #BIN             ?= bin/game.exe
 #TEST            ?= bin/game_ut.exe
 #CXX 			= $(EXTERNALS)/mingw32/bin/i686-w64-mingw32-g++
-#CXXFLAGS    	?= -std=c++11 -U main -Iinclude -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2-2.0.0/include -I$(EXTERNALS)/SDL2_image-2.0.0 -I$(EXTERNALS)/di/include -D BOOST_DI_NO_CXX11_FEATURES
+#CXXFLAGS    	?= -std=c++11 -Iinclude -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2-2.0.0/include -I$(EXTERNALS)/SDL2_image-2.0.0 -I$(EXTERNALS)/di/include -D BOOST_DI_NO_CXX11_FEATURES
 #LIBS            ?= -Lbin -lSDL2 -lSDL2_image
 
 BIN             ?= bin/game
 TEST            ?= bin/game_ut
 CXX             ?= g++
-CXXFLAGS    	?= -std=c++11 -Wall -Wextra -Werror -Iinclude -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2-2.0.0/include -I$(EXTERNALS)/SDL2_image-2.0.0 -I$(EXTERNALS)/di/include -D BOOST_DI_NO_CXX11_FEATURES
+CXXFLAGS    	 ?= -std=c++11 -Wall -Wextra -Werror -Iinclude -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2-2.0.0/include -I$(EXTERNALS)/SDL2_image-2.0.0 -I$(EXTERNALS)/di/include -D BOOST_DI_NO_CXX11_FEATURES
 LIBS            ?= -L$(EXTERNALS)/SDL2-2.0.0/build/.libs -L$(EXTERNALS)/SDL2_image-2.0.0/.libs -lSDL2 -lSDL2_image
 
 all: clean $(patsubst %.cpp, %.o, $(shell find src -iname *.cpp)) $(BIN)
@@ -29,9 +29,6 @@ $(BIN):
 $(TEST):
 	$(CXX) $(CXXFLAGS) -o $(TEST) $(shell find bin -iname *.o) $(LIBS) -L$(EXTERNALS)/$(GMOCK)/lib/.libs -L$(EXTERNALS)/$(GMOCK)/gtest/lib/.libs -lgtest -lgmock
 	LD_LIBRARY_PATH="$(LD_LIBRARY_PATH):$(EXTERNALS)/$(GMOCK)/gtest/lib/.libs:$(EXTERNALS)/$(GMOCK)/lib/.libs" ./$(TEST)
-
-run:
-	LD_LIBRARY_PATH="$(LD_LIBRARY_PATH):$(EXTERNALS)/SDL2-2.0.0/build/.libs:$(EXTERNALS)/SDL2_image-2.0.0/.libs" bin/game
 
 mocks:
 	find include -iname *.hpp | xargs $(EXTERNALS)/gmockgen/gmock.py -c test/config/gmock.conf -l game -d test/mocks

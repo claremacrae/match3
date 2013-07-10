@@ -34,9 +34,9 @@ void user::run() {
                     }
                     break;
 
-/*                case SDL_QUIT: //user closes the window*/
-                    //controller_->process_event(window_close());
-                    /*break;*/
+                case SDL_QUIT: //user closes the window
+                    controller_->process_event(window_close());
+                    break;
             }
         }
     }

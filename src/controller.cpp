@@ -53,7 +53,6 @@ bool controller::is_swap_items_incorrect(const msm::front::none& event) {
 }
 
 bool controller::is_game_timeout(const time_tick&) {
-    std::cout << time_ticks_ << std::endl;
     return ++time_ticks_ >= game_time_in_sec_;
 }
 

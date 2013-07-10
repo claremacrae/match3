@@ -3,6 +3,8 @@
 #include "app.hpp"
 #include "config.hpp"
 
+#undef main
+
 int main() {
     using namespace game;
 
