@@ -34,6 +34,7 @@ public:
     virtual void show_grid(const detail::position&, detail::color_t) override;
     virtual void show_match(const detail::position&) override;
     virtual void select_item(const detail::position&) override;
+    virtual void show_text(const std::string& str, int x, int y) override;
 
 private:
     boost::shared_ptr<gui::iwindow> window_;

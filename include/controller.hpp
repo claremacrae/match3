@@ -27,7 +27,7 @@ class controller : public msm::front::state_machine_def<controller>
     struct idle : public msm::front::state<> { };
     struct wait_for_first_item : public msm::front::state<> { };
     struct wait_for_second_item: public msm::front::state<> { };
-    struct wait_for_user : public msm::front::state<> { };
+    struct wait_for_client : public msm::front::state<> { };
     struct let_swap_items : public msm::front::state<> { };
     struct try_swap_items : public msm::front::state<> { };
     struct board_scrolling : public msm::front::state<> { };
@@ -43,6 +43,7 @@ class controller : public msm::front::state_machine_def<controller>
     void revert_swap_items(const msm::front::none&);
     void show_matches(const msm::front::none&);
     void scroll_board(const msm::front::none&);
+    void show_time(const time_tick&);
 
     template<typename Event>
     void finish_game(const Event&) {
@@ -56,6 +57,7 @@ class controller : public msm::front::state_machine_def<controller>
     bool is_swap_items_correct(const msm::front::none&);
     bool is_swap_items_incorrect(const msm::front::none&);
     bool is_game_timeout(const time_tick&);
+    bool is_not_game_timeout(const time_tick&);
 
 public:
     BOOST_DI_CTOR(controller
@@ -64,7 +66,7 @@ public:
         , boost::di::named<int, game_time_in_sec>
     );
 
-    typedef mpl::vector<idle, wait_for_user> initial_state;
+    typedef mpl::vector<idle, wait_for_client> initial_state;
 
     typedef mpl::vector<
          //    Start                , Event            , Target                  , Action                          , Guard
@@ -77,9 +79,10 @@ public:
       ,   row< try_swap_items       , msm::front::none , board_scrolling         , &controller::show_matches       , &controller::is_swap_items_correct     >
       , a_row< board_scrolling      , msm::front::none , wait_for_first_item     , &controller::scroll_board                                                >
 
-      ,   row< wait_for_user       , time_tick        , game_over                , &controller::finish_game        , &controller::is_game_timeout           >
-      , a_row< wait_for_user       , key_pressed      , game_over                , &controller::finish_game                                                 >
-      , a_row< wait_for_user       , window_close     , game_over                , &controller::finish_game                                                 >
+      ,   row< wait_for_client      , time_tick        , game_over                , &controller::finish_game        , &controller::is_game_timeout          >
+      ,   row< wait_for_client      , time_tick        , wait_for_client          , &controller::show_time          , &controller::is_not_game_timeout      >
+      , a_row< wait_for_client      , key_pressed      , game_over                , &controller::finish_game                                                >
+      , a_row< wait_for_client      , window_close     , game_over                , &controller::finish_game                                                >
 
     > transition_table;
 

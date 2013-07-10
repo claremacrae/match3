@@ -22,7 +22,7 @@ viewer::viewer(boost::shared_ptr<gui::iwindow> w)
 
 void viewer::set_background() {
     window_->clear();
-    window_->apply(background_image_);
+    window_->draw(background_image_);
 }
 
 void viewer::render() {
@@ -30,7 +30,7 @@ void viewer::render() {
 }
 
 void viewer::show_match(const detail::position& pos) {
-    window_->apply(
+    window_->draw(
         match_image_
       , grids_offset_x + (pos.x * grid_offset)
       , grids_offset_y + (pos.y * grid_offset)
@@ -39,7 +39,7 @@ void viewer::show_match(const detail::position& pos) {
 
 void viewer::show_grid(const detail::position& pos, detail::color_t color) {
     assert(grid_images_.find(color) != grid_images_.end());
-    window_->apply(
+    window_->draw(
         grid_images_[color]
       , grids_offset_x + (pos.x * grid_offset)
       , grids_offset_y + (pos.y * grid_offset)
@@ -47,11 +47,15 @@ void viewer::show_grid(const detail::position& pos, detail::color_t color) {
 }
 
 void viewer::select_item(const detail::position& pos) {
-    window_->apply(
+    window_->draw(
         select_image_
       , grids_offset_x + (pos.x * grid_offset) - 1
       , grids_offset_y + (pos.y * grid_offset) - 1
     );
+}
+
+void viewer::show_text(const std::string& str, int x, int y) {
+    window_->draw(window_->render_text(str), x, y);
 }
 
 void viewer::quit() {

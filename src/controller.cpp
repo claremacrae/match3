@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/lexical_cast.hpp>
 #include "controller.hpp"
 
 namespace game {
@@ -53,7 +54,11 @@ bool controller::is_swap_items_incorrect(const msm::front::none& event) {
 }
 
 bool controller::is_game_timeout(const time_tick&) {
-    return ++time_ticks_ >= game_time_in_sec_;
+    return time_ticks_ >= game_time_in_sec_;
+}
+
+bool controller::is_not_game_timeout(const time_tick& event) {
+    return !is_game_timeout(event);
 }
 
 void controller::select_item(const item_selected& event) {
@@ -91,6 +96,16 @@ void controller::show_matches(const msm::front::none&) {
 void controller::scroll_board(const msm::front::none&) {
     board_->scroll_down();
     show_board();
+}
+
+void controller::show_time(const time_tick&) {
+    viewer_->show_text(
+        boost::lexical_cast<std::string>(game_time_in_sec_ - time_ticks_)
+      , 50
+      , 50
+    );
+    time_ticks_++;
+    viewer_->render();
 }
 
 } // namespace game
