@@ -4,7 +4,6 @@
 #include "app.hpp"
 #include "gui/user.hpp"
 
-#include "SDL.h"
 namespace game {
 
 app::app(
@@ -17,10 +16,11 @@ app::app(
 
 void app::play() {
     controller_->start();
-    boost::thread user(boost::bind(&iclient::run, boost::ref(*user_)));
+    //boost::thread user(boost::bind(&iclient::run, boost::ref(*user_)));
     //boost::thread timer(boost::bind(&iclient::run, boost::ref(*timer_)));
-    user.join();
+    //user.join();
     //timer.join();
+    user_->run();
 }
 
 } // namespace game

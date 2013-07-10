@@ -7,8 +7,8 @@
 namespace game {
 namespace gui {
 
-user::user(boost::shared_ptr<controller_t> c)
-    : controller_(c)
+user::user(boost::shared_ptr<controller_t> c, boost::shared_ptr<iviewer> v)
+    : controller_(c), v_(v)
 { }
 
 void user::run() {
@@ -32,7 +32,6 @@ void user::run() {
                     if (event.key.keysym.sym == SDLK_ESCAPE) {
                         controller_->process_event(key_pressed());
                     }
-                    break;
 
                 case SDL_QUIT: //user closes the window
                     controller_->process_event(window_close());

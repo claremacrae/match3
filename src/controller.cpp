@@ -1,6 +1,5 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
-#include <cassert>
 #include "controller.hpp"
 
 namespace game {
