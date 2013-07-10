@@ -1,5 +1,5 @@
+#include <SDL.h>
 #include <boost/shared_ptr.hpp>
-#include <boost/thread.hpp>
 #include "controller.hpp"
 
 namespace game {
@@ -53,6 +53,7 @@ bool controller::is_swap_items_incorrect(const msm::front::none& event) {
 }
 
 bool controller::is_game_timeout(const time_tick&) {
+    std::cout << time_ticks_ << std::endl;
     return ++time_ticks_ >= game_time_in_sec_;
 }
 
@@ -73,7 +74,7 @@ void controller::swap_items(const msm::front::none&) {
 }
 
 void controller::revert_swap_items(const msm::front::none&) {
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
+    SDL_Delay(100);
     board_->swap(); // just swap again
     board_->unselect_all();
     show_board();
@@ -85,7 +86,7 @@ void controller::show_matches(const msm::front::none&) {
     }
     board_->unselect_all();
     viewer_->render();
-    boost::this_thread::sleep_for(boost::chrono::milliseconds(300));
+    SDL_Delay(300);
 }
 
 void controller::scroll_board(const msm::front::none&) {

@@ -17,9 +17,8 @@ class app
 public:
     BOOST_DI_CTOR(app
         , boost::shared_ptr<controller_t>
-        , boost::shared_ptr<iclient>
-        //, boost::di::named<boost::shared_ptr<iclient>, user>
-        //, boost::di::named<boost::shared_ptr<iclient>, timer>
+        , boost::di::named<boost::shared_ptr<iclient>, user>
+        , boost::di::named<boost::shared_ptr<iclient>, timer>
     );
 
     void play();

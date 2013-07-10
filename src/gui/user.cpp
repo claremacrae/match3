@@ -32,10 +32,11 @@ void user::run() {
                     if (event.key.keysym.sym == SDLK_ESCAPE) {
                         controller_->process_event(key_pressed());
                     }
-
-                case SDL_QUIT: //user closes the window
-                    controller_->process_event(window_close());
                     break;
+
+/*                case SDL_QUIT: //user closes the window*/
+                    //controller_->process_event(window_close());
+                    /*break;*/
             }
         }
     }
