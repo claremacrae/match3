@@ -12,22 +12,15 @@
 namespace di  = boost::di;
 namespace mpl = boost::mpl;
 
-namespace game {
-class user { };
-class timer { };
-} // namespace game
-
 namespace boost {
 namespace di {
-
-using namespace game;
 
 template<>
 struct ctor_traits<game::app>
 {
-    static void ctor(shared_ptr<controller_t>
-                   , named<shared_ptr<iclient>, user>
-                   , named<shared_ptr<iclient>, timer>
+    static void ctor(shared_ptr<game::controller_t>
+                   , shared_ptr<game::gui::user>
+                   , shared_ptr<game::gui::timer>
     );
 };
 
@@ -45,8 +38,8 @@ typedef di::generic_module<
     >
 
   , di::singletons<
-        di::bind<iclient, gui::user>::in_name<user>
-      , di::bind<iclient, gui::timer>::in_name<timer>
+        gui::user
+      , gui::timer
       , gui::viewer
       , gui::window
       , random_rand
