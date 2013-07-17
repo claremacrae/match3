@@ -13,6 +13,28 @@ namespace di  = boost::di;
 namespace mpl = boost::mpl;
 
 namespace game {
+class user { };
+class timer { };
+} // namespace game
+
+namespace boost {
+namespace di {
+
+using namespace game;
+
+template<>
+struct ctor_traits<game::app>
+{
+    static void ctor(shared_ptr<controller_t>
+                   , named<shared_ptr<iclient>, user>
+                   , named<shared_ptr<iclient>, timer>
+    );
+};
+
+} // namespace di
+} // namespace boost
+
+namespace game {
 
 typedef di::generic_module<
     di::per_requests<

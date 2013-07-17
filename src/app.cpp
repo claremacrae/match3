@@ -5,17 +5,12 @@
 
 namespace game {
 
-app::app(
-    boost::shared_ptr<controller_t> c
-  , boost::di::named<boost::shared_ptr<iclient>, user> u
-  , boost::di::named<boost::shared_ptr<iclient>, timer> t)
-    : controller_(c), user_(u), timer_(t)
-{ }
-
 void app::play() {
     controller_->start();
-    timer_->run();
-    user_->run();
+
+    for (auto& client : clients_) {
+        client->run();
+    }
 }
 
 } // namespace game
