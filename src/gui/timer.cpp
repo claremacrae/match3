@@ -1,31 +1,29 @@
+#include <boost/bind.hpp>
 #include "gui/timer.hpp"
 #include "events.hpp"
 
 namespace game {
 namespace gui {
 
-namespace {
-
-Uint32 callback(Uint32 interval, void *arg) {
-    controller_t* c = static_cast<controller_t*>(arg);
-
-    if (c->is_flag_active<flags::game_over>()) {
-        return 0;
-    }
-
-    c->process_event(time_tick());
-    return interval; //periodic
-}
-
-} // namespace
-
 timer::timer(boost::shared_ptr<controller_t> c)
-    : controller_(c)
+    : controller_(c), callback_(boost::bind(&timer::callback, this, _1))
 { }
 
 void timer::run() {
-    //old, c style, interface, even bind can't be used
-    SDL_AddTimer(TICK_IN_MILLISECONDS, &callback, static_cast<void*>(controller_.get()));
+    SDL_AddTimer(TICK_IN_MILLISECONDS, &timer::do_callback, &callback_);
+}
+
+Uint32 timer::callback(Uint32 interval) {
+    if (controller_->is_flag_active<flags::game_over>()) {
+        return 0;
+    }
+
+    controller_->process_event(time_tick());
+    return interval; //periodic
+}
+
+Uint32 timer::do_callback(Uint32 interval, void* data) {
+    return (*static_cast<callback_t*>(data))(interval);
 }
 
 } // namespace gui

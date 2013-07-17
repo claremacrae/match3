@@ -1,14 +1,16 @@
+#include <cassert>
 #include <stdexcept>
 #include <boost/shared_ptr.hpp>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "gui/window.hpp"
 
 namespace game {
 namespace gui {
 
 window::window(int width, int height, const std::string& caption) {
-    if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
-        throw std::runtime_error("failed SDL_Init: " + std::string(SDL_GetError()));
-    }
+    assert(!SDL_Init(SDL_INIT_EVERYTHING) && SDL_GetError());
+    //assert(!TTF_Init() && TTF_GetError());
 
     window_ = boost::shared_ptr<SDL_Window>(
         SDL_CreateWindow(
@@ -22,18 +24,10 @@ window::window(int width, int height, const std::string& caption) {
       , SDL_DestroyWindow
     );
 
-    if (!window_.get()) {
-        throw std::runtime_error("failed SDL_CreateWindow: " + std::string(SDL_GetError()));
-    }
-
     renderer_ = boost::shared_ptr<SDL_Renderer>(
         SDL_CreateRenderer(window_.get(), RENDER_DRIVER, RENDER_FLAGS)
       , SDL_DestroyRenderer
     );
-
-    if (!renderer_.get()) {
-        throw std::runtime_error("failed SDL_CreateRenderer: " + std::string(SDL_GetError()));
-    }
 }
 
 window::~window() {

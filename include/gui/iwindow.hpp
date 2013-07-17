@@ -3,8 +3,6 @@
 
 #include <boost/shared_ptr.hpp>
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
 
 namespace game {
 namespace gui {

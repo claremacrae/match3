@@ -24,14 +24,14 @@ class game_over { };
 
 class controller : public msm::front::state_machine_def<controller>
 {
-    struct idle : public msm::front::state<> { };
-    struct wait_for_first_item : public msm::front::state<> { };
-    struct wait_for_second_item: public msm::front::state<> { };
-    struct wait_for_client : public msm::front::state<> { };
-    struct let_swap_items : public msm::front::state<> { };
-    struct try_swap_items : public msm::front::state<> { };
-    struct board_scrolling : public msm::front::state<> { };
-    struct game_over : public msm::front::state<>
+    struct idle : msm::front::state<> { };
+    struct wait_for_first_item : msm::front::state<> { };
+    struct wait_for_second_item: msm::front::state<> { };
+    struct wait_for_client : msm::front::state<> { };
+    struct let_swap_items : msm::front::state<> { };
+    struct try_swap_items : msm::front::state<> { };
+    struct board_scrolling : msm::front::state<> { };
+    struct game_over : msm::front::state<>
     {
         typedef boost::mpl::vector1<flags::game_over> flag_list;
     };

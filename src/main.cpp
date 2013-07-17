@@ -3,7 +3,7 @@
 #include "app.hpp"
 #include "config.hpp"
 
-#undef main
+#undef main // for undefined reference to WinMain
 
 int main() {
     using namespace game;
