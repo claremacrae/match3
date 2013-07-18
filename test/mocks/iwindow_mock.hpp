@@ -8,7 +8,7 @@
 #include "iwindow.hpp"
 
 namespace game {
-namespace gui {
+namespace sdl {
 
 class iwindow_mock : public iwindow
 {
@@ -24,7 +24,7 @@ public:
 };
 
 } // namespace game
-} // namespace gui
+} // namespace sdl
 
 #endif // IWINDOW_MOCK_HPP
 

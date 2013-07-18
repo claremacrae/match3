@@ -7,7 +7,7 @@
 namespace game {
 namespace gui {
 
-viewer::viewer(boost::shared_ptr<gui::iwindow> w)
+viewer::viewer(boost::shared_ptr<sdl::iwindow> w)
     : window_(w)
 {
     background_image_ = window_->load_image(images_dir + background_image);

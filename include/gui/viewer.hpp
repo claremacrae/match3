@@ -5,10 +5,10 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
-#include "gui/iwindow.hpp"
-#include "iviewer.hpp"
 #include "detail/position.hpp"
 #include "detail/common.hpp"
+#include "sdl/iwindow.hpp"
+#include "iviewer.hpp"
 
 namespace game {
 namespace gui {
@@ -25,7 +25,7 @@ class viewer : public iviewer
 
 public:
     BOOST_DI_CTOR(viewer
-        , boost::shared_ptr<iwindow>
+        , boost::shared_ptr<sdl::iwindow>
     );
 
     virtual void set_background() override;
@@ -37,7 +37,7 @@ public:
     virtual void show_text(const std::string& str, int x, int y) override;
 
 private:
-    boost::shared_ptr<gui::iwindow> window_;
+    boost::shared_ptr<sdl::iwindow> window_;
     boost::shared_ptr<SDL_Texture> background_image_;
     boost::shared_ptr<SDL_Texture> match_image_;
     boost::shared_ptr<SDL_Texture> select_image_;

@@ -1,11 +1,11 @@
 #ifndef WINDOW_80DDRNSJ
 #define WINDOW_80DDRNSJ
 
-#include "gui/iwindow.hpp"
+#include "sdl/iwindow.hpp"
 #include <boost/shared_ptr.hpp>
 
 namespace game {
-namespace gui {
+namespace sdl {
 
 class window : public iwindow
 {
@@ -28,7 +28,7 @@ private:
     boost::shared_ptr<SDL_Renderer> renderer_;
 };
 
-} // namespace gui
+} // namespace sdl
 } // namespace game
 
 #endif

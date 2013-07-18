@@ -5,13 +5,12 @@
 #include <SDL.h>
 
 namespace game {
-namespace gui {
+namespace sdl {
 
 class iwindow
 {
 public:
     virtual ~iwindow() { };
-
     virtual boost::shared_ptr<SDL_Texture> load_image(const std::string&) const = 0;
     virtual boost::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string& = "font.ttf", SDL_Color = {255, 255, 255, 0}, int = 0) const = 0;
     virtual void draw(boost::shared_ptr<SDL_Texture>, int x = 0, int y = 0) = 0;
@@ -20,7 +19,7 @@ public:
     virtual void quit() = 0;
 };
 
-} // namespace gui
+} // namespace sdl
 } // namespace game
 
 #endif

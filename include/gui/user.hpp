@@ -2,9 +2,8 @@
 #define USER_ZJZFAXBM
 
 #include <boost/di/ctor.hpp>
-#include "iclient.hpp"
 #include "controller.hpp"
-
+#include "iclient.hpp"
 #include "iviewer.hpp"
 
 namespace game {

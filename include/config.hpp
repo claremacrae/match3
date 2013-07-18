@@ -2,10 +2,10 @@
 #define CONFIG_2BXW6AE7
 
 #include <boost/di.hpp>
-#include "gui/window.hpp"
+#include "sdl/window.hpp"
 #include "gui/viewer.hpp"
 #include "gui/user.hpp"
-#include "gui/timer.hpp"
+#include "gui/time.hpp"
 #include "random_mt19937.hpp"
 #include "random_rand.hpp"
 
@@ -20,7 +20,7 @@ struct ctor_traits<game::app>
 {
     static void ctor(shared_ptr<game::controller_t>
                    , shared_ptr<game::gui::user>
-                   , shared_ptr<game::gui::timer>
+                   , shared_ptr<game::gui::time>
     );
 };
 
@@ -38,10 +38,10 @@ typedef di::generic_module<
     >
 
   , di::singletons<
-        gui::user
-      , gui::timer
+        sdl::window
+      , gui::user
+      , gui::time
       , gui::viewer
-      , gui::window
       , random_rand
       , controller_t
     >

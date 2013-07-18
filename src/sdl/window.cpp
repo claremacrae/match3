@@ -3,10 +3,10 @@
 #include <boost/shared_ptr.hpp>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "gui/window.hpp"
+#include "sdl/window.hpp"
 
 namespace game {
-namespace gui {
+namespace sdl {
 
 window::window(int width, int height, const std::string& caption) {
     assert(!SDL_Init(SDL_INIT_EVERYTHING) && SDL_GetError());
@@ -66,6 +66,6 @@ void window::render() {
     SDL_RenderPresent(renderer_.get());
 }
 
-} // namespace gui
+} // namespace sdl
 } // namespace game
 
