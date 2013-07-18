@@ -2,7 +2,7 @@
 #define TIMER_NKQ1WP9I
 
 #include <functional>
-#include "SDL.h"
+#include <SDL.h>
 
 namespace game {
 namespace sdl {
