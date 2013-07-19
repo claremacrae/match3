@@ -29,9 +29,7 @@ void user::run() {
                     break;
 
                 case SDL_KEYDOWN:
-                    if (event.key.keysym.sym == SDLK_ESCAPE) {
-                        controller_->process_event(key_pressed());
-                    }
+                    controller_->process_event(key_pressed(event.key.keysym.sym));
                     break;
 
                 case SDL_QUIT: //user closes the window

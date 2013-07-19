@@ -8,50 +8,60 @@ namespace euml = boost::msm::front::euml;
 
 namespace game {
 
-static class is_within_board_ : public euml::euml_action<is_within_board_>
+class is_within_board : public euml::euml_action<is_within_board>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const item_selected& event, FSM& fsm, SourceState&, TargetState&) {
         return fsm.board_->is_within_board(event.pos);
     }
-} is_within_board;
+};
 
-static class is_neighbor_ : public euml::euml_action<is_neighbor_>
+class is_neighbor : public euml::euml_action<is_neighbor>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const item_selected& event, FSM& fsm, SourceState&, TargetState&) {
         return fsm.board_->is_neighbor(event.pos);
     }
-} is_neighbor;
+};
 
-static class is_the_same_item_ : public euml::euml_action<is_the_same_item_>
+class is_the_same_item : public euml::euml_action<is_the_same_item>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const item_selected& event, FSM& fsm, SourceState&, TargetState&) {
         return fsm.board_->is_same_selected(event.pos);
     }
-} is_the_same_item;
+};
 
-static class is_swap_items_correct_ : public euml::euml_action<is_swap_items_correct_>
+class is_swap_items_correct : public euml::euml_action<is_swap_items_correct>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     bool operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         return fsm.board_->is_swap_winning();
     }
-} is_swap_items_correct;
+};
 
-static class is_game_timeout_ : public euml::euml_action<is_game_timeout_>
+class is_game_timeout : public euml::euml_action<is_game_timeout>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const time_tick&, FSM& fsm, SourceState&, TargetState&) {
         return fsm.time_ticks_ >= fsm.game_time_in_sec_;
     }
-} is_game_timeout;
+};
+
+template<int Key>
+class is_key : public euml::euml_action<is_key<Key>>
+{
+public:
+    template<class FSM, class SourceState, class TargetState>
+    bool operator()(const key_pressed& event, FSM&, SourceState&, TargetState&) {
+        return event.key == Key;
+    }
+};
 
 } // namespace game
 

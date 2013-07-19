@@ -22,7 +22,7 @@ void show_board(FSM& fsm) {
     fsm.viewer_->render();
 }
 
-static class init_board_ : public euml::euml_action<init_board_>
+class init_board : public euml::euml_action<init_board>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
@@ -30,9 +30,9 @@ public:
         fsm.board_->init_with_randoms();
         show_board(fsm);
     }
-} init_board;
+};
 
-static class select_item_ : public euml::euml_action<select_item_>
+class select_item : public euml::euml_action<select_item>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -41,9 +41,9 @@ public:
         fsm.viewer_->select_item(event.pos);
         fsm.viewer_->render();
     }
-} select_item;
+};
 
-static class unselect_item_ : public euml::euml_action<unselect_item_>
+class unselect_item : public euml::euml_action<unselect_item>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -51,9 +51,9 @@ public:
         fsm.board_->unselect_all();
         show_board(fsm);
     }
-} unselect_item;
+};
 
-static class swap_items_ : public euml::euml_action<swap_items_>
+class swap_items : public euml::euml_action<swap_items>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
@@ -61,9 +61,9 @@ public:
         fsm.board_->swap();
         show_board(fsm);
     }
-} swap_items;
+};
 
-static class revert_swap_items_ : public euml::euml_action<revert_swap_items_>
+class revert_swap_items : public euml::euml_action<revert_swap_items>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
@@ -73,9 +73,9 @@ public:
         fsm.board_->unselect_all();
         show_board(fsm);
     }
-} revert_swap_items;
+};
 
-static class show_matches_ : public euml::euml_action<show_matches_>
+class show_matches : public euml::euml_action<show_matches>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
@@ -87,9 +87,9 @@ public:
         fsm.viewer_->render();
         SDL_Delay(300);
     }
-} show_matches;
+};
 
-static class scroll_board_ : public euml::euml_action<scroll_board_>
+class scroll_board : public euml::euml_action<scroll_board>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
@@ -97,9 +97,9 @@ public:
         fsm.board_->scroll_down();
         show_board(fsm);
     }
-} scroll_board;
+};
 
-static class show_time_ : public euml::euml_action<show_time_>
+class show_time : public euml::euml_action<show_time>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -112,16 +112,16 @@ public:
         fsm.time_ticks_++;
         fsm.viewer_->render();
     }
-} show_time;
+};
 
-static class finish_game_ : public euml::euml_action<finish_game_>
+class finish_game : public euml::euml_action<finish_game>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         fsm.viewer_->quit();
     }
-} finish_game;
+};
 
 } // namespace game
 
