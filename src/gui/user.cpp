@@ -1,7 +1,5 @@
 #include <SDL.h>
 #include "gui/user.hpp"
-#include "gui/common.hpp"
-#include "detail/position.hpp"
 #include "events.hpp"
 
 namespace game {
@@ -19,13 +17,7 @@ void user::run() {
                 default: break;
 
                 case SDL_MOUSEBUTTONDOWN:
-                    if (event.button.button == SDL_BUTTON_LEFT) {
-                        detail::position pos(
-                            (event.button.x - grids_offset_x) / grid_offset
-                          , (event.button.y - grids_offset_y) / grid_offset
-                        );
-                        controller_->process_event(item_selected(pos));
-                    }
+                    controller_->process_event(button_clicked(event.button));
                     break;
 
                 case SDL_KEYDOWN:

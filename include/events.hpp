@@ -2,6 +2,8 @@
 #define EVENTS_BCQLG30Q
 
 #include <boost/msm/front/euml/euml.hpp>
+#include <SDL.h>
+#include "gui/common.hpp"
 #include "detail/position.hpp"
 
 namespace euml = boost::msm::front::euml;
@@ -10,18 +12,16 @@ namespace game {
 
 typedef euml::True_ anonymous;
 
-struct item_selected : euml::euml_event<item_selected>
+struct button_clicked : euml::euml_event<button_clicked>
 {
-    item_selected() { }
+    button_clicked() { }
 
-    explicit item_selected(const detail::position& pos)
-        : pos(pos)
+    explicit button_clicked(const SDL_MouseButtonEvent& button)
+        : button(button)
     { }
 
-    detail::position pos;
+    SDL_MouseButtonEvent button;
 };
-
-struct time_tick : euml::euml_event<time_tick> { };
 
 struct key_pressed : euml::euml_event<key_pressed>
 {
@@ -33,6 +33,8 @@ struct key_pressed : euml::euml_event<key_pressed>
 
     int key = 0;
 };
+
+struct time_tick : euml::euml_event<time_tick> { };
 
 struct window_close : euml::euml_event<window_close>{ };
 

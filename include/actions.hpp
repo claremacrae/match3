@@ -5,6 +5,7 @@
 #include <boost/msm/front/euml/euml.hpp>
 #include <SDL.h>
 #include "events.hpp"
+#include "guards.hpp"
 
 namespace euml = boost::msm::front::euml;
 
@@ -36,9 +37,9 @@ class select_item : public euml::euml_action<select_item>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
-    void operator()(const item_selected& event, FSM& fsm, SourceState&, TargetState&) {
-        fsm.board_->select(event.pos);
-        fsm.viewer_->select_item(event.pos);
+    void operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
+        fsm.board_->select(get_pos(button));
+        fsm.viewer_->select_item(get_pos(button));
         fsm.viewer_->render();
     }
 };
@@ -47,7 +48,7 @@ class unselect_item : public euml::euml_action<unselect_item>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
-    void operator()(const item_selected&, FSM& fsm, SourceState&, TargetState&) {
+    void operator()(const button_clicked&, FSM& fsm, SourceState&, TargetState&) {
         fsm.board_->unselect_all();
         show_board(fsm);
     }

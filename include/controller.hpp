@@ -57,9 +57,9 @@ public:
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +--------------------------------------------------------------------------------------------------------------------------------------------+
         idle()                    [anonymous()] / init_board()                                                          == wait_for_first_item()
-      , wait_for_first_item()   + item_selected()[is_within_board()] / select_item()                                    == wait_for_second_item()
-      , wait_for_second_item()  + item_selected()[is_the_same_item()] / unselect_item()                                 == wait_for_first_item()
-      , wait_for_second_item()  + item_selected()[is_within_board() and is_neighbor()] / (select_item(), swap_items())  == try_swap_items()
+      , wait_for_first_item()   + button_clicked()[is_within_board()] / select_item()                                   == wait_for_second_item()
+      , wait_for_second_item()  + button_clicked()[is_the_same_item()] / unselect_item()                                == wait_for_first_item()
+      , wait_for_second_item()  + button_clicked()[is_within_board() and is_neighbor()] / (select_item(), swap_items()) == try_swap_items()
       , try_swap_items()          [is_swap_items_correct()] / (show_matches(), scroll_board())                          == wait_for_first_item()
       , try_swap_items()          [not is_swap_items_correct()] / revert_swap_items()                                   == wait_for_first_item()
    // +--------------------------------------------------------------------------------------------------------------------------------------------+
