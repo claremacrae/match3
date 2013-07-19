@@ -55,19 +55,19 @@ public:
     typedef mpl::vector<idle, wait_for_client> initial_state;
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
-   // +--------------------------------------------------------------------------------------------------------------------------+
-        idle()                  + any() [always_true()] / init_board()                                  == wait_for_first_item()
-      , wait_for_first_item()   + item_selected() [is_within_board()] / select_item()                   == wait_for_second_item()
-      , wait_for_second_item()  + item_selected() [is_the_same_item()] / unselect_item()                == wait_for_first_item()
-      , wait_for_second_item()  + item_selected() [is_correct_item()] / (select_item(), swap_items())   == try_swap_items()
-      , try_swap_items()        + any() [is_swap_items_incorrect()] / revert_swap_items()               == wait_for_first_item()
-      , try_swap_items()        + any() [is_swap_items_correct()] / (show_matches(), scroll_board())    == wait_for_first_item()
-   // +-----------------------------------------------------------------------------------------------------------------------+
-      , wait_for_client()       + time_tick() [is_game_timeout()] / finish_game()                       == game_over()
-      , wait_for_client()       + time_tick() [is_not_game_timeout()] / show_time()                     == wait_for_client()
-      , wait_for_client()       + key_pressed() / finish_game()                                         == game_over()
-      , wait_for_client()       + window_close() / finish_game()                                        == game_over()
-   // +--------------------------------------------------------------------------------------------------------------------------+
+   // +-----------------------------------------------------------------------------------------------------------------------------------+
+        idle()                    [anonymous()] / init_board()                                                  == wait_for_first_item()
+      , wait_for_first_item()   + item_selected() [is_within_board()] / select_item()                           == wait_for_second_item()
+      , wait_for_second_item()  + item_selected() [is_the_same_item()] / unselect_item()                        == wait_for_first_item()
+      , wait_for_second_item()  + item_selected() [is_correct_item()] / (select_item(), swap_items())           == try_swap_items()
+      , try_swap_items()          [anonymous()] [is_swap_items_incorrect()] / revert_swap_items()               == wait_for_first_item()
+      , try_swap_items()          [anonymous()] [is_swap_items_correct()] / (show_matches(), scroll_board())    == wait_for_first_item()
+   // +-----------------------------------------------------------------------------------------------------------------------------------+
+      , wait_for_client()       + time_tick() [is_game_timeout()] / finish_game()                               == game_over()
+      , wait_for_client()       + time_tick() [is_not_game_timeout()] / show_time()                             == wait_for_client()
+      , wait_for_client()       + key_pressed() / finish_game()                                                 == game_over()
+      , wait_for_client()       + window_close() / finish_game()                                                == game_over()
+   // +-----------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table);
 
     template<class T, class Event>

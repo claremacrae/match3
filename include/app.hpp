@@ -12,7 +12,7 @@ class app
 public:
     template<typename... TClients>
     explicit app(boost::shared_ptr<controller_t> c, TClients&&... cl)
-        : controller_(c), clients_{cl...}
+        : controller_(c), clients_{std::forward<TClients>(cl)...}
     { };
 
     void play();
