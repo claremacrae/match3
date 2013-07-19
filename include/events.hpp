@@ -8,7 +8,7 @@ namespace euml = boost::msm::front::euml;
 
 namespace game {
 
-typedef euml::True_ anonymous;
+static euml::True_ anonymous;
 
 struct item_selected : euml::euml_event<item_selected>
 {

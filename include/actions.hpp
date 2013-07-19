@@ -2,10 +2,11 @@
 #define ACTIONS_QIAZ45F2
 
 #include <boost/lexical_cast.hpp>
+#include <boost/msm/front/euml/euml.hpp>
 #include <SDL.h>
 #include "events.hpp"
 
-namespace msm = boost::msm;
+namespace euml = boost::msm::front::euml;
 
 namespace game {
 
@@ -21,7 +22,7 @@ void show_board(FSM& fsm) {
     fsm.viewer_->render();
 }
 
-class init_board
+static class init_board_ : public euml::euml_action<init_board_>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
@@ -29,9 +30,9 @@ public:
         fsm.board_->init_with_randoms();
         show_board(fsm);
     }
-};
+} init_board;
 
-class select_item
+static class select_item_ : public euml::euml_action<select_item_>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -40,9 +41,9 @@ public:
         fsm.viewer_->select_item(event.pos);
         fsm.viewer_->render();
     }
-};
+} select_item;
 
-class unselect_item
+static class unselect_item_ : public euml::euml_action<unselect_item_>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -50,35 +51,35 @@ public:
         fsm.board_->unselect_all();
         show_board(fsm);
     }
-};
+} unselect_item;
 
-class swap_items
+static class swap_items_ : public euml::euml_action<swap_items_>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    void operator()(const msm::front::none&, FSM& fsm, SourceState&, TargetState&) {
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         fsm.board_->swap();
         show_board(fsm);
     }
-};
+} swap_items;
 
-class revert_swap_items
+static class revert_swap_items_ : public euml::euml_action<revert_swap_items_>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    void operator()(const msm::front::none&, FSM& fsm, SourceState&, TargetState&) {
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         SDL_Delay(100);
         fsm.board_->swap(); // just swap again
         fsm.board_->unselect_all();
         show_board(fsm);
     }
-};
+} revert_swap_items;
 
-class show_matches
+static class show_matches_ : public euml::euml_action<show_matches_>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    void operator()(const msm::front::none&, FSM& fsm, SourceState&, TargetState&) {
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         for (auto& pos : fsm.board_->matches()) {
             fsm.viewer_->show_match(pos);
         }
@@ -86,19 +87,19 @@ public:
         fsm.viewer_->render();
         SDL_Delay(300);
     }
-};
+} show_matches;
 
-class scroll_board
+static class scroll_board_ : public euml::euml_action<scroll_board_>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    void operator()(const msm::front::none&, FSM& fsm, SourceState&, TargetState&) {
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         fsm.board_->scroll_down();
         show_board(fsm);
     }
-};
+} scroll_board;
 
-class show_time
+static class show_time_ : public euml::euml_action<show_time_>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -111,16 +112,16 @@ public:
         fsm.time_ticks_++;
         fsm.viewer_->render();
     }
-};
+} show_time;
 
-class finish_game
+static class finish_game_ : public euml::euml_action<finish_game_>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         fsm.viewer_->quit();
     }
-};
+} finish_game;
 
 } // namespace game
 
