@@ -11,7 +11,7 @@ namespace gui {
 
 class time : public iclient
 {
-    const sdl::milliseconds_t TICK_EVERY_SECOND_IN_MILLISECONDS = 1000;
+    const sdl::milliseconds_t ONE_SECOND_IN_MILLISECONDS = 1000;
 
 public:
     BOOST_DI_CTOR(explicit time

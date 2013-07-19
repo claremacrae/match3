@@ -10,7 +10,7 @@ time::time(boost::shared_ptr<controller_t> c)
 
 void time::run() {
     timer_.reset(new sdl::timer(
-        TICK_EVERY_SECOND_IN_MILLISECONDS
+        ONE_SECOND_IN_MILLISECONDS
       , [&](sdl::milliseconds_t interval) -> sdl::milliseconds_t {
             if (controller_->is_flag_active<flags::game_over>()) {
                 return 0;
