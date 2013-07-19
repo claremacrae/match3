@@ -64,7 +64,7 @@ public:
       , try_swap_items()          [anonymous()] [is_swap_items_correct()] / (show_matches(), scroll_board())    == wait_for_first_item()
    // +-----------------------------------------------------------------------------------------------------------------------------------+
       , wait_for_client()       + time_tick() [is_game_timeout()] / finish_game()                               == game_over()
-      , wait_for_client()       + time_tick() [is_not_game_timeout()] / show_time()                             == wait_for_client()
+      , wait_for_client()       + time_tick() [is_not_game_timeout()] / show_time()
       , wait_for_client()       + key_pressed() / finish_game()                                                 == game_over()
       , wait_for_client()       + window_close() / finish_game()                                                == game_over()
    // +-----------------------------------------------------------------------------------------------------------------------------------+
