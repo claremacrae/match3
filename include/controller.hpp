@@ -56,17 +56,17 @@ public:
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +--------------------------------------------------------------------------------------------------------------------------------------------+
-        idle()                    [anonymous()] / init_board()                                                          == wait_for_first_item()
-      , wait_for_first_item()   + button_clicked()[is_within_board()] / select_item()                                   == wait_for_second_item()
-      , wait_for_second_item()  + button_clicked()[is_the_same_item()] / unselect_item()                                == wait_for_first_item()
-      , wait_for_second_item()  + button_clicked()[is_within_board() and is_neighbor()] / (select_item(), swap_items()) == try_swap_items()
-      , try_swap_items()          [is_swap_items_correct()] / (show_matches(), scroll_board())                          == wait_for_first_item()
-      , try_swap_items()          [not is_swap_items_correct()] / revert_swap_items()                                   == wait_for_first_item()
+        wait_for_first_item()  == idle()                   [anonymous()] / init_board()
+      , wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
+      , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_the_same_item()] / unselect_item()
+      , try_swap_items()       == wait_for_second_item() + button_clicked() [is_within_board() and is_neighbor()] / (select_item(), swap_items())
+      , wait_for_first_item()  == try_swap_items()         [is_swap_items_correct()] / (show_matches(), scroll_board())
+      , wait_for_first_item()  == try_swap_items()         [not is_swap_items_correct()] / revert_swap_items()
    // +--------------------------------------------------------------------------------------------------------------------------------------------+
-      , wait_for_client()       + time_tick()[is_game_timeout()] / finish_game()                                        == game_over()
-      , wait_for_client()       + time_tick()[not is_game_timeout()] / show_time()
-      , wait_for_client()       + key_pressed()[is_key<SDLK_ESCAPE>()] / finish_game()                                  == game_over()
-      , wait_for_client()       + window_close() / finish_game()                                                        == game_over()
+      , game_over()            == wait_for_client()      + time_tick() [is_game_timeout()] / finish_game()
+      ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()
+      , game_over()            == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / finish_game()
+      , game_over()            == wait_for_client()      + window_close() / finish_game()
    // +--------------------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table);
 

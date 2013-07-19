@@ -10,7 +10,7 @@ namespace sdl {
 
 window::window(int width, int height, const std::string& caption) {
     assert(!SDL_Init(SDL_INIT_EVERYTHING) && SDL_GetError());
-    assert(!TTF_Init() && TTF_GetError());
+    //assert(!TTF_Init() && TTF_GetError());
 
     window_ = boost::shared_ptr<SDL_Window>(
         SDL_CreateWindow(
