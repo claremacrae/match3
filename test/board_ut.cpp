@@ -9,6 +9,15 @@ namespace test {
 
 namespace {
 
+enum color_t
+{
+    black
+  , blue
+  , green
+  , yellow
+  , purple
+};
+
 std::ostream& operator<<(std::ostream& out, board& b) {
     out << "    ";
     for (int x = 0; x < b.get_cols(); ++x) {

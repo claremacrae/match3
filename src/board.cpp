@@ -6,9 +6,9 @@
 namespace game {
 
 board::board(
-    boost::di::named<int, rows> r
-  , boost::di::named<int, cols> c
-  , boost::di::named<int, to_win> w
+    boost::di::named<int, _S("rows")> r
+  , boost::di::named<int, _S("cols")> c
+  , boost::di::named<int, _S("winning strike")> w
   , boost::shared_ptr<irandom> i)
     : rows_size_(r)
     , cols_size_(c)

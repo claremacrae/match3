@@ -28,14 +28,8 @@ class init_board : public euml::euml_action<init_board>
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
-        //fsm.board_->init_with_randoms();
-        //show_board(fsm);
-        fsm.viewer_->show_text(
-            "dupa jasia"
-          , 10
-          , 10
-        );
-        fsm.viewer_->render();
+        fsm.board_->init_with_randoms();
+        show_board(fsm);
     }
 };
 

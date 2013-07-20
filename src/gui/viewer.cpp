@@ -23,6 +23,7 @@ viewer::viewer(boost::shared_ptr<sdl::iwindow> w)
 void viewer::set_background() {
     window_->clear();
     window_->draw(background_image_);
+    window_->draw(window_->render_text("dupa", "font.ttf", {255, 255, 255, 0}, 16), 10, 10);
 }
 
 void viewer::render() {
@@ -54,9 +55,9 @@ void viewer::select_item(const detail::position& pos) {
     );
 }
 
-void viewer::show_text(const std::string& str, int x, int y) {
-    window_->clear();
-    window_->draw(window_->render_text(str), x, y);
+void viewer::show_text(const std::string& str, int , int ) {
+    window_->draw(window_->render_text("dupa", "font.ttf", {255, 255, 255, 0}, 16), 10, 20);
+    std::cout << str << std::endl;
 }
 
 void viewer::quit() {

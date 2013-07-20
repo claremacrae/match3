@@ -7,14 +7,7 @@ namespace detail {
 const unsigned min_color = 0;
 const unsigned max_color = 4;
 
-enum color_t
-{
-    black
-  , blue
-  , green
-  , yellow
-  , purple
-};
+typedef int color_t;
 
 } // namespace detail
 } // namespace game

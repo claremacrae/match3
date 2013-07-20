@@ -19,8 +19,6 @@ namespace mpl = boost::mpl;
 
 namespace game {
 
-class game_time_in_sec { };
-
 namespace flags {
 class game_over { };
 } // namespace flags
@@ -49,7 +47,7 @@ public:
     BOOST_DI_CTOR(controller
         , boost::shared_ptr<board>
         , boost::shared_ptr<iviewer>
-        , boost::di::named<int, game_time_in_sec>
+        , boost::di::named<int, _S("game time in seconds")>
     );
 
     typedef mpl::vector<idle, wait_for_client> initial_state;

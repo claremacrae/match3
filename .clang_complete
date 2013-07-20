@@ -1,6 +1,7 @@
 -std=c++11
 -D BOOST_DI_NO_CXX11_FEATURES
 -Iinclude
+-Iexternals
 -Iexternals/boost_1_52_0
 -Iexternals/SDL2-2.0.0/include
 -Iexternals/SDL2_image-2.0.0

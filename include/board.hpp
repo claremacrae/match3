@@ -8,15 +8,12 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
+#include <mpl_string.hpp>
 #include "detail/row.hpp"
 #include "detail/position.hpp"
 #include "irandom.hpp"
 
 namespace game {
-
-class rows {};
-class cols {};
-class to_win {};
 
 class board
 {
@@ -24,9 +21,9 @@ class board
 
 public:
     BOOST_DI_CTOR(board
-      , boost::di::named<int, rows>
-      , boost::di::named<int, cols>
-      , boost::di::named<int, to_win>
+      , boost::di::named<int, _S("rows")>
+      , boost::di::named<int, _S("cols")>
+      , boost::di::named<int, _S("winning strike")>
       , boost::shared_ptr<irandom>);
 
     void init_with_randoms();

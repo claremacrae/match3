@@ -8,11 +8,11 @@ namespace detail {
 
 struct grid
 {
-    explicit grid(color_t c = black)
+    explicit grid(color_t c = 0)
         : color(c)
     { }
 
-    color_t color;
+    color_t color = 0;
     bool matched = false;
 };
 
