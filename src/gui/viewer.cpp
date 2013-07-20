@@ -6,26 +6,23 @@
 namespace game {
 namespace gui {
 
-viewer::viewer(boost::shared_ptr<sdl::iwindow> w
-             , boost::di::named<int, _S("grid offset")> g
+viewer::viewer(boost::shared_ptr<sdl::iwindow> window
+             , boost::di::named<int, _S("grid offset")> grid
              , boost::di::named<int, _S("grids offset x")> x
              , boost::di::named<int, _S("grids offset y")> y
-             , boost::di::named<int, _S("board colors")> c
-             , boost::di::named<std::string, _S("font name")> f
-             , boost::di::named<int, _S("font size")> s)
-    : window_(w)
-    , grid_offset_(g)
+             , boost::di::named<int, _S("board colors")> colors
+             , boost::di::named<std::string, _S("font name")> font)
+    : window_(window)
+    , grid_offset_(grid)
     , grids_offset_x_(x)
     , grids_offset_y_(y)
-    , colors_(c)
-    , font_(f)
-    , font_size_(s)
+    , font_(font)
 {
     background_image_ = window_->load_image(images_dir + background_image);
     match_image_ = window_->load_image(images_dir + match_image);
     select_image_ = window_->load_image(images_dir + select_image);
 
-    for (int i = 0; i <= colors_; ++i) {
+    for (int i = 0; i <= colors; ++i) {
         grid_images_[static_cast<detail::color_t>(i)] =
             window_->load_image(images_dir + boost::lexical_cast<std::string>(i) + ".png");
     }
@@ -65,9 +62,8 @@ void viewer::select_item(const detail::position& pos) {
     );
 }
 
-void viewer::show_text(const std::string& str, int x, int y) {
-    std::cout << str << std::endl;
-    window_->draw(window_->render_text(str, font_, {255, 255, 255, 0}, font_size_), x, y);
+void viewer::show_text(const std::string& str, int x, int y, SDL_Color color, int font_size) {
+    window_->draw(window_->render_text(str, font_, color, font_size), x, y);
 }
 
 void viewer::quit() {

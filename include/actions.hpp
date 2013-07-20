@@ -109,6 +109,8 @@ public:
             boost::lexical_cast<std::string>(fsm.game_time_in_sec_ - fsm.time_ticks_)
           , 50
           , 50
+          , {255, 255, 255, 0}
+          , 16
         );
         fsm.time_ticks_++;
         fsm.viewer_->render();

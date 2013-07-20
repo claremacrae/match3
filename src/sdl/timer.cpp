@@ -1,4 +1,3 @@
-#include <cassert>
 #include "sdl/timer.hpp"
 
 namespace game {
@@ -11,7 +10,7 @@ timer::timer(milliseconds_t time, const callback_t& callback)
 }
 
 timer::~timer() {
-    assert(SDL_RemoveTimer(id_));
+    SDL_RemoveTimer(id_);
 }
 
 Uint32 timer::do_callback(milliseconds_t interval, void* data) {

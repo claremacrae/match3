@@ -28,7 +28,6 @@ public:
         , boost::di::named<int, _S("grids offset y")>
         , boost::di::named<int, _S("board colors")>
         , boost::di::named<std::string, _S("font name")>
-        , boost::di::named<int, _S("font size")>
     );
 
     virtual void set_background() override;
@@ -37,7 +36,7 @@ public:
     virtual void show_grid(const detail::position&, detail::color_t) override;
     virtual void show_match(const detail::position&) override;
     virtual void select_item(const detail::position&) override;
-    virtual void show_text(const std::string& str, int x, int y) override;
+    virtual void show_text(const std::string& str, int x, int y, SDL_Color, int) override;
 
 private:
     boost::shared_ptr<sdl::iwindow> window_;
@@ -48,9 +47,7 @@ private:
     int grid_offset_ = 0;
     int grids_offset_x_ = 0;
     int grids_offset_y_ = 0;
-    int colors_ = 0;
     std::string font_ = "";
-    int font_size_ = 0;
 };
 
 } // namespace gui

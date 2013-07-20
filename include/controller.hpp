@@ -2,11 +2,11 @@
 #define CONTROLLER_AMV06IFP
 
 #include <boost/shared_ptr.hpp>
-#include <boost/msm/back/state_machine.hpp>
 #include <boost/msm/front/state_machine_def.hpp>
 #include <boost/msm/front/euml/euml.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
+#include "sdl/state_machine.hpp"
 #include "detail/position.hpp"
 #include "board.hpp"
 #include "iviewer.hpp"
@@ -14,21 +14,14 @@
 #include "actions.hpp"
 #include "guards.hpp"
 
-namespace msm = boost::msm;
-namespace mpl = boost::mpl;
-
 namespace game {
 
-namespace flags {
-class game_over { };
-} // namespace flags
-
-class controller : public msm::front::state_machine_def<controller>
+class controller : public boost::msm::front::state_machine_def<controller>
 {
     template<typename T>
     struct state
-        : msm::front::state<>
-        , msm::front::euml::euml_state<T>
+        : boost::msm::front::state<>
+        , boost::msm::front::euml::euml_state<T>
     { };
 
     struct idle : state<idle> { };
@@ -40,7 +33,7 @@ class controller : public msm::front::state_machine_def<controller>
     struct board_scrolling : state<board_scrolling> { };
     struct game_over : state<game_over>
     {
-        typedef boost::mpl::vector1<flags::game_over> flag_list;
+        typedef boost::mpl::vector1<flag_game_over> flag_list;
     };
 
 public:
@@ -59,7 +52,7 @@ public:
       , grids_offset_y_(y)
     { };
 
-    typedef mpl::vector<idle, wait_for_client> initial_state;
+    typedef boost::mpl::vector<idle, wait_for_client> initial_state;
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +---------------------------------------------------------------------------------------------------------------------+
@@ -101,7 +94,7 @@ public: //FIXME: temporary workaround
     int grids_offset_y_ = 0;
 };
 
-typedef msm::back::state_machine<controller> controller_t;
+typedef sdl::state_machine<controller> controller_t;
 
 } // namespace game
 

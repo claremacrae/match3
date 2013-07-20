@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include "gui/time.hpp"
 #include "events.hpp"
 
@@ -12,7 +13,7 @@ void time::run() {
     timer_.reset(new sdl::timer(
         ONE_SECOND_IN_MILLISECONDS
       , [&](sdl::milliseconds_t interval) -> sdl::milliseconds_t {
-            if (controller_->is_flag_active<flags::game_over>()) {
+            if (controller_->is_flag_active<flag_game_over>()) {
                 return 0;
             }
 
