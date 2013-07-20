@@ -55,6 +55,7 @@ void viewer::select_item(const detail::position& pos) {
 }
 
 void viewer::show_text(const std::string& str, int x, int y) {
+    window_->clear();
     window_->draw(window_->render_text(str), x, y);
 }
 

@@ -33,10 +33,12 @@ public:
     bool is_within_board(const detail::position& pos) const;
     bool is_neighbor(const detail::position&) const;
     bool is_same_selected(const detail::position&) const;
+    bool is_same_color(const detail::position&);
     bool is_swap_winning();
     std::vector<detail::position> matches();
 
     void select(const detail::position&);
+    void unselect_item(std::size_t);
     void unselect_all();
     void swap();
     void scroll_down();

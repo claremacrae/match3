@@ -35,7 +35,7 @@ public:
     }
 };
 
-class is_the_same_item : public euml::euml_action<is_the_same_item>
+class is_same_item : public euml::euml_action<is_same_item>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
@@ -44,7 +44,16 @@ public:
     }
 };
 
-class is_swap_items_correct : public euml::euml_action<is_swap_items_correct>
+class is_same_color : public euml::euml_action<is_same_color>
+{
+public:
+    template<class FSM, class SourceState, class TargetState>
+    bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
+        return fsm.board_->is_same_color(get_pos(button));
+    }
+};
+
+class is_swap_items_winning : public euml::euml_action<is_swap_items_winning>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>

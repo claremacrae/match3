@@ -16,7 +16,7 @@ void user::run() {
             switch (event.type) {
                 default: break;
 
-                case SDL_MOUSEBUTTONDOWN:
+                case SDL_MOUSEBUTTONUP:
                     controller_->process_event(button_clicked(event.button));
                     break;
 

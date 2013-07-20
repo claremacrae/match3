@@ -48,6 +48,11 @@ bool board::is_same_selected(const detail::position& pos) const {
     return selected_[0].x == pos.x and selected_[0].y == pos.y;
 }
 
+bool board::is_same_color(const detail::position& pos) {
+    assert(selected_.size() == 1);
+    return get_grid_color(selected_[0]) == get_grid_color(pos);
+}
+
 bool board::is_swap_winning() {
     assert(selected_.size() == 2);
     return is_swap_winning(selected_[0]) or
@@ -81,6 +86,11 @@ void board::select(const detail::position& pos) {
 
 void board::unselect_all() {
     selected_.clear();
+}
+
+void board::unselect_item(std::size_t item) {
+    assert(selected_.size() > item);
+    selected_.erase(selected_.begin() + item);
 }
 
 void board::swap() {
