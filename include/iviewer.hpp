@@ -1,8 +1,8 @@
 #ifndef IVIEWER_T977IO6T
 #define IVIEWER_T977IO6T
 
+#include "detail/grid.hpp"
 #include "detail/position.hpp"
-#include "detail/common.hpp"
 
 namespace game {
 

@@ -8,13 +8,17 @@
 namespace game {
 namespace sdl {
 
-window::window(int width, int height, const std::string& caption) {
+window::window(boost::di::named<int, _S("win width")> width
+             , boost::di::named<int, _S("win height")> height
+             , boost::di::named<std::string, _S("win caption")> caption)
+{
     assert(!SDL_Init(SDL_INIT_EVERYTHING) && SDL_GetError());
     assert(!TTF_Init() && TTF_GetError());
 
+    std::string caption_ = caption;
     window_ = boost::shared_ptr<SDL_Window>(
         SDL_CreateWindow(
-            caption.c_str()
+            caption_.c_str()
           , SDL_WINDOWPOS_CENTERED
           , SDL_WINDOWPOS_CENTERED
           , width

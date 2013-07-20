@@ -45,23 +45,32 @@ class controller : public msm::front::state_machine_def<controller>
 
 public:
     BOOST_DI_CTOR(controller
-        , boost::shared_ptr<board>
-        , boost::shared_ptr<iviewer>
-        , boost::di::named<int, _S("game time in seconds")>
-    );
+        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iviewer> v
+        , boost::di::named<int, _S("game time in seconds")> t
+        , boost::di::named<int, _S("grid offset")> g
+        , boost::di::named<int, _S("grids offset x")> x
+        , boost::di::named<int, _S("grids offset y")> y
+    ) : board_(b)
+      , viewer_(v)
+      , game_time_in_sec_(t)
+      , grid_offset_(g)
+      , grids_offset_x_(x)
+      , grids_offset_y_(y)
+    { };
 
     typedef mpl::vector<idle, wait_for_client> initial_state;
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +---------------------------------------------------------------------------------------------------------------------+
         wait_for_first_item()  == idle()                   [anonymous()] / init_board()
-      //, wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
-      //, wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()
-      //, try_swap_items()       == wait_for_second_item() + button_clicked() [is_within_board() and
-                                                                             //not is_same_color() and
-                                                                             //is_neighbor()] / (select_item(), swap_items())
-      //, wait_for_first_item()  == try_swap_items()         [is_swap_items_winning()] / (show_matches(), scroll_board())
-      //, wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / revert_swap_items()
+      , wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
+      , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()
+      , try_swap_items()       == wait_for_second_item() + button_clicked() [is_within_board() and
+                                                                             not is_same_color() and
+                                                                             is_neighbor()] / (select_item(), swap_items())
+      , wait_for_first_item()  == try_swap_items()         [is_swap_items_winning()] / (show_matches(), scroll_board())
+      , wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / revert_swap_items()
    // +---------------------------------------------------------------------------------------------------------------------+
       , game_over()            == wait_for_client()      + time_tick() [is_game_timeout()] / finish_game()
       ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()
@@ -73,12 +82,23 @@ public:
     template<class T, class Event>
     void no_transition(const Event&, T&, int) { }
 
+    //FIXME: temporary workaround
+    detail::position get_pos(const button_clicked& button) {
+        return detail::position(
+            (button.button.x - grids_offset_x_) / grid_offset_
+          , (button.button.y - grids_offset_y_) / grid_offset_
+        );
+    }
+
 //private:
-public: /*FIXME: temporary workaround*/
+public: //FIXME: temporary workaround
     boost::shared_ptr<board> board_;
     boost::shared_ptr<iviewer> viewer_;
     int game_time_in_sec_ = 0;
     int time_ticks_ = 0;
+    int grid_offset_ = 0;
+    int grids_offset_x_ = 0;
+    int grids_offset_y_ = 0;
 };
 
 typedef msm::back::state_machine<controller> controller_t;

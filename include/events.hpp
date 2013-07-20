@@ -3,7 +3,6 @@
 
 #include <boost/msm/front/euml/euml.hpp>
 #include <SDL.h>
-#include "gui/common.hpp"
 #include "detail/position.hpp"
 
 namespace euml = boost::msm::front::euml;

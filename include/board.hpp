@@ -21,9 +21,10 @@ class board
 
 public:
     BOOST_DI_CTOR(board
-      , boost::di::named<int, _S("rows")>
-      , boost::di::named<int, _S("cols")>
-      , boost::di::named<int, _S("winning strike")>
+      , boost::di::named<int, _S("board rows")>
+      , boost::di::named<int, _S("board cols")>
+      , boost::di::named<int, _S("board winning strike")>
+      , boost::di::named<int, _S("board colors")> colors
       , boost::shared_ptr<irandom>);
 
     void init_with_randoms();
@@ -62,6 +63,7 @@ private:
     int rows_size_;
     int cols_size_;
     int to_win_size_;
+    int colors_;
     boost::shared_ptr<irandom> random_;
     rows_t rows_;
     mutable std::vector<detail::position> selected_;

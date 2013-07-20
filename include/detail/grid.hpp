@@ -1,10 +1,10 @@
 #ifndef GRID_5TY96XWJ
 #define GRID_5TY96XWJ
 
-#include "common.hpp"
-
 namespace game {
 namespace detail {
+
+typedef int color_t;
 
 struct grid
 {

@@ -38,8 +38,8 @@ class select_item : public euml::euml_action<select_item>
 public:
     template<class FSM, class SourceState, class TargetState>
     void operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        fsm.board_->select(get_pos(button));
-        fsm.viewer_->select_item(get_pos(button));
+        fsm.board_->select(fsm.get_pos(button));
+        fsm.viewer_->select_item(fsm.get_pos(button));
         fsm.viewer_->render();
     }
 };

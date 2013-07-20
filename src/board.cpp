@@ -6,13 +6,15 @@
 namespace game {
 
 board::board(
-    boost::di::named<int, _S("rows")> r
-  , boost::di::named<int, _S("cols")> c
-  , boost::di::named<int, _S("winning strike")> w
+    boost::di::named<int, _S("board rows")> rows
+  , boost::di::named<int, _S("board cols")> cols
+  , boost::di::named<int, _S("board winning strike")> win
+  , boost::di::named<int, _S("board colors")> colors
   , boost::shared_ptr<irandom> i)
-    : rows_size_(r)
-    , cols_size_(c)
-    , to_win_size_(w)
+    : rows_size_(rows)
+    , cols_size_(cols)
+    , to_win_size_(win)
+    , colors_(colors)
     , random_(i)
     , rows_(get_rows(), detail::row(get_cols()))
 { }
@@ -250,7 +252,7 @@ int board::get_to_win() const { return to_win_size_; }
 
 detail::color_t board::get_random() const {
     return static_cast<detail::color_t>(
-        random_->get_random_number(detail::min_color, detail::max_color)
+        random_->get_random_number(0, colors_)
     );
 }
 

@@ -12,7 +12,7 @@ class iwindow
 public:
     virtual ~iwindow() { };
     virtual boost::shared_ptr<SDL_Texture> load_image(const std::string&) const = 0;
-    virtual boost::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string& = "font.ttf", SDL_Color = {255, 255, 255, 0}, int = 0) const = 0;
+    virtual boost::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string&, SDL_Color, int) const = 0;
     virtual void draw(boost::shared_ptr<SDL_Texture>, int x = 0, int y = 0) = 0;
     virtual void clear() = 0;
     virtual void render() = 0;

@@ -5,16 +5,13 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
+#include <mpl_string.hpp>
 #include "detail/position.hpp"
-#include "detail/common.hpp"
 #include "sdl/iwindow.hpp"
 #include "iviewer.hpp"
 
 namespace game {
 namespace gui {
-
-class win_width { };
-class win_height { };
 
 class viewer : public iviewer
 {
@@ -26,6 +23,12 @@ class viewer : public iviewer
 public:
     BOOST_DI_CTOR(viewer
         , boost::shared_ptr<sdl::iwindow>
+        , boost::di::named<int, _S("grid offset")>
+        , boost::di::named<int, _S("grids offset x")>
+        , boost::di::named<int, _S("grids offset y")>
+        , boost::di::named<int, _S("board colors")>
+        , boost::di::named<std::string, _S("font name")>
+        , boost::di::named<int, _S("font size")>
     );
 
     virtual void set_background() override;
@@ -42,9 +45,15 @@ private:
     boost::shared_ptr<SDL_Texture> match_image_;
     boost::shared_ptr<SDL_Texture> select_image_;
     std::map<detail::color_t, boost::shared_ptr<SDL_Texture>> grid_images_;
+    int grid_offset_ = 0;
+    int grids_offset_x_ = 0;
+    int grids_offset_y_ = 0;
+    int colors_ = 0;
+    std::string font_ = "";
+    int font_size_ = 0;
 };
 
-} // namespace tui
+} // namespace gui
 } // namespace game
 
 #endif

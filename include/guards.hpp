@@ -3,26 +3,18 @@
 
 #include <boost/msm/front/euml/euml.hpp>
 #include "detail/position.hpp"
-#include "gui/common.hpp"
 #include "events.hpp"
 
 namespace euml = boost::msm::front::euml;
 
 namespace game {
 
-inline detail::position get_pos(const button_clicked& button) {
-    return detail::position(
-        (button.button.x - gui::grids_offset_x) / gui::grid_offset
-      , (button.button.y - gui::grids_offset_y) / gui::grid_offset
-    );
-}
-
 class is_within_board : public euml::euml_action<is_within_board>
 {
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_within_board(get_pos(button));
+        return fsm.board_->is_within_board(fsm.get_pos(button));
     }
 };
 
@@ -31,7 +23,7 @@ class is_neighbor : public euml::euml_action<is_neighbor>
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_neighbor(get_pos(button));
+        return fsm.board_->is_neighbor(fsm.get_pos(button));
     }
 };
 
@@ -40,7 +32,7 @@ class is_same_item : public euml::euml_action<is_same_item>
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_same_selected(get_pos(button));
+        return fsm.board_->is_same_selected(fsm.get_pos(button));
     }
 };
 
@@ -49,7 +41,7 @@ class is_same_color : public euml::euml_action<is_same_color>
 public:
     template<class FSM, class SourceState, class TargetState>
     bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_same_color(get_pos(button));
+        return fsm.board_->is_same_color(fsm.get_pos(button));
     }
 };
 

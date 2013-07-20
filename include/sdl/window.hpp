@@ -1,8 +1,10 @@
 #ifndef WINDOW_80DDRNSJ
 #define WINDOW_80DDRNSJ
 
-#include "sdl/iwindow.hpp"
 #include <boost/shared_ptr.hpp>
+#include <boost/di.hpp>
+#include <mpl_string.hpp>
+#include "sdl/iwindow.hpp"
 
 namespace game {
 namespace sdl {
@@ -13,9 +15,12 @@ class window : public iwindow
     const int RENDER_FLAGS = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 
 public:
-    explicit window(int width = 755, int height = 600, const std::string& caption = "");
-    virtual ~window();
+    BOOST_DI_CTOR(window
+        , boost::di::named<int, _S("win width")>
+        , boost::di::named<int, _S("win height")>
+        , boost::di::named<std::string, _S("win caption")>);
 
+    virtual ~window();
     virtual boost::shared_ptr<SDL_Texture> load_image(const std::string&) const override;
     virtual boost::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string&, SDL_Color, int) const override;
     virtual void draw(boost::shared_ptr<SDL_Texture>, int, int) override;
