@@ -19,10 +19,11 @@ struct button_clicked : euml::euml_event<button_clicked>
     button_clicked() { }
 
     explicit button_clicked(const SDL_Event& event)
-        : button(event.button)
+        : x(event.button.x), y(event.button.y)
     { }
 
-    SDL_MouseButtonEvent button;
+    int x = 0;
+    int y = 0;
 };
 
 struct key_pressed : euml::euml_event<key_pressed>
@@ -36,8 +37,8 @@ struct key_pressed : euml::euml_event<key_pressed>
     int key = 0;
 };
 
-struct time_tick : euml::euml_event<time_tick> { };
 struct window_close : euml::euml_event<window_close> { };
+struct time_tick : euml::euml_event<time_tick> { };
 
 } // namespace game
 

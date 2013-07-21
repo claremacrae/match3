@@ -73,14 +73,11 @@ public:
    // +---------------------------------------------------------------------------------------------------------------------+
     ), transition_table);
 
-    template<class T, class Event>
-    void no_transition(const Event&, T&, int) { }
-
     //FIXME: temporary workaround
     detail::position get_pos(const button_clicked& button) {
         return detail::position(
-            (button.button.x - grids_offset_x_) / grid_offset_
-          , (button.button.y - grids_offset_y_) / grid_offset_
+            (button.x - grids_offset_x_) / grid_offset_
+          , (button.y - grids_offset_y_) / grid_offset_
         );
     }
 
