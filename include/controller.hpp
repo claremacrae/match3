@@ -6,7 +6,7 @@
 #include <boost/msm/front/euml/euml.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
-#include "sdl/state_machine.hpp"
+#include "sdl/msm.hpp"
 #include "detail/position.hpp"
 #include "events_traits.hpp"
 #include "board.hpp"
@@ -95,7 +95,7 @@ public: //FIXME: temporary workaround
     int grids_offset_y_ = 0;
 };
 
-typedef sdl::state_machine<controller, events_traits> controller_t;
+typedef sdl::msm<controller, events_traits> controller_t;
 
 } // namespace game
 
