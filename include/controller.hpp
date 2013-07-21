@@ -8,6 +8,7 @@
 #include <boost/di/named.hpp>
 #include "sdl/state_machine.hpp"
 #include "detail/position.hpp"
+#include "events_traits.hpp"
 #include "board.hpp"
 #include "iviewer.hpp"
 #include "events.hpp"
@@ -94,7 +95,7 @@ public: //FIXME: temporary workaround
     int grids_offset_y_ = 0;
 };
 
-typedef sdl::state_machine<controller> controller_t;
+typedef sdl::state_machine<controller, events_traits> controller_t;
 
 } // namespace game
 

@@ -2,8 +2,9 @@
 #define EVENTS_BCQLG30Q
 
 #include <SDL.h>
-#include "sdl/event.hpp"
 #include "detail/position.hpp"
+
+namespace euml = boost::msm::front::euml;
 
 namespace game {
 
@@ -11,7 +12,9 @@ namespace game {
 class flag_game_over { };
 
 //events
-struct button_clicked : sdl::event<button_clicked, __LINE__>
+typedef euml::True_ anonymous;
+
+struct button_clicked : euml::euml_event<button_clicked>
 {
     button_clicked() { }
 
@@ -22,7 +25,7 @@ struct button_clicked : sdl::event<button_clicked, __LINE__>
     SDL_MouseButtonEvent button;
 };
 
-struct key_pressed : sdl::event<key_pressed, __LINE__>
+struct key_pressed : euml::euml_event<key_pressed>
 {
     key_pressed() { }
 
@@ -33,9 +36,8 @@ struct key_pressed : sdl::event<key_pressed, __LINE__>
     int key = 0;
 };
 
-struct time_tick : sdl::event<time_tick, __LINE__> { };
-
-struct window_close : sdl::event<window_close, __LINE__> { };
+struct time_tick : euml::euml_event<time_tick> { };
+struct window_close : euml::euml_event<window_close> { };
 
 } // namespace game
 

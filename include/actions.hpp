@@ -106,11 +106,11 @@ public:
     template<class FSM, class SourceState, class TargetState>
     void operator()(const time_tick&, FSM& fsm, SourceState&, TargetState&) {
         fsm.viewer_->show_text(
-            boost::lexical_cast<std::string>(fsm.game_time_in_sec_ - fsm.time_ticks_)
-          , 50
-          , 50
-          , {255, 255, 255, 0}
-          , 16
+            boost::lexical_cast<std::string>(fsm.game_time_in_sec_ - fsm.time_ticks_) + " s"
+          , 255
+          , 555
+          , {0, 0, 0, 0}
+          , 32
         );
         fsm.time_ticks_++;
         fsm.viewer_->render();
