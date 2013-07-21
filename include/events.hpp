@@ -18,8 +18,8 @@ struct button_clicked : euml::euml_event<button_clicked>
 {
     button_clicked() { }
 
-    explicit button_clicked(const SDL_MouseButtonEvent& button)
-        : button(button)
+    explicit button_clicked(const SDL_Event& event)
+        : button(event.button)
     { }
 
     SDL_MouseButtonEvent button;
@@ -29,8 +29,8 @@ struct key_pressed : euml::euml_event<key_pressed>
 {
     key_pressed() { }
 
-    explicit key_pressed(int key)
-        : key(key)
+    explicit key_pressed(const SDL_Event& event)
+        : key(event.key.keysym.sym)
     { }
 
     int key = 0;
