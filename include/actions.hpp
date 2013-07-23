@@ -13,7 +13,7 @@ namespace game {
 
 template<typename FSM>
 void show_board(FSM& fsm) {
-    fsm.viewer_->set_background();
+    fsm.viewer_->clear_board();
     for (int y = 0; y < fsm.board_->get_rows(); y++) {
         for (int x = 0; x < fsm.board_->get_cols(); x++) {
             detail::position pos(x, y);
@@ -103,8 +103,8 @@ public:
 class show_time : public euml::euml_action<show_time>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    void operator()(const time_tick&, FSM& fsm, SourceState&, TargetState&) {
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         fsm.viewer_->show_text(
             boost::lexical_cast<std::string>(fsm.game_time_in_sec_ - fsm.time_ticks_) + " s"
           , 255

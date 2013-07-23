@@ -20,6 +20,13 @@ class viewer : public iviewer
     const std::string select_image        = "select.png";
     const std::string match_image         = "match.png";
 
+    enum {
+        background_layer
+      , board_layer
+      , board_actions_layer
+      , text_layer
+    };
+
 public:
     BOOST_DI_CTOR(viewer
         , boost::shared_ptr<sdl::iwindow>
@@ -30,9 +37,9 @@ public:
         , boost::di::named<std::string, _S("font name")>
     );
 
-    virtual void set_background() override;
     virtual void quit() override;
     virtual void render() override;
+    virtual void clear_board() override;
     virtual void show_grid(const detail::position&, detail::color_t) override;
     virtual void show_match(const detail::position&) override;
     virtual void select_item(const detail::position&) override;

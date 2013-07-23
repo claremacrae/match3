@@ -56,17 +56,29 @@ boost::shared_ptr<SDL_Texture> window::render_text(const std::string& str, const
     return boost::shared_ptr<SDL_Texture>(SDL_CreateTextureFromSurface(renderer_.get(), surface.get()), SDL_DestroyTexture);
 }
 
-void window::draw(boost::shared_ptr<SDL_Texture> texture, int x, int y) {
+void window::draw(boost::shared_ptr<SDL_Texture> texture, int x, int y, std::size_t layer) {
     SDL_Rect pos = {x, y, 0, 0};
     SDL_QueryTexture(texture.get(), nullptr, nullptr, &pos.w, &pos.h);
-    SDL_RenderCopy(renderer_.get(), texture.get(), nullptr, &pos);
+    layers_[layer].push_back(std::make_pair(texture, pos));
 }
 
 void window::clear() {
+    layers_.clear();
     SDL_RenderClear(renderer_.get());
 }
 
+void window::clear(std::size_t layer) {
+    if (layers_.find(layer) != layers_.end()) {
+        layers_[layer].clear();
+    }
+}
+
 void window::render() {
+    for (const auto& layer : layers_) {
+        for (const auto& data : layer.second) {
+            SDL_RenderCopy(renderer_.get(), data.first.get(), nullptr, &data.second);
+        }
+    }
     SDL_RenderPresent(renderer_.get());
 }
 
