@@ -57,7 +57,7 @@ public:
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +---------------------------------------------------------------------------------------------------------------------+
-        wait_for_first_item()  == idle()                   [anonymous()] / (init_board(), show_time())
+        wait_for_first_item()  == idle()                   [anonymous()] / (init_board(), show_time(), show_points())
       , wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
       , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()
       , try_swap_items()       == wait_for_second_item() + button_clicked() [is_within_board() and
@@ -90,6 +90,7 @@ public: //FIXME: temporary workaround
     int grid_offset_ = 0;
     int grids_offset_x_ = 0;
     int grids_offset_y_ = 0;
+    int points = 0;
 };
 
 typedef sdl::msm<controller, events_traits> controller_t;

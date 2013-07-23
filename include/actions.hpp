@@ -105,7 +105,7 @@ class show_time : public euml::euml_action<show_time>
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
-        fsm.viewer_->show_text(
+        fsm.viewer_->show_time(
             boost::lexical_cast<std::string>(fsm.game_time_in_sec_ - fsm.time_ticks_) + " s"
           , 255
           , 555
@@ -113,6 +113,22 @@ public:
           , 32
         );
         fsm.time_ticks_++;
+        fsm.viewer_->render();
+    }
+};
+
+class show_points : public euml::euml_action<show_points>
+{
+public:
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
+        fsm.viewer_->show_points(
+            boost::lexical_cast<std::string>(fsm.points)
+          , 105
+          , 435
+          , {0, 0, 0, 0}
+          , 40
+        );
         fsm.viewer_->render();
     }
 };

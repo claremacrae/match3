@@ -18,7 +18,13 @@ viewer::viewer(boost::shared_ptr<sdl::iwindow> window
     , grids_offset_y_(y)
     , font_(font)
 {
-    window_->draw(window_->load_image(images_dir + background_image), 0, 0, background_layer);
+    window_->draw(
+        window_->load_image(images_dir + background_image)
+      , 0
+      , 0
+      , background_layer
+    );
+
     match_image_ = window_->load_image(images_dir + match_image);
     select_image_ = window_->load_image(images_dir + select_image);
 
@@ -65,13 +71,21 @@ void viewer::select_item(const detail::position& pos) {
     );
 }
 
-void viewer::show_text(const std::string& str, int x, int y, SDL_Color color, int font_size) {
-    window_->clear(text_layer);
+void viewer::show_time(const std::string& str, int x, int y, SDL_Color color, int font_size) {
+    show_text(str, x, y, color, font_size, text_time_layer);
+}
+
+void viewer::show_points(const std::string& str, int x, int y, SDL_Color color, int font_size) {
+    show_text(str, x, y, color, font_size, text_points_layer);
+}
+
+void viewer::show_text(const std::string& str, int x, int y, SDL_Color color, int font_size, std::size_t layer) {
+    window_->clear(layer);
     window_->draw(
         window_->render_text(str, font_, color, font_size)
       , x
       , y
-      , text_layer
+      , layer
     );
 }
 

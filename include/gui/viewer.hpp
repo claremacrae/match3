@@ -24,7 +24,8 @@ class viewer : public iviewer
         background_layer
       , board_layer
       , board_actions_layer
-      , text_layer
+      , text_time_layer
+      , text_points_layer
     };
 
 public:
@@ -43,9 +44,12 @@ public:
     virtual void show_grid(const detail::position&, detail::color_t) override;
     virtual void show_match(const detail::position&) override;
     virtual void select_item(const detail::position&) override;
-    virtual void show_text(const std::string& str, int x, int y, SDL_Color, int) override;
+    virtual void show_time(const std::string& str, int x, int y, SDL_Color, int) override;
+    virtual void show_points(const std::string& str, int x, int y, SDL_Color, int) override;
 
 private:
+    void show_text(const std::string& str, int x, int y, SDL_Color, int, std::size_t);
+
     boost::shared_ptr<sdl::iwindow> window_;
     boost::shared_ptr<SDL_Texture> background_image_;
     boost::shared_ptr<SDL_Texture> match_image_;
