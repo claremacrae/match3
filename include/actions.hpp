@@ -47,8 +47,8 @@ public:
 class unselect_all : public euml::euml_action<unselect_all>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    void operator()(const button_clicked&, FSM& fsm, SourceState&, TargetState&) {
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         fsm.board_->unselect_all();
         show_board(fsm);
     }
@@ -71,8 +71,6 @@ public:
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
         SDL_Delay(100);
         fsm.board_->swap(); // just swap again
-        fsm.board_->unselect_all();
-        show_board(fsm);
     }
 };
 
@@ -81,10 +79,9 @@ class show_matches : public euml::euml_action<show_matches>
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
-        for (auto& pos : fsm.board_->matches()) {
+        for (const auto& pos : fsm.board_->matches()) {
             fsm.viewer_->show_match(pos);
         }
-        fsm.board_->unselect_all();
         fsm.viewer_->render();
         SDL_Delay(300);
     }
@@ -117,14 +114,38 @@ public:
     }
 };
 
+template<int Value>
+class add_points : public euml::euml_action<add_points<Value>>
+{
+public:
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
+        std::size_t size = fsm.board_->matches().size();
+        while (size--) {
+            fsm.points += Value;
+        }
+    }
+};
+
+template<int Value>
+class sub_points : public euml::euml_action<add_points<Value>>
+{
+public:
+    template<class Event, class FSM, class SourceState, class TargetState>
+    void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
+        fsm.points -= Value;
+    }
+};
+
 class show_points : public euml::euml_action<show_points>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
     void operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
+        std::string points = boost::lexical_cast<std::string>(fsm.points);
         fsm.viewer_->show_points(
             boost::lexical_cast<std::string>(fsm.points)
-          , 105
+          , 105 - (12 * (points.length() - 1))
           , 435
           , {0, 0, 0, 0}
           , 40
