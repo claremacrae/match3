@@ -20,7 +20,9 @@ public:
     MOCK_METHOD2(show_grid, void(const detail::position &, detail::color_t));
     MOCK_METHOD1(show_match, void(const detail::position &));
     MOCK_METHOD1(select_item, void(const detail::position &));
-    MOCK_METHOD5(show_text, void(const std::string &, int, int, SDL_Color, int));
+    MOCK_METHOD1(show_time, void(int));
+    MOCK_METHOD1(show_points, void(int));
+    MOCK_METHOD1(show_results, void(int));
 };
 
 } // namespace game
