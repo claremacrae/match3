@@ -34,7 +34,7 @@ class msm : public back::state_machine<M>
 
 public:
     template<typename... Args>
-    msm(Args&&... args)
+    explicit msm(Args&&... args)
         : back::state_machine<M>(std::forward<Args>(args)...)
     { }
 

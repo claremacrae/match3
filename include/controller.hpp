@@ -15,28 +15,26 @@
 #include "actions.hpp"
 #include "guards.hpp"
 
+namespace mpl   = boost::mpl;
+namespace front = boost::msm::front;
+namespace euml  = boost::msm::front::euml;
+
 namespace game {
 
-class controller : public boost::msm::front::state_machine_def<controller>
+class controller : public front::state_machine_def<controller>
 {
-    template<typename T>
-    struct state
-        : boost::msm::front::state<>
-        , boost::msm::front::euml::euml_state<T>
-    { };
-
-    struct idle : state<idle> { };
-    struct wait_for_first_item : state<wait_for_first_item> { };
-    struct wait_for_second_item: state<wait_for_second_item> { };
-    struct wait_for_client : state<wait_for_client> { };
-    struct wait_for_any_key : state<wait_for_any_key> { };
-    struct let_swap_items : state<let_swap_items> { };
-    struct try_swap_items : state<try_swap_items> { };
-    struct board_scrolling : state<board_scrolling> { };
-    struct game_over : state<game_over>
+    struct idle                 : front::state<>, euml::euml_state<idle> { };
+    struct wait_for_first_item  : front::state<>, euml::euml_state<wait_for_first_item> { };
+    struct wait_for_second_item : front::state<>, euml::euml_state<wait_for_second_item> { };
+    struct wait_for_client      : front::state<>, euml::euml_state<wait_for_client> { };
+    struct let_swap_items       : front::state<>, euml::euml_state<let_swap_items> { };
+    struct try_swap_items       : front::state<>, euml::euml_state<try_swap_items> { };
+    struct board_scrolling      : front::state<>, euml::euml_state<board_scrolling> { };
+    struct game_over            : front::state<>, euml::euml_state<game_over>
     {
-        typedef boost::mpl::vector1<flag_game_over> flag_list;
+        typedef mpl::vector1<flag_game_over> flag_list;
     };
+    struct wait_for_any_key     : front::interrupt_state<key_pressed>, euml::euml_state<wait_for_any_key> { };
 
 public:
     BOOST_DI_CTOR(controller
@@ -54,7 +52,7 @@ public:
       , grids_offset_y_(y)
     { };
 
-    typedef boost::mpl::vector<idle, wait_for_client> initial_state;
+    typedef mpl::vector<idle, wait_for_client> initial_state;
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -69,7 +67,6 @@ public:
       ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()
       , wait_for_any_key()     == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / show_results()
       , wait_for_any_key()     == wait_for_client()      + window_close() / show_results()
-      ,                           wait_for_any_key()     + time_tick()
       , game_over()            == wait_for_any_key()     + key_pressed() / finish_game()
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table)
