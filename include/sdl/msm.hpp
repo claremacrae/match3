@@ -2,27 +2,27 @@
 #define MSM_KRNOGIYP
 
 #include <type_traits>
-#include <boost/utility/enable_if.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/transform.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/empty.hpp>
+#include <boost/mpl/empty.hpp>
+#include <boost/mpl/has_xxx.hpp>
 #include <boost/msm/back/state_machine.hpp>
 #include <SDL.h>
 
+namespace mpl  = boost::mpl;
 namespace back = boost::msm::back;
-namespace mpl = boost::mpl;
 
 namespace game {
 namespace sdl {
 
-template<
-    typename M
-  , template<typename> class EventsTraits
->
+template<typename M>
 class msm : public back::state_machine<M>
 {
+    BOOST_MPL_HAS_XXX_TRAIT_DEF(id)
+
     template<typename T>
     struct event
     {
@@ -51,14 +51,14 @@ public:
 
 private:
     template<typename Seq>
-    void for_events(const SDL_Event&, typename boost::enable_if<mpl::empty<Seq>>::type* = 0) { }
+    void for_events(const SDL_Event&, typename std::enable_if<mpl::empty<Seq>::value>::type* = 0) { }
 
     template<typename Seq>
-    void for_events(const SDL_Event& event, typename boost::disable_if<mpl::empty<Seq>>::type* = 0) {
+    void for_events(const SDL_Event& event, typename std::enable_if<!mpl::empty<Seq>::value>::type* = 0) {
         typedef typename mpl::front<Seq>::type event_t;
-        if (event.type == SDL_USEREVENT and event.user.code == EventsTraits<event_t>::id) {
+        if (event.type == SDL_USEREVENT and is_same_id<event_t>(event.user.code)) {
             back::state_machine<M>::process_event(*static_cast<event_t*>(event.user.data1));
-        } else if (event.type == (unsigned)EventsTraits<event_t>::id) {
+        } else if (is_same_id<event_t>(event.type)) {
             process_event_impl<event_t>(event);
         } else {
             for_events<typename mpl::pop_front<Seq>::type>(event);
@@ -81,10 +81,20 @@ private:
     SDL_Event&& build_sdl_event(const TEvent& event) {
         SDL_Event sdl_event;
         sdl_event.type = SDL_USEREVENT;
-        sdl_event.user.code = EventsTraits<TEvent>::id;
+        sdl_event.user.code = TEvent::id::value;
         sdl_event.user.data1 = (void*)&event;
         sdl_event.user.data2 = nullptr;
         return std::move(sdl_event);
+    }
+
+    template<typename TEvent>
+    static bool is_same_id(int value, typename std::enable_if<has_id<TEvent>::value>::type* = 0) {
+        return value == TEvent::id::value;
+    }
+
+    template<typename TEvent>
+    static bool is_same_id(int, typename std::enable_if<!has_id<TEvent>::value>::type* = 0) {
+        return false;
     }
 };
 

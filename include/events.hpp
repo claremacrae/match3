@@ -1,6 +1,7 @@
 #ifndef EVENTS_BCQLG30Q
 #define EVENTS_BCQLG30Q
 
+#include <boost/mpl/int.hpp>
 #include <SDL.h>
 #include "detail/position.hpp"
 
@@ -16,6 +17,8 @@ typedef euml::True_ anonymous;
 
 struct button_clicked : euml::euml_event<button_clicked>
 {
+    typedef mpl::int_<SDL_MOUSEBUTTONUP> id;
+
     button_clicked() { }
 
     explicit button_clicked(const SDL_Event& event)
@@ -28,6 +31,8 @@ struct button_clicked : euml::euml_event<button_clicked>
 
 struct key_pressed : euml::euml_event<key_pressed>
 {
+    typedef mpl::int_<SDL_KEYDOWN> id;
+
     key_pressed() { }
 
     explicit key_pressed(const SDL_Event& event)
@@ -37,8 +42,15 @@ struct key_pressed : euml::euml_event<key_pressed>
     int key = 0;
 };
 
-struct window_close : euml::euml_event<window_close> { };
-struct time_tick : euml::euml_event<time_tick> { };
+struct window_close : euml::euml_event<window_close>
+{
+    typedef mpl::int_<SDL_QUIT> id;
+};
+
+struct time_tick : euml::euml_event<time_tick>
+{
+    typedef mpl::int_<__LINE__> id;
+};
 
 } // namespace game
 

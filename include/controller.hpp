@@ -8,7 +8,6 @@
 #include <boost/di/named.hpp>
 #include "sdl/msm.hpp"
 #include "detail/position.hpp"
-#include "events_traits.hpp"
 #include "board.hpp"
 #include "iviewer.hpp"
 #include "events.hpp"
@@ -91,7 +90,7 @@ public: //FIXME: temporary workaround
     int points = 0;
 };
 
-typedef sdl::msm<controller, events_traits> controller_t;
+typedef sdl::msm<controller> controller_t;
 
 } // namespace game
 
