@@ -20,6 +20,9 @@ class viewer : public iviewer
     const std::string select_image        = "select.png";
     const std::string match_image         = "match.png";
 
+    const SDL_Color black                 = { 0, 0, 0, 0 };
+    const SDL_Color white                 = { 255, 255, 255, 0 };
+
     enum {
         background_layer
       , board_layer
@@ -44,11 +47,12 @@ public:
     virtual void show_grid(const detail::position&, detail::color_t) override;
     virtual void show_match(const detail::position&) override;
     virtual void select_item(const detail::position&) override;
-    virtual void show_time(const std::string& str, int x, int y, SDL_Color, int) override;
-    virtual void show_points(const std::string& str, int x, int y, SDL_Color, int) override;
+    virtual void show_time(int) override;
+    virtual void show_points(int) override;
+    virtual void show_results(int) override;
 
 private:
-    void show_text(const std::string& str, int x, int y, SDL_Color, int, std::size_t);
+    void show_text(const std::string&, int, int, SDL_Color, int, std::size_t);
 
     boost::shared_ptr<sdl::iwindow> window_;
     boost::shared_ptr<SDL_Texture> background_image_;

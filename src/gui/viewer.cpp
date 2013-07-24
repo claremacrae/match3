@@ -71,16 +71,62 @@ void viewer::select_item(const detail::position& pos) {
     );
 }
 
-void viewer::show_time(const std::string& str, int x, int y, SDL_Color color, int font_size) {
-    show_text(str, x, y, color, font_size, text_time_layer);
+void viewer::show_time(int seconds) {
+    window_->clear(text_time_layer);
+    show_text(
+        boost::lexical_cast<std::string>(seconds) + " s"
+      , 255
+      , 555
+      , black
+      , 32
+      , text_time_layer
+    );
 }
 
-void viewer::show_points(const std::string& str, int x, int y, SDL_Color color, int font_size) {
-    show_text(str, x, y, color, font_size, text_points_layer);
+void viewer::show_points(int points) {
+    window_->clear(text_points_layer);
+    std::string points_ = boost::lexical_cast<std::string>(points);
+    show_text(
+        points_
+      , 105 - (12 * (points_.length() - 1))
+      , 435
+      , black
+      , 40
+      , text_points_layer
+    );
+}
+
+void viewer::show_results(int points) {
+    window_->clear();
+    show_text(
+        "Game Over"
+      , 110
+      , 85
+      , white
+      , 100
+      , background_layer
+    );
+
+    show_text(
+        "Points: " + boost::lexical_cast<std::string>(points)
+      , 130
+      , 255
+      , white
+      , 100
+      , background_layer
+    );
+
+    show_text(
+        "Press any key to exit..."
+      , 220
+      , 480
+      , white
+      , 32
+      , background_layer
+    );
 }
 
 void viewer::show_text(const std::string& str, int x, int y, SDL_Color color, int font_size, std::size_t layer) {
-    window_->clear(layer);
     window_->draw(
         window_->render_text(str, font_, color, font_size)
       , x

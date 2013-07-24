@@ -29,6 +29,7 @@ class controller : public boost::msm::front::state_machine_def<controller>
     struct wait_for_first_item : state<wait_for_first_item> { };
     struct wait_for_second_item: state<wait_for_second_item> { };
     struct wait_for_client : state<wait_for_client> { };
+    struct wait_for_any_key : state<wait_for_any_key> { };
     struct let_swap_items : state<let_swap_items> { };
     struct try_swap_items : state<try_swap_items> { };
     struct board_scrolling : state<board_scrolling> { };
@@ -64,10 +65,12 @@ public:
       , wait_for_first_item()  == try_swap_items()         [is_swap_items_winning()] / (show_matches(), add_points<10>(), show_points(), unselect_all(), scroll_board())
       , wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / (revert_swap_items(), sub_points<5>(), show_points(), unselect_all())
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      , game_over()            == wait_for_client()      + time_tick() [is_game_timeout()] / finish_game()
+      , wait_for_any_key()     == wait_for_client()      + time_tick() [is_game_timeout()] / show_results()
       ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()
-      , game_over()            == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / finish_game()
-      , game_over()            == wait_for_client()      + window_close() / finish_game()
+      , wait_for_any_key()     == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / show_results()
+      , wait_for_any_key()     == wait_for_client()      + window_close() / show_results()
+      ,                           wait_for_any_key()     + time_tick()
+      , game_over()            == wait_for_any_key()     + key_pressed() / finish_game()
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table);
 
