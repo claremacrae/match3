@@ -72,7 +72,7 @@ public:
       ,                           wait_for_any_key()     + time_tick()
       , game_over()            == wait_for_any_key()     + key_pressed() / finish_game()
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-    ), transition_table);
+    ), transition_table)
 
     //FIXME: temporary workaround
     detail::position get_pos(const button_clicked& button) {
