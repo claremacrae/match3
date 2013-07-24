@@ -59,10 +59,10 @@ public:
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
         wait_for_first_item()  == idle()                   [anonymous()] / (init_board(), show_time(), show_points())
       , wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
-      , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / (unselect_all(), sub_points<5>(), show_points())
+      , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()
       , try_swap_items()       == wait_for_second_item() + button_clicked() [is_within_board() and not is_same_color() and is_neighbor()] / (select_item(), swap_items())
       , wait_for_first_item()  == try_swap_items()         [is_swap_items_winning()] / (show_matches(), add_points<10>(), show_points(), unselect_all(), scroll_board())
-      , wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / (revert_swap_items(), unselect_all())
+      , wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / (revert_swap_items(), sub_points<5>(), show_points(), unselect_all())
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
       , game_over()            == wait_for_client()      + time_tick() [is_game_timeout()] / finish_game()
       ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()

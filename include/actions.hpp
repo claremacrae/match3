@@ -128,7 +128,7 @@ public:
 };
 
 template<int Value>
-class sub_points : public euml::euml_action<add_points<Value>>
+class sub_points : public euml::euml_action<sub_points<Value>>
 {
 public:
     template<class Event, class FSM, class SourceState, class TargetState>
