@@ -4,8 +4,8 @@ GMOCK 			:= gmock-1.6.0
 #BIN             := bin/win/game.exe
 #TEST            := bin/win/game_ut.exe
 #CXX 		    := $(EXTERNALS)/mingw32/bin/i686-w64-mingw32-g++
-#CXXFLAGS        := -std=c++11 -Iinclude -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2-2.0.0/include -I$(EXTERNALS)/SDL2_image-2.0.0 -I$(EXTERNALS)/SDL_ttf-2.0.11 -I$(EXTERNALS)/di/include -D BOOST_DI_NO_CXX11_FEATURES
-#LIBS            := -Lbin/win -lSDL2 -lSDL2_image -lSDL_ttf
+#CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -D BOOST_MSM_CONSTRUCTOR_ARG_SIZE=10 -D BOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2-2.0.0/include -I$(EXTERNALS)/SDL2_image-2.0.0 -I$(EXTERNALS)/SDL_ttf-2.0.11 -I$(EXTERNALS)/di/include
+#LIBS            := -Lbin/win -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6
 
 BIN             := bin/linux/game
 TEST            := bin/linux/game_ut
