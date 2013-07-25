@@ -47,7 +47,6 @@ public:
     int get_rows() const;
     int get_cols() const;
     int get_to_win() const;
-    detail::color_t get_random() const;
 
 private:
     bool is_swap_winning(const detail::position&);

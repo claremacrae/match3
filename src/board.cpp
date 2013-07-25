@@ -22,7 +22,7 @@ board::board(
 void board::init_with_randoms() {
    for (int y = 0; y < get_rows(); ++y) {
         for (int x = 0; x < get_cols(); ++x) {
-            rows_[x][y].color = get_random();
+            rows_[x][y].color = random_->get_random_number(0, colors_);
         }
     }
 }
@@ -130,7 +130,7 @@ void board::scroll_down() {
         for (int x = 0; x < get_cols(); ++x) {
             if (rows_[x][y].matched) {
                 scroll_column(x, y);
-                rows_[x][0].color = get_random();
+                rows_[x][0].color = random_->get_random_number(0, colors_);
             }
         }
     }
@@ -249,12 +249,6 @@ void board::clear_matches() {
 int board::get_rows() const { return rows_size_; }
 int board::get_cols() const { return cols_size_; }
 int board::get_to_win() const { return to_win_size_; }
-
-detail::color_t board::get_random() const {
-    return static_cast<detail::color_t>(
-        random_->get_random_number(0, colors_)
-    );
-}
 
 } // namespace game
 

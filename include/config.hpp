@@ -20,7 +20,7 @@ struct ctor_traits<game::app>
 {
     static void ctor(shared_ptr<game::controller_t>
                    , shared_ptr<game::gui::time>
-                   , shared_ptr<game::gui::user> // has to be in the main thread
+                   , shared_ptr<game::gui::user>
     );
 };
 
