@@ -1,3 +1,4 @@
+EXTERNALS   	:= externals
 BIN             := bin/linux
 TGT 			:= game
 TEST            := game_ut
@@ -5,8 +6,8 @@ CXX             := g++
 CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -D BOOST_MSM_CONSTRUCTOR_ARG_SIZE=10 -D BOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2
 LIBS            := -Lbin/linux -lSDL2 -lSDL2_image -lSDL2_ttf-2.0 -lfreetype
 
+include Makefile.aux
+
 run:
 	cd $(BIN) && ./$(TGT)
-
-include Makefile.aux
 
