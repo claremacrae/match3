@@ -1,6 +1,6 @@
 **Game** 
 
-### Compilation
+# Compilation
  + linux
 ```sh
 make -f Makefile.linux all run
