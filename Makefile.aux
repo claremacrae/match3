@@ -1,6 +1,6 @@
 OBJS := $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) src -iname *.cpp)) | $(TR) '\\' '/')
 
-all: $(OBJS) $(BIN)/$(TGT)
+build: $(OBJS) $(BIN)/$(TGT)
 	
 src/%.o:
 	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o

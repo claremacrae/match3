@@ -2,7 +2,9 @@ EXTERNALS   	:= externals
 BIN             := bin/win
 TGT             := game.exe
 TEST            := game_ut.exe
-CXX 		    := $(EXTERNALS)/mingw32-linux/bin/i686-w64-mingw32-g++
+MINGW 			:= mingw32-linux
+BOOST 			:= boost_1_52_0
+CXX 		    := $(EXTERNALS)/$(MINGW)/mingw32/bin/i686-w64-mingw32-g++
 CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -D BOOST_MSM_CONSTRUCTOR_ARG_SIZE=10 -D BOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2
 LIBS            := -static-libgcc -static-libstdc++ -Lbin/win -lmingw32 -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6 -mwindows
 FIND 			:= find
@@ -10,6 +12,9 @@ RM 				:= rm
 TR 				:= tr
 
 include Makefile.aux
+
+externals:
+	wget -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/rubenvb/gcc-4.7-release/i686-w64-mingw32-gcc-dw2-4.7.4-release-linux64_rubenvb.tar.xz"
 
 run:
 	cd $(BIN) && wine $(TGT)
