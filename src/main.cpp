@@ -3,7 +3,9 @@
 #include "app.hpp"
 #include "config.hpp"
 
-#undef main // for undefined reference to WinMain
+#ifdef _WIN32
+# undef main // for undefined reference to WinMain
+#endif
 
 int main() {
     using namespace game;
