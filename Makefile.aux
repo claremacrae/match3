@@ -1,0 +1,11 @@
+all: clean $(OBJS) $(BIN)/$(TGT)
+
+src/%.o:
+	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $* | tr '/' '_').o
+
+$(BIN)/$(TGT):
+	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell find $(BIN) -iname *.o) $(LIBS)
+
+clean:
+	rm -f bin/*.o $(BIN)/$(TGT) $(TEST)
+

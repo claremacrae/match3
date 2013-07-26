@@ -1,0 +1,12 @@
+BIN             := bin/win
+TGT             := game.exe
+TEST            := game_ut.exe
+CXX 		    := $(EXTERNALS)/mingw32/bin/i686-w64-mingw32-g++
+CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -D BOOST_MSM_CONSTRUCTOR_ARG_SIZE=10 -D BOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost_1_52_0 -I$(EXTERNALS)/SDL2
+LIBS            := -static-libgcc -static-libstdc++ -Lbin/win -lmingw32 -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6 -mwindows
+
+run:
+	cd $(BIN) && wine $(TGT)
+
+include Makefile.aux
+
