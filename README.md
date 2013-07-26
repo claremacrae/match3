@@ -1,6 +1,6 @@
 # Game
 
-**Compilation** 
+**Compilation**
  + linux
 ```sh
 make -f Makefile.linux all run
@@ -13,6 +13,6 @@ make -f Makefile.mingw_linux all run
 
  + windows
 ```sh
-externals/msys/make.exe -f Makefile.mingw_win all run
+externals/unix/make.exe -f Makefile.mingw_win all run
 ```
 

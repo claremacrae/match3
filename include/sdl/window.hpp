@@ -14,8 +14,7 @@ namespace sdl {
 class window : public iwindow
 {
     const int RENDER_DRIVER = -1;
-    //const int RENDER_FLAGS = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
-    const int RENDER_FLAGS = SDL_RENDERER_SOFTWARE;
+    const int RENDER_FLAGS = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 
     typedef std::pair<boost::shared_ptr<SDL_Texture>, SDL_Rect> texture_rect_t;
     typedef std::map<int, std::vector<texture_rect_t>> layers_t;

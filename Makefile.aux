@@ -1,16 +1,16 @@
-OBJS := $(patsubst %.cpp, %.o, $(shell find src -iname *.cpp))
+OBJS := $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) src -iname *.cpp)) | $(TR) '\\' '/')
 
-all: clean $(OBJS) $(BIN)/$(TGT)
-
+all: $(OBJS) $(BIN)/$(TGT)
+	
 src/%.o:
-	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $* | tr '/' '_').o
+	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o
 
 $(BIN)/$(TGT):
-	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell find $(BIN) -iname *.o) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell $(FIND) $(BIN) -iname *.o) $(LIBS)
 
 mocks:
-	find include -iname *.hpp | xargs -i% $(EXTERNALS)/gmockgen/gmock.py -c test/config/gmock.conf -l game -d test/mocks % -- $(CXXFLAGS)
+	$(FIND) include -iname *.hpp | xargs -i% $(EXTERNALS)/gmockgen/gmock.py -c test/config/gmock.conf -l game -d test/mocks % -- $(CXXFLAGS)
 
 clean:
-	rm -f $(BIN)/*.o $(BIN)/$(TGT) $(TEST)
+	$(RM) -f bin/*.o $(TEST)
 
