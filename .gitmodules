@@ -10,3 +10,6 @@
 [submodule "externals/gmock"]
 	path = externals/gmock
 	url = https://github.com/mydrive/gmock.git
+[submodule "externals/msm"]
+	path = externals/msm
+	url = git@github.com:krzysztof-jusiak/msm.git
