@@ -12,5 +12,5 @@ mocks:
 	find include -iname *.hpp | xargs -i% $(EXTERNALS)/gmockgen/gmock.py -c test/config/gmock.conf -l game -d test/mocks % -- $(CXXFLAGS)
 
 clean:
-	rm -f bin/*/*.o $(BIN)/$(TGT) $(TEST)
+	rm -f $(BIN)/*.o $(BIN)/$(TGT) $(TEST)
 
