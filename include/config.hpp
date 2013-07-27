@@ -18,7 +18,7 @@ namespace di {
 template<>
 struct ctor_traits<game::app>
 {
-    static void ctor(shared_ptr<game::controller_t>
+    static void ctor(shared_ptr<game::controller_t> //clients
                    , shared_ptr<game::gui::time>
                    , shared_ptr<game::gui::user>
     );
@@ -51,6 +51,7 @@ typedef di::generic_module<
       , gui::viewer
       , random_rand
       , controller_t
+      , int
     >
 > config;
 

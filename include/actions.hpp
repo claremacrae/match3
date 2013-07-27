@@ -17,10 +17,11 @@ template<typename T>
 class action : public boost::msm::front::euml::euml_action<T>
 {
 public:
+    action() { }
+
     BOOST_DI_CTOR(action
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<board> b = boost::shared_ptr<board>()
-        , boost::shared_ptr<iviewer> v = boost::shared_ptr<iviewer>())
+        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iviewer> v)
         : board_(b), viewer_(v)
     { }
 
@@ -58,8 +59,8 @@ public:
     using action::action;
 
     void operator()(const button_clicked& button) {
-        board_->select(get_pos(button));
-        viewer_->select_item(get_pos(button));
+        board_->select(button.pos);
+        viewer_->select_item(button.pos);
         viewer_->render();
     }
 };
@@ -130,13 +131,14 @@ public:
 class show_time : public action<show_time>
 {
 public:
+    show_time() { }
+
     BOOST_DI_CTOR(show_time
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<board> b = boost::shared_ptr<board>()
-        , boost::shared_ptr<iviewer> v = boost::shared_ptr<iviewer>()
-        , boost::shared_ptr<int> t = boost::shared_ptr<int>()
-        , boost::di::named<int, _S("game time in seconds")> s = 0)
-        : action(0, b, v), time_ticks_(t), game_time_in_sec_(s)
+        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iviewer> v
+        , boost::shared_ptr<int> t
+        , boost::di::named<int, _S("game time in seconds")> s)
+        : action(b, v), time_ticks_(t), game_time_in_sec_(s)
     { }
 
     template<class Event>
@@ -154,19 +156,20 @@ private:
 template<int Value>
 class add_points : public action<add_points<Value>>
 {
-    using action<add_points<Value>>::board_;
+    typedef action<add_points<Value>> action_t;
 
 public:
+    add_points() { }
+
     BOOST_DI_CTOR(add_points
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<board> b = boost::shared_ptr<board>()
-        , boost::shared_ptr<int> p = boost::shared_ptr<int>())
-        : action<add_points<Value>>(0, b), points_(p)
+        , boost::shared_ptr<board> b
+        , boost::shared_ptr<int> p)
+        : action_t(b, boost::shared_ptr<iviewer>()), points_(p)
     { }
 
     template<class Event>
     void operator()(const Event&) {
-        std::size_t size = board_->matches().size();
+        std::size_t size = action_t::board_->matches().size();
         while (size--) {
             *points_ += Value;
         }
@@ -179,10 +182,13 @@ private:
 template<int Value>
 class sub_points : public action<sub_points<Value>>
 {
+    typedef action<sub_points<Value>> action_t;
+
 public:
+    sub_points() { }
+
     BOOST_DI_CTOR(sub_points
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<int> p = boost::shared_ptr<int>())
+        , boost::shared_ptr<int> p, int /*dummy*/)
         : points_(p)
     { }
 
@@ -198,12 +204,13 @@ private:
 class show_points : public action<show_points>
 {
 public:
+    show_points() { }
+
     BOOST_DI_CTOR(show_points
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<board> b = boost::shared_ptr<board>()
-        , boost::shared_ptr<iviewer> v = boost::shared_ptr<iviewer>()
-        , boost::shared_ptr<int> p = boost::shared_ptr<int>())
-        : action(0, b, v), points_(p)
+        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iviewer> v
+        , boost::shared_ptr<int> p)
+        : action(b, v), points_(p)
     { }
 
     template<class Event>
@@ -219,12 +226,13 @@ private:
 class show_results : public action<show_results>
 {
 public:
+    show_results() { }
+
     BOOST_DI_CTOR(show_results
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<board> b = boost::shared_ptr<board>()
-        , boost::shared_ptr<iviewer> v = boost::shared_ptr<iviewer>()
-        , boost::shared_ptr<int> p = boost::shared_ptr<int>())
-        : action(0, b, v), points_(p)
+        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iviewer> v
+        , boost::shared_ptr<int> p)
+        : action(b, v), points_(p)
     { }
 
     template<class Event>

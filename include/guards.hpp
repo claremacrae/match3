@@ -14,9 +14,10 @@ template<typename T>
 class guard : public boost::msm::front::euml::euml_action<T>
 {
 public:
+    guard() { }
+
     BOOST_DI_CTOR(guard
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<board> b = boost::shared_ptr<board>())
+        , boost::shared_ptr<board> b, int /*dummy*/)
         : board_(b)
     { }
 
@@ -30,7 +31,7 @@ public:
     using guard::guard;
 
     bool operator()(const button_clicked& button) const {
-        return board_->is_within_board(get_pos(button));
+        return board_->is_within_board(button.pos);
     }
 };
 
@@ -40,7 +41,7 @@ public:
     using guard::guard;
 
     bool operator()(const button_clicked& button) const {
-        return board_->is_neighbor(get_pos(button));
+        return board_->is_neighbor(button.pos);
     }
 };
 
@@ -50,7 +51,7 @@ public:
     using guard::guard;
 
     bool operator()(const button_clicked& button) const {
-        return board_->is_same_selected(get_pos(button));
+        return board_->is_same_selected(button.pos);
     }
 };
 
@@ -60,7 +61,7 @@ public:
     using guard::guard;
 
     bool operator()(const button_clicked& button) const {
-        return board_->is_same_color(get_pos(button));
+        return board_->is_same_color(button.pos);
     }
 };
 
@@ -78,10 +79,11 @@ public:
 class is_game_timeout : public guard<is_game_timeout>
 {
 public:
+    is_game_timeout() { }
+
     BOOST_DI_CTOR(is_game_timeout
-        , int = 0 /*dummy*/
-        , boost::shared_ptr<int> t = boost::shared_ptr<int>()
-        , boost::di::named<int, _S("game time in seconds")> s = 0)
+        , boost::shared_ptr<int> t
+        , boost::di::named<int, _S("game time in seconds")> s)
         : time_ticks_(t), game_time_in_sec_(s)
     { }
 

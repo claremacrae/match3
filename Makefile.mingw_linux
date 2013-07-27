@@ -5,16 +5,18 @@ TEST            := game_ut.exe
 MINGW 			:= mingw32-linux
 BOOST 			:= boost_1_52_0
 CXX 		    := $(EXTERNALS)/$(MINGW)/mingw32/bin/i686-w64-mingw32-g++
-CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -D BOOST_MSM_CONSTRUCTOR_ARG_SIZE=10 -D BOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
+CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
 LIBS            := -static-libgcc -static-libstdc++ -Lbin/win -lmingw32 -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6 -mwindows
 FIND 			:= find
 RM 				:= rm
 TR 				:= tr
+WGET 			:= wget
 
 include Makefile.aux
 
 externals:
-	wget -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/rubenvb/gcc-4.7-release/i686-w64-mingw32-gcc-dw2-4.7.4-release-linux64_rubenvb.tar.xz"
+	$(RM) -rf $(EXTERNALS)/$(MINGW)
+	$(WGET) -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/rubenvb/gcc-4.8-release/i686-w64-mingw32-gcc-4.8.0-linux64_rubenvb.tar.xz"
 
 run:
 	cd $(BIN) && wine $(TGT)

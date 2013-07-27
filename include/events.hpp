@@ -2,6 +2,9 @@
 #define EVENTS_BCQLG30Q
 
 #include <boost/mpl/int.hpp>
+#include <boost/di/ctor.hpp>
+#include <boost/di/named.hpp>
+#include <mpl_string.hpp>
 #include <SDL.h>
 #include "detail/position.hpp"
 
@@ -21,12 +24,16 @@ struct button_clicked : euml::euml_event<button_clicked>
 
     button_clicked() { }
 
-    explicit button_clicked(const SDL_Event& event)
-        : x(event.button.x), y(event.button.y)
+    BOOST_DI_CTOR(button_clicked
+        , const SDL_Event& event
+        , boost::di::named<int, _S("grid offset")> grid = 38 + 5
+        , boost::di::named<int, _S("grids offset x")> x = 328
+        , boost::di::named<int, _S("grids offset y")> y = 100)
+        : pos(((event.button.x - x) / grid)
+            , ((event.button.y - y) / grid))
     { }
 
-    int x = 0;
-    int y = 0;
+    detail::position pos;
 };
 
 struct key_pressed : euml::euml_event<key_pressed>
@@ -51,13 +58,6 @@ struct time_tick : euml::euml_event<time_tick>
 {
     typedef mpl::int_<__LINE__> id;
 };
-
-inline detail::position get_pos(const button_clicked& button) {
-    return detail::position(
-        (button.x - 328) / 43
-      , (button.y - 100) / 43
-    );
-}
 
 } // namespace game
 

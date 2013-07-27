@@ -7,7 +7,7 @@ TEST            := game_ut.exe
 MINGW 			:= mingw32-win
 BOOST 			:= boost_1_52_0
 CXX 		    := $(EXTERNALS)/$(MINGW)/mingw32/bin/i686-w64-mingw32-g++.exe
-CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -D BOOST_MSM_CONSTRUCTOR_ARG_SIZE=10 -D BOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
+CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
 LIBS            := -static-libgcc -static-libstdc++ -Lbin/win -lmingw32 -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6 -mwindows
 FIND 			:= $(EXTERNALS)\unix\find.exe
 RM 				:= $(EXTERNALS)\unix\rm.exe
@@ -23,8 +23,8 @@ run:
 
 externals:
 	$(RM) -rf $(EXTERNALS)/$(MINGW) $(EXTERNALS)/boost/$(BOOST)
-	$(WGET) -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains targetting Win32/Personal Builds/rubenvb/gcc-4.7-release/i686-w64-mingw32-gcc-4.7.4-release-win32_rubenvb.7z" -O "$(EXTERNALS)/i686-w64-mingw32-gcc-4.7.4-release-win32_rubenvb.7z"
-	$(ZIP) x "$(EXTERNALS)/i686-w64-mingw32-gcc-4.7.4-release-win32_rubenvb.7z" -o"$(EXTERNALS)/$(MINGW)"
+	$(WGET) -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/rubenvb/gcc-4.8-release/i686-w64-mingw32-gcc-4.8.0-win32_rubenvb.7z" -O "$(EXTERNALS)/i686-w64-mingw32-gcc-4.8.0-win32_rubenvb.7z"
+	$(ZIP) x "$(EXTERNALS)/i686-w64-mingw32-gcc-4.8.0-win32_rubenvb.7z" -o"$(EXTERNALS)/$(MINGW)"
 	$(WGET) -c "http://downloads.sourceforge.net/project/boost/boost/1.52.0/$(BOOST).zip" -O "$(EXTERNALS)/$(BOOST).zip"
 	$(ZIP) x "$(EXTERNALS)/$(BOOST).zip" -o"$(EXTERNALS)/boost"
 

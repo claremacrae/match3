@@ -59,10 +59,10 @@ private:
     void scroll_column(int, int);
     void clear_matches();
 
-    int rows_size_;
-    int cols_size_;
-    int to_win_size_;
-    int colors_;
+    int rows_size_ = 0;
+    int cols_size_ = 0;
+    int to_win_size_ = 0;
+    int colors_ = 0;
     boost::shared_ptr<irandom> random_;
     rows_t rows_;
     mutable std::vector<detail::position> selected_;
