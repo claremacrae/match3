@@ -52,6 +52,13 @@ struct time_tick : euml::euml_event<time_tick>
     typedef mpl::int_<__LINE__> id;
 };
 
+inline detail::position get_pos(const button_clicked& button) {
+    return detail::position(
+        (button.x - 328) / 43
+      , (button.y - 100) / 43
+    );
+}
+
 } // namespace game
 
 #endif
