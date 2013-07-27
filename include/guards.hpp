@@ -1,74 +1,103 @@
 #ifndef GUARDS_KWSYEU3M
 #define GUARDS_KWSYEU3M
 
+#include <boost/shared_ptr.hpp>
 #include <boost/msm/front/euml/euml.hpp>
+#include <boost/di/ctor.hpp>
 #include "detail/position.hpp"
 #include "events.hpp"
-
-namespace euml = boost::msm::front::euml;
+#include "board.hpp"
 
 namespace game {
 
-class is_within_board : public euml::euml_action<is_within_board>
+template<typename T>
+class guard : public boost::msm::front::euml::euml_action<T>
 {
 public:
-    bool operator()(const button_clicked&) {
-        //return fsm.board_->is_within_board(fsm.get_pos(button));
+    BOOST_DI_CTOR(guard
+        , int = 0 /*dummy*/
+        , boost::shared_ptr<board> b = boost::shared_ptr<board>())
+        : board_(b)
+    { }
+
+protected:
+    boost::shared_ptr<board> board_;
+};
+
+class is_within_board : public guard<is_within_board>
+{
+public:
+    using guard::guard;
+
+    bool operator()(const button_clicked&) const {
+        //return board_->is_within_board(get_pos(button));
         return true;
     }
 };
 
-class is_neighbor : public euml::euml_action<is_neighbor>
+class is_neighbor : public guard<is_neighbor>
 {
 public:
-    bool operator()(const button_clicked&) {
-        //return fsm.board_->is_neighbor(fsm.get_pos(button));
+    using guard::guard;
+
+    bool operator()(const button_clicked&) const {
+        //return board_->is_neighbor(get_pos(button));
         return true;
     }
 };
 
-class is_same_item : public euml::euml_action<is_same_item>
+class is_same_item : public guard<is_same_item>
 {
 public:
-    bool operator()(const button_clicked&) {
-        //return fsm.board_->is_same_selected(fsm.get_pos(button));
+    using guard::guard;
+
+    bool operator()(const button_clicked&) const {
+        //return board_->is_same_selected(get_pos(button));
         return true;
     }
 };
 
-class is_same_color : public euml::euml_action<is_same_color>
+class is_same_color : public guard<is_same_color>
 {
 public:
-    bool operator()(const button_clicked&) {
-        //return fsm.board_->is_same_color(fsm.get_pos(button));
+    using guard::guard;
+
+    bool operator()(const button_clicked&) const {
+        //return board_->is_same_color(get_pos(button));
         return true;
     }
 };
 
-class is_swap_items_winning : public euml::euml_action<is_swap_items_winning>
+class is_swap_items_winning : public guard<is_swap_items_winning>
 {
 public:
+    using guard::guard;
+
     template<typename Event>
-    bool operator()(const Event&) {
-        //return fsm.board_->is_swap_winning();
+    bool operator()(const Event&) const {
+        //return board_->is_swap_winning();
         return true;
     }
 };
 
-class is_game_timeout : public euml::euml_action<is_game_timeout>
+class is_game_timeout : public guard<is_game_timeout>
 {
 public:
-    bool operator()(const time_tick&) {
-        //return fsm.time_ticks_ >= fsm.game_time_in_sec_;
+    using guard::guard;
+
+    bool operator()(const time_tick&) const {
+        //return time_ticks_ >= game_time_in_sec_;
         return true;
     }
 };
 
 template<int Key>
-class is_key : public euml::euml_action<is_key<Key>>
+class is_key : public guard<is_key<Key>>
 {
 public:
-    bool operator()(const key_pressed& event) {
+    BOOST_DI_CTOR(is_key) { }
+
+    bool operator()(const key_pressed& event) const {
         return event.key == Key;
     }
 };
