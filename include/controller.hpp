@@ -4,12 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/msm/front/state_machine_def.hpp>
 #include <boost/msm/front/euml/euml.hpp>
-#include <boost/di/ctor.hpp>
-#include <boost/di/named.hpp>
 #include "sdl/msm.hpp"
-#include "detail/position.hpp"
-#include "board.hpp"
-#include "iviewer.hpp"
 #include "events.hpp"
 #include "actions.hpp"
 #include "guards.hpp"
@@ -36,21 +31,6 @@ class controller : public front::state_machine_def<controller>
     struct wait_for_any_key     : front::interrupt_state<key_pressed>, euml::euml_state<wait_for_any_key> { };
 
 public:
-    BOOST_DI_CTOR(controller
-        , boost::shared_ptr<board> b
-        , boost::shared_ptr<iviewer> v
-        , boost::di::named<int, _S("game time in seconds")> t
-        , boost::di::named<int, _S("grid offset")> g
-        , boost::di::named<int, _S("grids offset x")> x
-        , boost::di::named<int, _S("grids offset y")> y
-    ) : board_(b)
-      , viewer_(v)
-      , game_time_in_sec_(t)
-      , grid_offset_(g)
-      , grids_offset_x_(x)
-      , grids_offset_y_(y)
-    { };
-
     typedef mpl::vector<idle, wait_for_client> initial_state;
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
@@ -69,25 +49,6 @@ public:
       , game_over()            == wait_for_any_key()     + key_pressed() / finish_game()
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table)
-
-    //FIXME: temporary workaround
-    detail::position get_pos(const button_clicked& button) {
-        return detail::position(
-            (button.x - grids_offset_x_) / grid_offset_
-          , (button.y - grids_offset_y_) / grid_offset_
-        );
-    }
-
-//private:
-public: //FIXME: temporary workaround
-    boost::shared_ptr<board> board_;
-    boost::shared_ptr<iviewer> viewer_;
-    int game_time_in_sec_ = 0;
-    int time_ticks_ = 0;
-    int grid_offset_ = 0;
-    int grids_offset_x_ = 0;
-    int grids_offset_y_ = 0;
-    int points = 0;
 };
 
 typedef sdl::msm<controller> controller_t;

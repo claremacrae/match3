@@ -12,54 +12,55 @@ namespace game {
 class is_within_board : public euml::euml_action<is_within_board>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_within_board(fsm.get_pos(button));
+    bool operator()(const button_clicked&) {
+        //return fsm.board_->is_within_board(fsm.get_pos(button));
+        return true;
     }
 };
 
 class is_neighbor : public euml::euml_action<is_neighbor>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_neighbor(fsm.get_pos(button));
+    bool operator()(const button_clicked&) {
+        //return fsm.board_->is_neighbor(fsm.get_pos(button));
+        return true;
     }
 };
 
 class is_same_item : public euml::euml_action<is_same_item>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_same_selected(fsm.get_pos(button));
+    bool operator()(const button_clicked&) {
+        //return fsm.board_->is_same_selected(fsm.get_pos(button));
+        return true;
     }
 };
 
 class is_same_color : public euml::euml_action<is_same_color>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    bool operator()(const button_clicked& button, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_same_color(fsm.get_pos(button));
+    bool operator()(const button_clicked&) {
+        //return fsm.board_->is_same_color(fsm.get_pos(button));
+        return true;
     }
 };
 
 class is_swap_items_winning : public euml::euml_action<is_swap_items_winning>
 {
 public:
-    template<class Event, class FSM, class SourceState, class TargetState>
-    bool operator()(const Event&, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.board_->is_swap_winning();
+    template<typename Event>
+    bool operator()(const Event&) {
+        //return fsm.board_->is_swap_winning();
+        return true;
     }
 };
 
 class is_game_timeout : public euml::euml_action<is_game_timeout>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    bool operator()(const time_tick&, FSM& fsm, SourceState&, TargetState&) {
-        return fsm.time_ticks_ >= fsm.game_time_in_sec_;
+    bool operator()(const time_tick&) {
+        //return fsm.time_ticks_ >= fsm.game_time_in_sec_;
+        return true;
     }
 };
 
@@ -67,8 +68,7 @@ template<int Key>
 class is_key : public euml::euml_action<is_key<Key>>
 {
 public:
-    template<class FSM, class SourceState, class TargetState>
-    bool operator()(const key_pressed& event, FSM&, SourceState&, TargetState&) {
+    bool operator()(const key_pressed& event) {
         return event.key == Key;
     }
 };
