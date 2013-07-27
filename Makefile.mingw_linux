@@ -1,3 +1,5 @@
+.PHONY: run externals
+
 EXTERNALS   	:= externals
 BIN             := bin/win
 TGT             := game.exe

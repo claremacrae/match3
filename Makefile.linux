@@ -1,3 +1,5 @@
+.PHONY: run
+
 EXTERNALS   	:= externals
 BIN             := bin/linux
 TGT 			:= game
