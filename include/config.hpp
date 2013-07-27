@@ -51,7 +51,8 @@ typedef di::generic_module<
       , gui::viewer
       , random_rand
       , controller_t
-      , int
+      , points
+      , time_ticks
     >
 > config;
 

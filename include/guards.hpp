@@ -5,6 +5,7 @@
 #include <boost/msm/front/euml/euml.hpp>
 #include <boost/di/ctor.hpp>
 #include "detail/position.hpp"
+#include "time_ticks.hpp"
 #include "events.hpp"
 #include "board.hpp"
 
@@ -82,7 +83,7 @@ public:
     is_game_timeout() { }
 
     BOOST_DI_CTOR(is_game_timeout
-        , boost::shared_ptr<int> t
+        , boost::shared_ptr<time_ticks> t
         , boost::di::named<int, _S("game time in seconds")> s)
         : time_ticks_(t), game_time_in_sec_(s)
     { }
@@ -93,7 +94,7 @@ public:
 
 private:
     int game_time_in_sec_ = 0;
-    boost::shared_ptr<int> time_ticks_;
+    boost::shared_ptr<time_ticks> time_ticks_;
 };
 
 template<int Key>
