@@ -201,8 +201,6 @@ TEST_F(board_test, matches) {
 }
 
 TEST_F(board_test, scroll_down) {
-    //expect
-    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
 
     //given
     board b(4, 4, 3, 5, irandom_mock_);
@@ -219,9 +217,9 @@ TEST_F(board_test, scroll_down) {
     board expected(4, 4, 3, 5, irandom_mock_);
     fill_board(expected,
         {
-            blue   , black   , green  , purple
-          , yellow , black   , blue   , black
-          , purple , black   , yellow , purple
+            blue   , none   , green  , purple
+          , yellow , none   , blue   , black
+          , purple , none   , yellow , purple
           , blue   , yellow  , blue   , black
         }
     );

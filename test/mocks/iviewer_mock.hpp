@@ -18,6 +18,7 @@ public:
     MOCK_METHOD0(render, void());
     MOCK_METHOD0(clear_board, void());
     MOCK_METHOD2(show_grid, void(const game::position &, color_t));
+    MOCK_METHOD2(scroll_grid, void(const game::position &, color_t));
     MOCK_METHOD1(show_match, void(const game::position &));
     MOCK_METHOD1(select_item, void(const game::position &));
     MOCK_METHOD1(show_time, void(int));
