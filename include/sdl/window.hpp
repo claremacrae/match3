@@ -30,7 +30,7 @@ public:
     virtual boost::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string&, SDL_Color, int) const override;
     virtual void draw(boost::shared_ptr<SDL_Texture>, int, int, std::size_t) override;
     virtual void clear() override;
-    void clear(std::size_t) override;
+    virtual void clear(std::size_t) override;
     virtual void render() override;
     virtual void quit() override;
 
