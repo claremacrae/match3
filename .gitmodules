@@ -4,3 +4,6 @@
 [submodule "externals/msm"]
 	path = externals/msm
 	url = git@github.com:krzysztof-jusiak/msm.git
+[submodule "externals/gmock"]
+	path = externals/gmock
+	url = git@github.com:krzysztof-jusiak/gmock.git
