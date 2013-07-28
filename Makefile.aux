@@ -30,5 +30,5 @@ mocks:
 	$(FIND) include -iname *.hpp | xargs -i% $(EXTERNALS)/gmock/gmock.py -c test/config/gmock.conf -l game -d test/mocks % -- $(CXXFLAGS)
 
 clean:
-	$(RM) -f $(BIN)/*.o $(BIN)/$(TGT)_test $(BIN)/$(TGT) $(TEST)
+	$(RM) -f $(BIN)/*.o $(BIN)/$(TGT)_test $(BIN)/$(TGT)
 
