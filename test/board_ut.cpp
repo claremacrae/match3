@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <gtest/gtest.h>
 #include "board.hpp"
 #include "mocks/irandom_mock.hpp"
-#include <gtest/gtest.h>
+
+namespace GT = testing;
 
 namespace game {
 namespace test {
@@ -63,8 +65,6 @@ void compare_boards(board& b1, board& b2) {
 }
 
 } // namespace
-
-namespace GT = ::testing;
 
 class board_test : public GT::Test
 {

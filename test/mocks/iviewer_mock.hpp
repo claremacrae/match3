@@ -23,6 +23,7 @@ public:
     MOCK_METHOD1(show_time, void(int));
     MOCK_METHOD1(show_points, void(int));
     MOCK_METHOD1(show_results, void(int));
+    MOCK_METHOD1(fade_screen, void(sdl::milliseconds_t));
 };
 
 } // namespace mocks
