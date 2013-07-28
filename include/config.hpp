@@ -33,6 +33,7 @@ struct ctor_traits<game::app>
 namespace game {
 
 typedef di::generic_module<
+
     di::bind_int    < _S("win width"),              755         >
   , di::bind_int    < _S("win height"),             600         >
   , di::bind_string < _S("win caption"),            _S("game")  >
