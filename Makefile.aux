@@ -1,4 +1,3 @@
-EXTERNALS  		:= externals
 BOOST 			:= boost_1_52_0
 CXXFLAGS_COMMON := -std=c++11 -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_DI_NO_CXX11_FEATURES -Iinclude -Iinclude/interfaces -Iinclude/detail -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
 CXXFLAGS    	:= $(CXXFLAGS_COMMON) -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs

@@ -1,15 +1,16 @@
 .PHONY: run externals
 
-BIN   	:= bin/win
-TGT    	:= game.exe
-TEST   	:= game_ut.exe
-MINGW  	:= mingw32-linux
-CXX    	:= $(EXTERNALS)/$(MINGW)/mingw32/bin/i686-w64-mingw32-g++
-LIBS   	:= -static-libgcc -static-libstdc++ -Lbin/win -lmingw32 -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6 -mwindows
-FIND   	:= find
-RM 	   	:= rm
-TR 	   	:= tr
-WGET   	:= wget
+EXTERNALS 	:= externals
+BIN   		:= bin/win
+TGT    		:= game.exe
+TEST   		:= game_ut.exe
+MINGW  		:= mingw32-linux
+CXX    		:= $(EXTERNALS)/$(MINGW)/mingw32/bin/i686-w64-mingw32-g++
+LIBS   		:= -static-libgcc -static-libstdc++ -Lbin/win -lmingw32 -lSDL2 -lSDL2_image -lSDL2_ttf -lfreetype-6 -mwindows
+FIND   		:= find
+RM 	   		:= rm
+TR 	   		:= tr
+WGET   		:= wget
 
 include Makefile.aux
 
