@@ -1,12 +1,12 @@
 .PHONY: run
 
-BIN  	:= bin/linux
-TGT   	:= game
-CXX   	:= g++
-LIBS  	:= -Lbin/linux -lSDL2 -lSDL2_image -lSDL2_ttf-2.0 -lfreetype
-FIND  	:= find
-RM 	  	:= rm
-TR 	  	:= tr
+BIN  		:= bin/linux
+TGT   		:= game
+CXX   		:= g++
+LD_FLAGS  	:= -Lbin/linux -lSDL2 -lSDL2_image -lSDL2_ttf-2.0 -lfreetype
+FIND  		:= find
+RM 	  		:= rm
+TR 	  		:= tr
 
 include Makefile.aux
 

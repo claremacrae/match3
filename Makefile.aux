@@ -15,7 +15,7 @@ ifeq (debug, $(mode))
 endif
 
 build: clean $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell $(FIND) $(BIN) -iname *.o) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell $(FIND) $(BIN) -iname *.o) $(LD_FLAGS)
 
 src/%.o:
 	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o
