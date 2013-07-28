@@ -10,7 +10,7 @@ user::user(boost::shared_ptr<controller_t> c)
 { }
 
 void user::run() {
-    SDL_Event event;
+    SDL_Event event = { };
     while (!controller_->is_flag_active<flag_game_over>()) {
         while (SDL_PollEvent(&event)) {
             controller_->process_event(event);
