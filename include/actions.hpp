@@ -139,7 +139,7 @@ public:
         , boost::shared_ptr<board> b
         , boost::shared_ptr<iviewer> v
         , boost::shared_ptr<time_ticks> t
-        , boost::di::named<int, _S("game time in seconds")> s)
+        , boost::di::named<time_ticks, _S("game time in seconds")> s)
         : action(b, v), time_ticks_(t), game_time_in_sec_(s)
     { }
 
@@ -151,7 +151,7 @@ public:
     }
 
 private:
-    int game_time_in_sec_ = 0;
+    time_ticks game_time_in_sec_ = 0;
     boost::shared_ptr<time_ticks> time_ticks_;
 };
 
