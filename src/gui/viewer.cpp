@@ -35,7 +35,7 @@ viewer::viewer(boost::shared_ptr<sdl::iwindow> window
 }
 
 void viewer::render() {
-    window_->render();
+    window_->render_layers();
 }
 
 void viewer::clear_board() {
@@ -133,6 +133,14 @@ void viewer::show_text(const std::string& str, int x, int y, SDL_Color color, in
       , y
       , layer
     );
+}
+
+void viewer::fade_screen(sdl::milliseconds_t delay) {
+    for (Uint8 i = SDL_ALPHA_TRANSPARENT; i < SDL_ALPHA_OPAQUE; i += 5) {
+        window_->fade(i/5);
+        window_->render();
+        SDL_Delay(delay);
+    }
 }
 
 void viewer::quit() {

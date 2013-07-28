@@ -2,6 +2,7 @@
 #define IVIEWER_T977IO6T
 
 #include <SDL.h>
+#include "sdl/timer.hpp"
 #include "grid.hpp"
 #include "position.hpp"
 
@@ -20,6 +21,7 @@ public:
     virtual void show_time(int) = 0;
     virtual void show_points(int) = 0;
     virtual void show_results(int) = 0;
+    virtual void fade_screen(sdl::milliseconds_t = 0) = 0;
 };
 
 } // namespace game

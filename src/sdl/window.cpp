@@ -32,6 +32,8 @@ window::window(boost::di::named<int, _S("win width")> width
         SDL_CreateRenderer(window_.get(), RENDER_DRIVER, RENDER_FLAGS)
       , SDL_DestroyRenderer
     );
+
+    SDL_SetRenderDrawBlendMode(renderer_.get(), SDL_BLENDMODE_BLEND);
 }
 
 window::~window() {
@@ -62,6 +64,13 @@ void window::draw(boost::shared_ptr<SDL_Texture> texture, int x, int y, std::siz
     layers_[layer].push_back(std::make_pair(texture, pos));
 }
 
+void window::fade(Uint8 alpha) {
+    SDL_Rect view = {0, 0, 0, 0};
+    SDL_RenderGetViewport(renderer_.get(), &view);
+    SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, alpha);
+    SDL_RenderFillRect(renderer_.get(), &view);
+}
+
 void window::clear() {
     layers_.clear();
     SDL_RenderClear(renderer_.get());
@@ -74,12 +83,16 @@ void window::clear(std::size_t layer) {
 }
 
 void window::render() {
+    SDL_RenderPresent(renderer_.get());
+}
+
+void window::render_layers() {
     for (const auto& layer : layers_) {
         for (const auto& data : layer.second) {
             SDL_RenderCopy(renderer_.get(), data.first.get(), nullptr, &data.second);
         }
     }
-    SDL_RenderPresent(renderer_.get());
+    render();
 }
 
 } // namespace sdl

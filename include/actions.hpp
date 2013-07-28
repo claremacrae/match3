@@ -247,6 +247,17 @@ private:
     boost::shared_ptr<ipoints> points_;
 };
 
+class fade_screen : public action<fade_screen>
+{
+public:
+    using action::action;
+
+    template<class Event>
+    void operator()(const Event&) {
+        viewer_->fade_screen(10);
+    }
+};
+
 class finish_game : public action<finish_game>
 {
 public:

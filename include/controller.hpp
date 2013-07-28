@@ -42,10 +42,10 @@ public:
       , wait_for_first_item()  == try_swap_items()         [is_swap_items_winning()] / (show_matches(), add_points<10>(), show_points(), unselect_all(), scroll_board())
       , wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / (revert_swap_items(), sub_points<5>(), show_points(), unselect_all())
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      , wait_for_any_key()     == wait_for_client()      + time_tick() [is_game_timeout()] / show_results()
+      , wait_for_any_key()     == wait_for_client()      + time_tick() [is_game_timeout()] / (fade_screen(), show_results())
       ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()
-      , wait_for_any_key()     == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / show_results()
-      , wait_for_any_key()     == wait_for_client()      + window_close() / show_results()
+      , wait_for_any_key()     == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / (fade_screen(), show_results())
+      , wait_for_any_key()     == wait_for_client()      + window_close() / (fade_screen(), show_results())
       , game_over()            == wait_for_any_key()     + key_pressed() / finish_game()
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table)

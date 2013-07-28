@@ -50,6 +50,7 @@ public:
     virtual void show_time(int) override;
     virtual void show_points(int) override;
     virtual void show_results(int) override;
+    virtual void fade_screen(sdl::milliseconds_t) override;
 
 private:
     void show_text(const std::string&, int, int, SDL_Color, int, std::size_t);
