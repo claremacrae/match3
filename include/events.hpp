@@ -4,7 +4,7 @@
 #include <boost/mpl/int.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
-#include <mpl_string.hpp>
+#include <mpl/string.hpp>
 #include <SDL.h>
 #include "detail/position.hpp"
 

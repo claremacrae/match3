@@ -5,7 +5,7 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include <boost/di.hpp>
-#include <mpl_string.hpp>
+#include <mpl/string.hpp>
 #include "sdl/iwindow.hpp"
 
 namespace game {

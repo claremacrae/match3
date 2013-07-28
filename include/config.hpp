@@ -2,7 +2,7 @@
 #define CONFIG_2BXW6AE7
 
 #include <boost/di.hpp>
-#include <mpl_string.hpp>
+#include <mpl/string.hpp>
 #include "sdl/window.hpp"
 #include "gui/viewer.hpp"
 #include "gui/user.hpp"

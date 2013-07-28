@@ -8,7 +8,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
-#include <mpl_string.hpp>
+#include <mpl/string.hpp>
 #include "detail/row.hpp"
 #include "detail/position.hpp"
 #include "irandom.hpp"
