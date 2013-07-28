@@ -8,20 +8,22 @@
 #include <SDL.h>
 #include "position.hpp"
 
-namespace euml = boost::msm::front::euml;
-
 namespace game {
+
+template<typename T, int Id>
+struct event : boost::msm::front::euml::euml_event<T>
+{
+    typedef boost::mpl::int_<Id> id;
+};
 
 //flags
 class flag_game_over { };
 
 //events
-typedef euml::True_ anonymous;
+typedef boost::msm::front::euml::True_ anonymous;
 
-struct button_clicked : euml::euml_event<button_clicked>
+struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP>
 {
-    typedef mpl::int_<SDL_MOUSEBUTTONUP> id;
-
     button_clicked() { }
 
     BOOST_DI_CTOR(button_clicked
@@ -36,10 +38,8 @@ struct button_clicked : euml::euml_event<button_clicked>
     position pos;
 };
 
-struct key_pressed : euml::euml_event<key_pressed>
+struct key_pressed : event<key_pressed, SDL_KEYDOWN>
 {
-    typedef mpl::int_<SDL_KEYDOWN> id;
-
     key_pressed() { }
 
     explicit key_pressed(const SDL_Event& event)
@@ -49,15 +49,8 @@ struct key_pressed : euml::euml_event<key_pressed>
     int key = 0;
 };
 
-struct window_close : euml::euml_event<window_close>
-{
-    typedef mpl::int_<SDL_QUIT> id;
-};
-
-struct time_tick : euml::euml_event<time_tick>
-{
-    typedef mpl::int_<__LINE__> id;
-};
+struct window_close : event<window_close, SDL_QUIT> { };
+struct time_tick    : event<time_tick, __LINE__> { };
 
 } // namespace game
 
