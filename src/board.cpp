@@ -22,7 +22,7 @@ board::board(
 void board::init_with_randoms() {
    for (int y = 0; y < get_rows(); ++y) {
         for (int x = 0; x < get_cols(); ++x) {
-            rows_[x][y].color = random_->get_random_number(0, colors_);
+            rows_[x][y].color = random_->get_random_number(0, colors_ - 1);
         }
     }
 }
@@ -130,7 +130,7 @@ void board::scroll_down() {
         for (int x = 0; x < get_cols(); ++x) {
             if (rows_[x][y].matched) {
                 scroll_column(x, y);
-                rows_[x][0].color = random_->get_random_number(0, colors_);
+                rows_[x][0].color = random_->get_random_number(0, colors_ - 1);
             }
         }
     }

@@ -1,7 +1,9 @@
-EXTERNALS  	:= externals
-BOOST 		:= boost_1_52_0
-CXXFLAGS    := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_DI_NO_CXX11_FEATURES -Iinclude -Iinclude/interfaces -Iinclude/detail -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
-OBJS 		:= $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) src -iname *.cpp)) | $(TR) '\\' '/')
+EXTERNALS  		:= externals
+BOOST 			:= boost_1_52_0
+CXXFLAGS_COMMON := -std=c++11 -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_DI_NO_CXX11_FEATURES -Iinclude -Iinclude/interfaces -Iinclude/detail -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
+CXXFLAGS    	:= $(CXXFLAGS_COMMON) -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs
+OBJS 			:= $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) src -iname *.cpp)) | $(TR) '\\' '/')
+TEST_OBJS 		:= $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) test -iname *.cpp)) | $(TR) '\\' '/')
 
 build: clean $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell $(FIND) $(BIN) -iname *.o) $(LIBS)
@@ -9,9 +11,15 @@ build: clean $(OBJS)
 src/%.o:
 	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o
 
+test: clean $(OBJS) $(TEST_OBJS)
+	$(CXX) $(CXXFLAGS_COMMON) -o $(BIN)/$(TGT)_test $(shell $(FIND) $(BIN) -iname *.o) $(LIBS) -lgtest -lgmock
+
+test/%.o:
+	$(CXX) $(CXXFLAGS_COMMON) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o
+
 mocks:
 	$(FIND) include -iname *.hpp | xargs -i% $(EXTERNALS)/gmock/gmock.py -c test/config/gmock.conf -l game -d test/mocks % -- $(CXXFLAGS)
 
 clean:
-	$(RM) -f $(BIN)/*.o $(BIN)/$(TGT) $(TEST)
+	$(RM) -f $(BIN)/*.o $(BIN)/$(TGT)_test $(BIN)/$(TGT) $(TEST)
 

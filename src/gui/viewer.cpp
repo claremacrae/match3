@@ -28,7 +28,7 @@ viewer::viewer(boost::shared_ptr<sdl::iwindow> window
     match_image_ = window_->load_image(images_dir + match_image);
     select_image_ = window_->load_image(images_dir + select_image);
 
-    for (int i = 0; i <= colors; ++i) {
+    for (int i = 0; i < colors; ++i) {
         grid_images_[static_cast<color_t>(i)] =
             window_->load_image(images_dir + boost::lexical_cast<std::string>(i) + ".png");
     }

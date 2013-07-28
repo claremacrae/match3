@@ -8,16 +8,17 @@
 #include "ipoints.hpp"
 
 namespace game {
+namespace mocks {
 
 class ipoints_mock : public ipoints
 {
 public:
-    virtual ~ipoints_mock();
-
+    virtual ~ipoints_mock() { }
     MOCK_METHOD1(add, void(int));
     MOCK_METHOD1(sub, void(int));
 };
 
+} // namespace mocks
 } // namespace game
 
 #endif // IPOINTS_MOCK_HPP

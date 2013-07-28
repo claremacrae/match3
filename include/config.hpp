@@ -40,7 +40,7 @@ typedef di::generic_module<
   , di::bind_int    < _S("board rows"),             8               >
   , di::bind_int    < _S("board cols"),             8               >
   , di::bind_int    < _S("board winning strike"),   3               >
-  , di::bind_int    < _S("board colors"),           4               >
+  , di::bind_int    < _S("board colors"),           5               >
   , di::bind_int    < _S("grid size"),              38              >
   , di::bind_int    < _S("grid offset"),            38 + 5          >
   , di::bind_int    < _S("grids offset x"),         328             >

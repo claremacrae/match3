@@ -8,12 +8,12 @@
 #include "iviewer.hpp"
 
 namespace game {
+namespace mocks {
 
 class iviewer_mock : public iviewer
 {
 public:
-    virtual ~iviewer_mock();
-
+    virtual ~iviewer_mock() { }
     MOCK_METHOD0(quit, void());
     MOCK_METHOD0(render, void());
     MOCK_METHOD0(clear_board, void());
@@ -25,6 +25,7 @@ public:
     MOCK_METHOD1(show_results, void(int));
 };
 
+} // namespace mocks
 } // namespace game
 
 #endif // IVIEWER_MOCK_HPP

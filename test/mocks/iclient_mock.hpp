@@ -8,15 +8,16 @@
 #include "iclient.hpp"
 
 namespace game {
+namespace mocks {
 
 class iclient_mock : public iclient
 {
 public:
-    virtual ~iclient_mock();
-
+    virtual ~iclient_mock() { }
     MOCK_METHOD0(run, void());
 };
 
+} // namespace mocks
 } // namespace game
 
 #endif // ICLIENT_MOCK_HPP

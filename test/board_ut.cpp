@@ -28,7 +28,7 @@ std::ostream& operator<<(std::ostream& out, board& b) {
     for (int y = 0; y < b.get_rows(); ++y) {
         out << y << ". ";
         for (int x = 0; x < b.get_cols(); ++x) {
-            out << " " << b.get_grid_color(detail::position(x, y)) << " ";
+            out << " " << b.get_grid_color(position(x, y)) << " ";
         }
         out << std::endl;
     }
@@ -37,11 +37,11 @@ std::ostream& operator<<(std::ostream& out, board& b) {
     return out;
 }
 
-void fill_board(board& board, std::vector<detail::color_t> colors) {
+void fill_board(board& board, std::vector<color_t> colors) {
     int i = 0;
     for (int y = 0; y < board.get_rows(); ++y) {
         for (int x = 0; x < board.get_cols(); ++x) {
-            board.set(detail::position(x, y), colors[i++]);
+            board.set(position(x, y), colors[i++]);
         }
     }
 
@@ -57,7 +57,7 @@ void compare_boards(board& b1, board& b2) {
 
     for (int y = 0; y < b1.get_rows(); ++y) {
         for (int x = 0; x < b1.get_cols(); ++x) {
-            EXPECT_EQ(b1.get_grid_color(detail::position(x, y)), b2.get_grid_color(detail::position(x, y)));
+            EXPECT_EQ(b1.get_grid_color(position(x, y)), b2.get_grid_color(position(x, y)));
         }
     }
 }
@@ -78,36 +78,34 @@ public:
 
 TEST_F(board_test, is_within_board) {
     //given
-    board b(4, 4, 3, irandom_mock_);
+    board b(4, 4, 3, 5, irandom_mock_);
 
     //when and then
-    EXPECT_TRUE(b.is_within_board(detail::position(0, 0)));
-    EXPECT_TRUE(b.is_within_board(detail::position(1, 2)));
-    EXPECT_TRUE(b.is_within_board(detail::position(3, 3)));
-    EXPECT_FALSE(b.is_within_board(detail::position(4, 5)));
+    EXPECT_TRUE(b.is_within_board(position(0, 0)));
+    EXPECT_TRUE(b.is_within_board(position(1, 2)));
+    EXPECT_TRUE(b.is_within_board(position(3, 3)));
+    EXPECT_FALSE(b.is_within_board(position(4, 5)));
 }
 
 TEST_F(board_test, is_neighbor) {
     //given
-    board b(4, 4, 3, irandom_mock_);
+    board b(4, 4, 3, 5, irandom_mock_);
 
     //when and then
-    b.select(detail::position(2, 2));
-    EXPECT_TRUE(b.is_neighbor(detail::position(1, 2)));
-    EXPECT_TRUE(b.is_neighbor(detail::position(2, 1)));
-    EXPECT_TRUE(b.is_neighbor(detail::position(2, 1)));
-    EXPECT_TRUE(b.is_neighbor(detail::position(3, 2)));
-    EXPECT_TRUE(b.is_neighbor(detail::position(2, 3)));
-    EXPECT_FALSE(b.is_neighbor(detail::position(2, 2)));
-    EXPECT_FALSE(b.is_neighbor(detail::position(1, 1)));
-    EXPECT_FALSE(b.is_neighbor(detail::position(3, 3)));
+    b.select(position(2, 2));
+    EXPECT_TRUE(b.is_neighbor(position(1, 2)));
+    EXPECT_TRUE(b.is_neighbor(position(2, 1)));
+    EXPECT_TRUE(b.is_neighbor(position(2, 1)));
+    EXPECT_TRUE(b.is_neighbor(position(3, 2)));
+    EXPECT_TRUE(b.is_neighbor(position(2, 3)));
+    EXPECT_FALSE(b.is_neighbor(position(2, 2)));
+    EXPECT_FALSE(b.is_neighbor(position(1, 1)));
+    EXPECT_FALSE(b.is_neighbor(position(3, 3)));
 }
 
 TEST_F(board_test, is_swap_winning_no) {
-    using namespace detail;
-
     //given
-    board b(4, 4, 2, irandom_mock_);
+    board b(4, 4, 2, 5, irandom_mock_);
     fill_board(b,
         {
             blue   , blue , black , purple
@@ -117,8 +115,8 @@ TEST_F(board_test, is_swap_winning_no) {
         }
     );
 
-    b.select(detail::position(2, 1));
-    b.select(detail::position(1, 1));
+    b.select(position(2, 1));
+    b.select(position(1, 1));
 
     //when
     b.swap(); std::cout << b;
@@ -128,10 +126,8 @@ TEST_F(board_test, is_swap_winning_no) {
 }
 
 TEST_F(board_test, is_swap_winning_yes_simple) {
-    using namespace detail;
-
     //given
-    board b(4, 4, 2, irandom_mock_);
+    board b(4, 4, 2, 5, irandom_mock_);
     fill_board(b,
         {
             blue   , blue , black , blue
@@ -141,8 +137,8 @@ TEST_F(board_test, is_swap_winning_yes_simple) {
         }
     );
 
-    b.select(detail::position(2, 1));
-    b.select(detail::position(2, 2));
+    b.select(position(2, 1));
+    b.select(position(2, 2));
 
     //when
     b.swap(); std::cout << b;
@@ -152,10 +148,8 @@ TEST_F(board_test, is_swap_winning_yes_simple) {
 }
 
 TEST_F(board_test, is_swap_winning_yes_complex) {
-    using namespace detail;
-
     //given
-    board b(4, 4, 3, irandom_mock_);
+    board b(4, 4, 3, 5, irandom_mock_);
     fill_board(b,
         {
             blue   , yellow , green  , purple
@@ -165,8 +159,8 @@ TEST_F(board_test, is_swap_winning_yes_complex) {
         }
     );
 
-    b.select(detail::position(1, 3));
-    b.select(detail::position(2, 3));
+    b.select(position(1, 3));
+    b.select(position(2, 3));
 
     //when
     b.swap(); std::cout << b;
@@ -176,14 +170,12 @@ TEST_F(board_test, is_swap_winning_yes_complex) {
 }
 
 TEST_F(board_test, matches) {
-    using namespace detail;
-
     //expect
-    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(detail::black));
+    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
 
     //given
-    board b(4, 4, 3, irandom_mock_);
-    std::vector<detail::position> m{detail::position(1, 1), detail::position(1, 2), detail::position(1, 3)};
+    board b(4, 4, 3, 5, irandom_mock_);
+    std::vector<position> m{position(1, 1), position(1, 2), position(1, 3)};
     fill_board(b,
         {
             blue   , yellow , green  , purple
@@ -193,8 +185,8 @@ TEST_F(board_test, matches) {
         }
     );
 
-    b.select(detail::position(1, 3));
-    b.select(detail::position(2, 3));
+    b.select(position(1, 3));
+    b.select(position(2, 3));
     b.swap(); std::cout << b;
 
     //when
@@ -208,13 +200,11 @@ TEST_F(board_test, matches) {
 }
 
 TEST_F(board_test, scroll_down) {
-    using namespace detail;
-
     //expect
-    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(detail::black));
+    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
 
     //given
-    board b(4, 4, 3, irandom_mock_);
+    board b(4, 4, 3, 5, irandom_mock_);
 
     fill_board(b,
         {
@@ -225,7 +215,7 @@ TEST_F(board_test, scroll_down) {
         }
     );
 
-    board expected(4, 4, 3, irandom_mock_);
+    board expected(4, 4, 3, 5, irandom_mock_);
     fill_board(expected,
         {
             blue   , black   , green  , purple
@@ -235,8 +225,8 @@ TEST_F(board_test, scroll_down) {
         }
     );
 
-    b.select(detail::position(1, 3));
-    b.select(detail::position(2, 3));
+    b.select(position(1, 3));
+    b.select(position(2, 3));
     b.swap(); std::cout << b;
     EXPECT_EQ(3u, b.matches().size());
 

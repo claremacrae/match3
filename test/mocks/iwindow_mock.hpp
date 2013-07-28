@@ -9,12 +9,12 @@
 
 namespace game {
 namespace sdl {
+namespace mocks {
 
 class iwindow_mock : public iwindow
 {
 public:
-    virtual ~iwindow_mock();
-
+    virtual ~iwindow_mock() { }
     MOCK_CONST_METHOD1(load_image, boost::shared_ptr<SDL_Texture>(const std::string &));
     MOCK_CONST_METHOD4(render_text, boost::shared_ptr<SDL_Texture>(const std::string &, const std::string &, SDL_Color, int));
     MOCK_METHOD4(draw, void(boost::shared_ptr<SDL_Texture>, int, int, std::size_t));
@@ -24,6 +24,7 @@ public:
     MOCK_METHOD0(quit, void());
 };
 
+} // namespace mocks
 } // namespace game
 } // namespace sdl
 

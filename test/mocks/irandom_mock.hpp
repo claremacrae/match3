@@ -8,15 +8,16 @@
 #include "irandom.hpp"
 
 namespace game {
+namespace mocks {
 
 class irandom_mock : public irandom
 {
 public:
-    virtual ~irandom_mock();
-
+    virtual ~irandom_mock() { }
     MOCK_CONST_METHOD2(get_random_number, int(int, int));
 };
 
+} // namespace mocks
 } // namespace game
 
 #endif // IRANDOM_MOCK_HPP
