@@ -15,7 +15,7 @@ class iviewer_mock : public iviewer
 public:
     virtual ~iviewer_mock() { }
     MOCK_METHOD0(quit, void());
-    MOCK_METHOD0(render, void(sdl::milliseconds_t));
+    MOCK_METHOD1(render, void(sdl::milliseconds_t));
     MOCK_METHOD0(clear_board, void());
     MOCK_METHOD2(show_grid, void(const game::position &, color_t));
     MOCK_METHOD2(scroll_grid, void(const game::position &, color_t));

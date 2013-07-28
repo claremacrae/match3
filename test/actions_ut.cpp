@@ -27,7 +27,7 @@ TEST(actions_test, init_board) {
 
     EXPECT_CALL(*viewer_mock, clear_board());
     EXPECT_CALL(*viewer_mock, show_grid(GT::_, color));
-    EXPECT_CALL(*viewer_mock, render());
+    EXPECT_CALL(*viewer_mock, render(GT::_));
 
     //when
     action(dummy_event());
@@ -44,7 +44,7 @@ TEST(actions_test, show_matches) {
     EXPECT_CALL(*board_mock, matches()).WillRepeatedly(GT::Return(positions));
 
     EXPECT_CALL(*viewer_mock, show_match(GT::_));
-    EXPECT_CALL(*viewer_mock, render());
+    EXPECT_CALL(*viewer_mock, render(GT::_));
 
     //when
     action(dummy_event());
@@ -67,7 +67,7 @@ TEST(actions_test, scroll_board) {
 
     EXPECT_CALL(*viewer_mock, clear_board()).Times(2);
     EXPECT_CALL(*viewer_mock, scroll_grid(GT::_, GT::_)).Times(1);
-    EXPECT_CALL(*viewer_mock, render()).Times(GT::AnyNumber());
+    EXPECT_CALL(*viewer_mock, render(GT::_)).Times(GT::AnyNumber());
     EXPECT_CALL(*viewer_mock, show_grid(GT::_, color)).Times(2);
 
     //when
@@ -84,7 +84,7 @@ TEST(actions_test, show_time) {
 
     //expect
     EXPECT_CALL(*viewer_mock, show_time(9));
-    EXPECT_CALL(*viewer_mock, render());
+    EXPECT_CALL(*viewer_mock, render(GT::_));
 
     //when
     action(dummy_event());
