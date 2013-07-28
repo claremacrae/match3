@@ -21,8 +21,8 @@ class viewer : public iviewer
     const std::string match_image       = "match.png";
     const std::string font              = "font.ttf";
 
-    const SDL_Color black               = { 0, 0, 0, 0 };
-    const SDL_Color white               = { 255, 255, 255, 0 };
+    const SDL_Color black               = {0, 0, 0, 0};
+    const SDL_Color white               = {255, 255, 255, 0};
 
     const int grid_size                 = 38;
     const int grid_offset               = grid_size + 5;
