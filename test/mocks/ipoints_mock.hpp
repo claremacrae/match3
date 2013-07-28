@@ -16,6 +16,7 @@ public:
     virtual ~ipoints_mock() { }
     MOCK_METHOD1(add, void(int));
     MOCK_METHOD1(sub, void(int));
+    virtual operator int() const override { return 0; }
 };
 
 } // namespace mocks

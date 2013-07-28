@@ -18,7 +18,10 @@ namespace back = boost::msm::back;
 namespace game {
 namespace sdl {
 
-template<typename TStateMachine>
+template<
+    typename TStateMachine
+  , int(*sdl_push_event)(SDL_Event*) = SDL_PushEvent
+>
 class msm : public back::state_machine<TStateMachine>
 {
     BOOST_MPL_HAS_XXX_TRAIT_DEF(id)
@@ -41,7 +44,7 @@ public:
     template<typename TEvent>
     void process_event(const TEvent& event) {
         SDL_Event sdl_event = build_sdl_event(event);
-        SDL_PushEvent(&sdl_event);
+        sdl_push_event(&sdl_event);
     }
 
     void process_event(const SDL_Event& event) {
