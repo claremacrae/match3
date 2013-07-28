@@ -6,6 +6,7 @@
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <SDL.h>
+#include "sdl/timer.hpp"
 #include "position.hpp"
 #include "time_ticks.hpp"
 #include "ipoints.hpp"
@@ -28,7 +29,7 @@ public:
     { }
 
 protected:
-    void show_board() {
+    void show_board(sdl::milliseconds_t delay = 0) {
         viewer_->clear_board();
         for (int y = 0; y < board_->get_rows(); y++) {
             for (int x = 0; x < board_->get_cols(); x++) {
@@ -36,7 +37,7 @@ protected:
                 viewer_->show_grid(pos, board_->get_grid_color(pos));
             }
         }
-        viewer_->render();
+        viewer_->render(delay);
     }
 
     boost::shared_ptr<iboard> board_;
@@ -87,7 +88,7 @@ public:
     template<class Event>
     void operator()(const Event&) {
         board_->swap();
-        show_board();
+        show_board(100);
     }
 };
 
@@ -98,7 +99,6 @@ public:
 
     template<class Event>
     void operator()(const Event&) {
-        SDL_Delay(100);
         board_->swap(); // just swap again
     }
 };
@@ -113,8 +113,7 @@ public:
         for (const auto& pos : board_->matches()) {
             viewer_->show_match(pos);
         }
-        viewer_->render();
-        SDL_Delay(300);
+        viewer_->render(300);
     }
 };
 
@@ -126,15 +125,13 @@ public:
     template<class Event>
     void operator()(const Event&) {
         board_->scroll_down();
-        show_board();
-        SDL_Delay(100);
+        show_board(100);
 
         for (const auto& pos : board_->new_randoms()) {
             viewer_->scroll_grid(pos, board_->get_grid_color(pos));
         }
 
-        viewer_->render();
-        SDL_Delay(100);
+        viewer_->render(100);
         show_board();
     }
 };

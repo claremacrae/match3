@@ -26,8 +26,9 @@ viewer::viewer(boost::shared_ptr<sdl::iwindow> window
     }
 }
 
-void viewer::render() {
+void viewer::render(sdl::milliseconds_t delay) {
     window_->render_layers();
+    SDL_Delay(delay);
 }
 
 void viewer::clear_board() {

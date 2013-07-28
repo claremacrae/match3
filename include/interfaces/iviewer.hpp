@@ -13,7 +13,7 @@ class iviewer
 public:
     virtual ~iviewer() { }
     virtual void quit() = 0;
-    virtual void render() = 0;
+    virtual void render(sdl::milliseconds_t = 0) = 0;
     virtual void clear_board() = 0;
     virtual void show_grid(const position&, color_t) = 0;
     virtual void scroll_grid(const position&, color_t) = 0;

@@ -43,7 +43,7 @@ public:
         , boost::di::named<int, _S("board colors")>);
 
     virtual void quit() override;
-    virtual void render() override;
+    virtual void render(sdl::milliseconds_t) override;
     virtual void clear_board() override;
     virtual void show_grid(const position&, color_t) override;
     virtual void scroll_grid(const position&, color_t) override;
