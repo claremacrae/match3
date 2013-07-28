@@ -100,7 +100,7 @@ void viewer::show_results(int points) {
     window_->clear();
     show_text(
         "Game Over"
-      , 110
+      , 115
       , 85
       , white
       , 100
@@ -117,8 +117,8 @@ void viewer::show_results(int points) {
     );
 
     show_text(
-        "Press any key to exit..."
-      , 220
+        "Close the window to exit..."
+      , 190
       , 480
       , white
       , 32

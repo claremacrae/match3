@@ -4,6 +4,15 @@ CXXFLAGS_COMMON := -std=c++11 -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MP
 CXXFLAGS    	:= $(CXXFLAGS_COMMON) -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs
 OBJS 			:= $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) src -iname *.cpp)) | $(TR) '\\' '/')
 TEST_OBJS 		:= $(shell echo $(patsubst %.cpp, %.o, $(shell $(FIND) test -iname *.cpp)) | $(TR) '\\' '/')
+mode 			:= release
+
+ifeq (release, $(mode))
+	CXXFLAGS 	+=
+endif
+
+ifeq (debug, $(mode))
+	CXXFLAGS 	+= -g
+endif
 
 build: clean $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(BIN)/$(TGT) $(shell $(FIND) $(BIN) -iname *.o) $(LIBS)

@@ -28,7 +28,7 @@ class controller : public front::state_machine_def<controller>
     {
         typedef mpl::vector1<flag_game_over> flag_list;
     };
-    struct wait_for_any_key     : front::interrupt_state<key_pressed>, euml::euml_state<wait_for_any_key> { };
+    struct wait_for_any_key     : front::interrupt_state<window_close>, euml::euml_state<wait_for_any_key> { };
 
 public:
     typedef mpl::vector<idle, wait_for_client> initial_state;
@@ -46,7 +46,7 @@ public:
       ,                           wait_for_client()      + time_tick() [not is_game_timeout()] / show_time()
       , wait_for_any_key()     == wait_for_client()      + key_pressed() [is_key<SDLK_ESCAPE>()] / (fade_screen(), show_results())
       , wait_for_any_key()     == wait_for_client()      + window_close() / (fade_screen(), show_results())
-      , game_over()            == wait_for_any_key()     + key_pressed() / finish_game()
+      , game_over()            == wait_for_any_key()     + window_close() / finish_game()
    // +------------------------------------------------------------------------------------------------------------------------------------------------------------------+
     ), transition_table)
 };
