@@ -18,7 +18,7 @@ make -f Makefile.mingw_linux externals build run
 
  + windows
 ```sh
-externals/unix/make.exe -f Makefile.mingw_win externals build run
+externals\unix\make.exe -f Makefile.mingw_win externals build run
 ```
 
 **Speed up compilation times**
