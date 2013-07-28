@@ -171,9 +171,6 @@ TEST_F(board_test, is_swap_winning_yes_complex) {
 }
 
 TEST_F(board_test, matches) {
-    //expect
-    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
-
     //given
     board b(4, 4, 3, 5, irandom_mock_);
     std::vector<position> m{position(1, 1), position(1, 2), position(1, 3)};
@@ -190,18 +187,20 @@ TEST_F(board_test, matches) {
     b.select(position(2, 3));
     b.swap(); std::cout << b;
 
+    //expect
+    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
+
     //when
     auto matches = b.matches();
 
     //then
     EXPECT_EQ(m.size(), matches.size());
-    for (std::size_t i = 0; i < m.size(); ++i) {
-        EXPECT_TRUE(matches.find(m[i]) != matches.end());
+    for (const auto& pos : m) {
+        EXPECT_TRUE(matches.find(pos) != matches.end());
     }
 }
 
 TEST_F(board_test, scroll_down) {
-
     //given
     board b(4, 4, 3, 5, irandom_mock_);
 
@@ -234,6 +233,33 @@ TEST_F(board_test, scroll_down) {
 
     //then
     compare_boards(b, expected);
+}
+
+TEST_F(board_test, new_randoms) {
+    //given
+    std::vector<position> n{position(0, 0), position(0, 1)};
+    board b(4, 4, 3, 5, irandom_mock_);
+
+    fill_board(b,
+        {
+            none   , yellow , green  , purple
+          , none   , green  , blue   , black
+          , purple , green  , yellow , purple
+          , blue   , blue   , green  , black
+        }
+    );
+
+    //expect
+    EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
+
+    //when
+    auto new_randoms = b.new_randoms();
+
+    //then
+    EXPECT_EQ(n.size(), new_randoms.size());
+    for (const auto& pos : n) {
+        EXPECT_TRUE(new_randoms.find(pos) != new_randoms.end());
+    }
 }
 
 } // namespace test
