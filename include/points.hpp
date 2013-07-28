@@ -1,14 +1,16 @@
 #ifndef POINTS_TQVMGAEK
 #define POINTS_TQVMGAEK
 
+#include "interfaces/ipoints.hpp"
+
 namespace game {
 
-class points
+class points : public ipoints
 {
 public:
-    void add(int);
-    void sub(int);
-    operator int() const;
+    virtual void add(int) override;
+    virtual void sub(int) override;
+    virtual operator int() const override;
 
 private:
     int points_ = 0;

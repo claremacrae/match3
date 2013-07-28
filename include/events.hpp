@@ -6,7 +6,7 @@
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>
 #include <SDL.h>
-#include "detail/position.hpp"
+#include "position.hpp"
 
 namespace euml = boost::msm::front::euml;
 
@@ -33,7 +33,7 @@ struct button_clicked : euml::euml_event<button_clicked>
             , ((event.button.y - y) / grid))
     { }
 
-    detail::position pos;
+    position pos;
 };
 
 struct key_pressed : euml::euml_event<key_pressed>

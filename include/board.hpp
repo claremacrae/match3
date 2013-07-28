@@ -9,15 +9,16 @@
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>
-#include "detail/row.hpp"
-#include "detail/position.hpp"
+#include "row.hpp"
+#include "position.hpp"
 #include "irandom.hpp"
+#include "iboard.hpp"
 
 namespace game {
 
-class board
+class board : public iboard
 {
-    typedef std::vector<detail::row> rows_t;
+    typedef std::vector<row> rows_t;
 
 public:
     BOOST_DI_CTOR(board
@@ -27,35 +28,35 @@ public:
       , boost::di::named<int, _S("board colors")> colors
       , boost::shared_ptr<irandom>);
 
-    void init_with_randoms();
-    bool is_within_board(const detail::position& pos) const;
-    bool is_neighbor(const detail::position&) const;
-    bool is_same_selected(const detail::position&) const;
-    bool is_same_color(const detail::position&);
-    bool is_swap_winning();
-    std::vector<detail::position> matches();
+    virtual void init_with_randoms() override;
+    virtual bool is_within_board(const position&) const override;
+    virtual bool is_neighbor(const position&) const override;
+    virtual bool is_same_selected(const position&) const override;
+    virtual bool is_same_color(const position&) override;
+    virtual bool is_swap_winning() override;
+    virtual std::vector<position> matches() override;
 
-    void select(const detail::position&);
-    void unselect_item(std::size_t);
-    void unselect_all();
-    void swap();
-    void scroll_down();
+    virtual void select(const position&) override;
+    virtual void unselect_item(std::size_t) override;
+    virtual void unselect_all() override;
+    virtual void swap() override;
+    virtual void scroll_down() override;
 
-    void set(const detail::position&, const detail::color_t&);
-    detail::color_t get_grid_color(const detail::position&);
+    virtual void set(const position&, const color_t&) override;
+    virtual color_t get_grid_color(const position&) override;
 
-    int get_rows() const;
-    int get_cols() const;
-    int get_to_win() const;
+    virtual int get_rows() const override;
+    virtual int get_cols() const override;
+    virtual int get_to_win() const override;
 
 private:
-    bool is_swap_winning(const detail::position&);
-    bool is_swap_winning_impl_x(const detail::position&);
-    bool is_swap_winning_impl_y(const detail::position&);
+    bool is_swap_winning(const position&);
+    bool is_swap_winning_impl_x(const position&);
+    bool is_swap_winning_impl_y(const position&);
 
-    void matches(const detail::position&);
-    void matches_impl_x(const detail::position&);
-    void matches_impl_y(const detail::position&);
+    void matches(const position&);
+    void matches_impl_x(const position&);
+    void matches_impl_y(const position&);
     void scroll_column(int, int);
     void clear_matches();
 
@@ -65,7 +66,7 @@ private:
     int colors_ = 0;
     boost::shared_ptr<irandom> random_;
     rows_t rows_;
-    mutable std::vector<detail::position> selected_;
+    mutable std::vector<position> selected_;
 };
 
 } // namespace game

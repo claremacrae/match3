@@ -29,7 +29,7 @@ viewer::viewer(boost::shared_ptr<sdl::iwindow> window
     select_image_ = window_->load_image(images_dir + select_image);
 
     for (int i = 0; i <= colors; ++i) {
-        grid_images_[static_cast<detail::color_t>(i)] =
+        grid_images_[static_cast<color_t>(i)] =
             window_->load_image(images_dir + boost::lexical_cast<std::string>(i) + ".png");
     }
 }
@@ -43,7 +43,7 @@ void viewer::clear_board() {
     window_->clear(board_actions_layer);
 }
 
-void viewer::show_match(const detail::position& pos) {
+void viewer::show_match(const position& pos) {
     window_->draw(
         match_image_
       , grids_offset_x_ + (pos.x * grid_offset_)
@@ -52,7 +52,7 @@ void viewer::show_match(const detail::position& pos) {
     );
 }
 
-void viewer::show_grid(const detail::position& pos, detail::color_t color) {
+void viewer::show_grid(const position& pos, color_t color) {
     assert(grid_images_.find(color) != grid_images_.end());
     window_->draw(
         grid_images_[color]
@@ -62,7 +62,7 @@ void viewer::show_grid(const detail::position& pos, detail::color_t color) {
     );
 }
 
-void viewer::select_item(const detail::position& pos) {
+void viewer::select_item(const position& pos) {
     window_->draw(
         select_image_
       , grids_offset_x_ + (pos.x * grid_offset_) - 1

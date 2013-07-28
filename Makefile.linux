@@ -1,12 +1,9 @@
 .PHONY: run
 
-EXTERNALS   	:= externals
 BIN             := bin/linux
 TGT 			:= game
 TEST            := game_ut
 CXX             := g++
-BOOST 			:= boost_1_52_0
-CXXFLAGS        := -std=c++11 -Wall -Wextra -Werror -pedantic -pedantic-errors -Wno-unused-local-typedefs -DBOOST_MPL_CFG_NO_PREPROCESSED_HEADERS -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DBOOST_DI_NO_CXX11_FEATURES -Iinclude -I$(EXTERNALS) -I$(EXTERNALS)/msm/include -I$(EXTERNALS)/di/include -I$(EXTERNALS)/boost/$(BOOST) -I$(EXTERNALS)/SDL2
 LIBS            := -Lbin/linux -lSDL2 -lSDL2_image -lSDL2_ttf-2.0 -lfreetype
 FIND 			:= find
 RM 				:= rm

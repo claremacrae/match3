@@ -5,7 +5,6 @@
 #include "grid.hpp"
 
 namespace game {
-namespace detail {
 
 class row
 {
@@ -24,7 +23,6 @@ private:
     grids_t grids_;
 };
 
-} // namespace detail
 } // namespace game
 
 #endif

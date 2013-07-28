@@ -2,7 +2,6 @@
 #define POSITION_IZC7KE4U
 
 namespace game {
-namespace detail {
 
 struct position
 {
@@ -14,7 +13,6 @@ struct position
     int y = 0;
 };
 
-} // namespace detail
 } // namespace game
 
 #endif

@@ -2,7 +2,6 @@
 #define GRID_5TY96XWJ
 
 namespace game {
-namespace detail {
 
 typedef int color_t;
 
@@ -16,7 +15,6 @@ struct grid
     bool matched = false;
 };
 
-} // namespace detail
 } // namespace game
 
 #endif

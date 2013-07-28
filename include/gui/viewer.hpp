@@ -6,9 +6,9 @@
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>
-#include "detail/position.hpp"
-#include "sdl/iwindow.hpp"
+#include "iwindow.hpp"
 #include "iviewer.hpp"
+#include "position.hpp"
 
 namespace game {
 namespace gui {
@@ -44,9 +44,9 @@ public:
     virtual void quit() override;
     virtual void render() override;
     virtual void clear_board() override;
-    virtual void show_grid(const detail::position&, detail::color_t) override;
-    virtual void show_match(const detail::position&) override;
-    virtual void select_item(const detail::position&) override;
+    virtual void show_grid(const position&, color_t) override;
+    virtual void show_match(const position&) override;
+    virtual void select_item(const position&) override;
     virtual void show_time(int) override;
     virtual void show_points(int) override;
     virtual void show_results(int) override;
@@ -58,7 +58,7 @@ private:
     boost::shared_ptr<SDL_Texture> background_image_;
     boost::shared_ptr<SDL_Texture> match_image_;
     boost::shared_ptr<SDL_Texture> select_image_;
-    std::map<detail::color_t, boost::shared_ptr<SDL_Texture>> grid_images_;
+    std::map<color_t, boost::shared_ptr<SDL_Texture>> grid_images_;
     int grid_offset_ = 0;
     int grids_offset_x_ = 0;
     int grids_offset_y_ = 0;

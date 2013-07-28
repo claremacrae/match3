@@ -4,10 +4,10 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/msm/front/euml/euml.hpp>
 #include <boost/di/ctor.hpp>
-#include "detail/position.hpp"
 #include "time_ticks.hpp"
+#include "iboard.hpp"
+#include "position.hpp"
 #include "events.hpp"
-#include "board.hpp"
 
 namespace game {
 
@@ -18,12 +18,12 @@ public:
     guard() { }
 
     BOOST_DI_CTOR(guard
-        , boost::shared_ptr<board> b, int /*dummy*/)
+        , boost::shared_ptr<iboard> b, int /*dummy*/)
         : board_(b)
     { }
 
 protected:
-    boost::shared_ptr<board> board_;
+    boost::shared_ptr<iboard> board_;
 };
 
 class is_within_board : public guard<is_within_board>

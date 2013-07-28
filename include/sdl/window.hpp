@@ -6,7 +6,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/di.hpp>
 #include <mpl/string.hpp>
-#include "sdl/iwindow.hpp"
+#include "iwindow.hpp"
 
 namespace game {
 namespace sdl {

@@ -16,7 +16,7 @@ board::board(
     , to_win_size_(win)
     , colors_(colors)
     , random_(i)
-    , rows_(get_rows(), detail::row(get_cols()))
+    , rows_(get_rows(), row(get_cols()))
 { }
 
 void board::init_with_randoms() {
@@ -27,7 +27,7 @@ void board::init_with_randoms() {
     }
 }
 
-bool board::is_within_board(const detail::position& pos) const {
+bool board::is_within_board(const position& pos) const {
     int x = pos.x;
     int y = pos.y;
 
@@ -35,7 +35,7 @@ bool board::is_within_board(const detail::position& pos) const {
            y >= 0 and y < get_rows();
 }
 
-bool board::is_neighbor(const detail::position& pos) const {
+bool board::is_neighbor(const position& pos) const {
     assert(!selected_.empty());
     int x1 = pos.x;
     int y1 = pos.y;
@@ -45,12 +45,12 @@ bool board::is_neighbor(const detail::position& pos) const {
     return (std::abs(x1 - x2) + std::abs(y1 - y2)) == 1;
 }
 
-bool board::is_same_selected(const detail::position& pos) const {
+bool board::is_same_selected(const position& pos) const {
     assert(selected_.size() == 1);
     return selected_[0].x == pos.x and selected_[0].y == pos.y;
 }
 
-bool board::is_same_color(const detail::position& pos) {
+bool board::is_same_color(const position& pos) {
     assert(selected_.size() == 1);
     return get_grid_color(selected_[0]) == get_grid_color(pos);
 }
@@ -61,29 +61,29 @@ bool board::is_swap_winning() {
            is_swap_winning(selected_[1]);
 }
 
-std::vector<detail::position> board::matches() {
+std::vector<position> board::matches() {
     assert(selected_.size() == 2);
 
     clear_matches();
     matches(selected_[0]);
     matches(selected_[1]);
 
-    std::vector<detail::position> v;
+    std::vector<position> v;
     for (int y = 0; y < get_rows(); ++y) {
         for (int x = 0; x < get_cols(); ++x) {
             if (rows_[x][y].matched) {
-                v.push_back(detail::position(x, y));
+                v.push_back(position(x, y));
             }
         }
     }
     return v;
 }
 
-void board::select(const detail::position& pos) {
+void board::select(const position& pos) {
     if (selected_.size() == 2) {
         selected_.clear();
     }
-    selected_.push_back(detail::position(pos.x, pos.y));
+    selected_.push_back(position(pos.x, pos.y));
 }
 
 void board::unselect_all() {
@@ -102,18 +102,18 @@ void board::swap() {
     int x2 = selected_[1].x;
     int y2 = selected_[1].y;
 
-    detail::color_t tmp = rows_[x1][y1].color;
+    color_t tmp = rows_[x1][y1].color;
     rows_[x1][y1].color = rows_[x2][y2].color;
     rows_[x2][y2].color = tmp;
 }
 
-void board::set(const detail::position& pos, const detail::color_t& color) {
+void board::set(const position& pos, const color_t& color) {
     assert(pos.x >= 0 and pos.x < get_cols());
     assert(pos.y >= 0 and pos.y < get_rows());
     rows_[pos.x][pos.y].color = color;
 }
 
-detail::color_t board::get_grid_color(const detail::position& pos) {
+color_t board::get_grid_color(const position& pos) {
     assert(pos.x >= 0 and pos.x < get_cols());
     assert(pos.y >= 0 and pos.y < get_rows());
     return rows_[pos.x][pos.y].color;
@@ -137,13 +137,13 @@ void board::scroll_down() {
     clear_matches();
 }
 
-bool board::is_swap_winning(const detail::position& pos) {
+bool board::is_swap_winning(const position& pos) {
     return is_swap_winning_impl_x(pos) or
            is_swap_winning_impl_y(pos);
 }
 
-bool board::is_swap_winning_impl_x(const detail::position& pos) {
-    detail::color_t color = rows_[pos.x][pos.y].color;
+bool board::is_swap_winning_impl_x(const position& pos) {
+    color_t color = rows_[pos.x][pos.y].color;
     int length = 0;
 
     for (int x = pos.x; x < get_cols(); ++x) {
@@ -165,8 +165,8 @@ bool board::is_swap_winning_impl_x(const detail::position& pos) {
     return length >= get_to_win() + 1;
 }
 
-bool board::is_swap_winning_impl_y(const detail::position& pos) {
-    detail::color_t color = rows_[pos.x][pos.y].color;
+bool board::is_swap_winning_impl_y(const position& pos) {
+    color_t color = rows_[pos.x][pos.y].color;
     int length = 0;
 
     for (int y = pos.y; y < get_rows(); ++y) {
@@ -188,7 +188,7 @@ bool board::is_swap_winning_impl_y(const detail::position& pos) {
     return length >= get_to_win() + 1;
 }
 
-void board::matches(const detail::position& pos) {
+void board::matches(const position& pos) {
     if (is_swap_winning_impl_x(pos)) {
         matches_impl_x(pos);
     }
@@ -198,8 +198,8 @@ void board::matches(const detail::position& pos) {
     }
 }
 
-void board::matches_impl_x(const detail::position& pos) {
-    detail::color_t color = rows_[pos.x][pos.y].color;
+void board::matches_impl_x(const position& pos) {
+    color_t color = rows_[pos.x][pos.y].color;
 
     for (int x = pos.x; x < get_cols(); ++x) {
         if (rows_[x][pos.y].color != color) {
@@ -218,8 +218,8 @@ void board::matches_impl_x(const detail::position& pos) {
     }
 }
 
-void board::matches_impl_y(const detail::position& pos) {
-    detail::color_t color = rows_[pos.x][pos.y].color;
+void board::matches_impl_y(const position& pos) {
+    color_t color = rows_[pos.x][pos.y].color;
 
     for (int y = pos.y; y < get_rows(); ++y) {
         if (rows_[pos.x][y].color != color) {

@@ -7,6 +7,9 @@
 #include "gui/viewer.hpp"
 #include "gui/user.hpp"
 #include "gui/time.hpp"
+#include "controller.hpp"
+#include "board.hpp"
+#include "points.hpp"
 #include "random_mt19937.hpp"
 #include "random_rand.hpp"
 
@@ -46,13 +49,14 @@ typedef di::generic_module<
 
   , di::singletons<
         sdl::window
+      , controller_t
+      , board
       , gui::user
       , gui::time
       , gui::viewer
-      , random_rand
-      , controller_t
       , points
       , time_ticks
+      , random_rand
     >
 > config;
 

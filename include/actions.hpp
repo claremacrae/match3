@@ -6,10 +6,10 @@
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <SDL.h>
-#include "detail/position.hpp"
+#include "position.hpp"
 #include "time_ticks.hpp"
-#include "points.hpp"
-#include "board.hpp"
+#include "ipoints.hpp"
+#include "iboard.hpp"
 #include "iviewer.hpp"
 #include "events.hpp"
 
@@ -22,7 +22,7 @@ public:
     action() { }
 
     BOOST_DI_CTOR(action
-        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iboard> b
         , boost::shared_ptr<iviewer> v)
         : board_(b), viewer_(v)
     { }
@@ -32,14 +32,14 @@ protected:
         viewer_->clear_board();
         for (int y = 0; y < board_->get_rows(); y++) {
             for (int x = 0; x < board_->get_cols(); x++) {
-                detail::position pos(x, y);
+                position pos(x, y);
                 viewer_->show_grid(pos, board_->get_grid_color(pos));
             }
         }
         viewer_->render();
     }
 
-    boost::shared_ptr<board> board_;
+    boost::shared_ptr<iboard> board_;
     boost::shared_ptr<iviewer> viewer_;
 };
 
@@ -136,7 +136,7 @@ public:
     show_time() { }
 
     BOOST_DI_CTOR(show_time
-        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iboard> b
         , boost::shared_ptr<iviewer> v
         , boost::shared_ptr<time_ticks> t
         , boost::di::named<time_ticks, _S("game time in seconds")> s)
@@ -164,8 +164,8 @@ public:
     add_points() { }
 
     BOOST_DI_CTOR(add_points
-        , boost::shared_ptr<board> b
-        , boost::shared_ptr<points> p)
+        , boost::shared_ptr<iboard> b
+        , boost::shared_ptr<ipoints> p)
         : action_t(b, boost::shared_ptr<iviewer>()), points_(p)
     { }
 
@@ -178,7 +178,7 @@ public:
     }
 
 private:
-    boost::shared_ptr<points> points_;
+    boost::shared_ptr<ipoints> points_;
 };
 
 template<int Value>
@@ -190,7 +190,7 @@ public:
     sub_points() { }
 
     BOOST_DI_CTOR(sub_points
-        , boost::shared_ptr<points> p, int /*dummy*/)
+        , boost::shared_ptr<ipoints> p, int /*dummy*/)
         : points_(p)
     { }
 
@@ -200,7 +200,7 @@ public:
     }
 
 private:
-    boost::shared_ptr<points> points_;
+    boost::shared_ptr<ipoints> points_;
 };
 
 class show_points : public action<show_points>
@@ -209,9 +209,9 @@ public:
     show_points() { }
 
     BOOST_DI_CTOR(show_points
-        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iboard> b
         , boost::shared_ptr<iviewer> v
-        , boost::shared_ptr<points> p)
+        , boost::shared_ptr<ipoints> p)
         : action(b, v), points_(p)
     { }
 
@@ -222,7 +222,7 @@ public:
     }
 
 private:
-    boost::shared_ptr<points> points_;
+    boost::shared_ptr<ipoints> points_;
 };
 
 class show_results : public action<show_results>
@@ -231,9 +231,9 @@ public:
     show_results() { }
 
     BOOST_DI_CTOR(show_results
-        , boost::shared_ptr<board> b
+        , boost::shared_ptr<iboard> b
         , boost::shared_ptr<iviewer> v
-        , boost::shared_ptr<points> p)
+        , boost::shared_ptr<ipoints> p)
         : action(b, v), points_(p)
     { }
 
@@ -244,7 +244,7 @@ public:
     }
 
 private:
-    boost::shared_ptr<points> points_;
+    boost::shared_ptr<ipoints> points_;
 };
 
 class finish_game : public action<finish_game>
