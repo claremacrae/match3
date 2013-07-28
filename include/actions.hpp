@@ -127,6 +127,15 @@ public:
     void operator()(const Event&) {
         board_->scroll_down();
         show_board();
+        SDL_Delay(100);
+
+        for (const auto& pos : board_->new_randoms()) {
+            viewer_->scroll_grid(pos, board_->get_grid_color(pos));
+        }
+
+        viewer_->render();
+        SDL_Delay(100);
+        show_board();
     }
 };
 

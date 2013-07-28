@@ -35,6 +35,7 @@ public:
     virtual bool is_same_selected(const position&) const override;
     virtual bool is_same_color(const position&) override;
     virtual bool is_swap_winning() override;
+    virtual std::set<position> new_randoms() override;
     virtual std::set<position> matches() override;
 
     virtual void select(const position&) override;

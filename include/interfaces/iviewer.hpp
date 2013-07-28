@@ -16,6 +16,7 @@ public:
     virtual void render() = 0;
     virtual void clear_board() = 0;
     virtual void show_grid(const position&, color_t) = 0;
+    virtual void scroll_grid(const position&, color_t) = 0;
     virtual void show_match(const position&) = 0;
     virtual void select_item(const position&) = 0;
     virtual void show_time(int) = 0;

@@ -61,6 +61,21 @@ bool board::is_swap_winning() {
            is_swap_winning(selected_[1]);
 }
 
+std::set<position> board::new_randoms() {
+    std::set<position> positions;
+
+    for (int y = 0; y < get_rows(); ++y) {
+        for (int x = 0; x < get_cols(); ++x) {
+            if (rows_[x][y].color == grid::none) {
+                rows_[x][y].color = random_->get_random_number(1, colors_);
+                positions.insert(position(x, y));
+            }
+        }
+    }
+
+    return positions;
+}
+
 std::set<position> board::matches() {
     assert(selected_.size() == 2);
 
@@ -68,7 +83,7 @@ std::set<position> board::matches() {
     matches(selected_[0], positions);
     matches(selected_[1], positions);
 
-    for (const auto pos : positions) {
+    for (const auto& pos : positions) {
         rows_[pos.x][pos.y].color = grid::none;
     }
 
@@ -126,7 +141,7 @@ void board::scroll_down() {
         for (int x = 0; x < get_cols(); ++x) {
             if (rows_[x][y].color == grid::none) {
                 scroll_column(x, y);
-                rows_[x][0].color = random_->get_random_number(1, colors_);
+                rows_[x][0].color = grid::none;
             }
         }
     }

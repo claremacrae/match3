@@ -46,6 +46,7 @@ public:
     virtual void render() override;
     virtual void clear_board() override;
     virtual void show_grid(const position&, color_t) override;
+    virtual void scroll_grid(const position&, color_t) override;
     virtual void show_match(const position&) override;
     virtual void select_item(const position&) override;
     virtual void show_time(int) override;
