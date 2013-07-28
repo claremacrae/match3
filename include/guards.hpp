@@ -4,6 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/msm/front/euml/euml.hpp>
 #include <boost/di/ctor.hpp>
+#include <boost/di/named.hpp>
 #include "time_ticks.hpp"
 #include "iboard.hpp"
 #include "position.hpp"

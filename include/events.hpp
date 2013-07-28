@@ -3,7 +3,6 @@
 
 #include <boost/mpl/int.hpp>
 #include <boost/di/ctor.hpp>
-#include <boost/di/named.hpp>
 #include <mpl/string.hpp>
 #include <SDL.h>
 #include "position.hpp"
@@ -28,11 +27,11 @@ struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP>
 
     BOOST_DI_CTOR(button_clicked
         , const SDL_Event& event
-        , boost::di::named<int, _S("grid offset")> grid = 38 + 5
-        , boost::di::named<int, _S("grids offset x")> x = 328
-        , boost::di::named<int, _S("grids offset y")> y = 100)
-        : pos(((event.button.x - x) / grid)
-            , ((event.button.y - y) / grid))
+        , int grid_offset = 38 + 5
+        , int grids_offset_x = 328
+        , int grids_offset_y = 100)
+        : pos(((event.button.x - grids_offset_x) / grid_offset)
+            , ((event.button.y - grids_offset_y) / grid_offset))
     { }
 
     position pos;

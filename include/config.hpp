@@ -33,19 +33,14 @@ struct ctor_traits<game::app>
 namespace game {
 
 typedef di::generic_module<
-    di::bind_int    < _S("win width"),              755             >
-  , di::bind_int    < _S("win height"),             600             >
-  , di::bind_string < _S("win caption"),            _S("game")      >
-  , di::bind_int    < _S("game time in seconds"),   60              >
-  , di::bind_int    < _S("board rows"),             8               >
-  , di::bind_int    < _S("board cols"),             8               >
-  , di::bind_int    < _S("board winning strike"),   3               >
-  , di::bind_int    < _S("board colors"),           5               >
-  , di::bind_int    < _S("grid size"),              38              >
-  , di::bind_int    < _S("grid offset"),            38 + 5          >
-  , di::bind_int    < _S("grids offset x"),         328             >
-  , di::bind_int    < _S("grids offset y"),         100             >
-  , di::bind_string < _S("font name"),              _S("font.ttf")  >
+    di::bind_int    < _S("win width"),              755         >
+  , di::bind_int    < _S("win height"),             600         >
+  , di::bind_string < _S("win caption"),            _S("game")  >
+  , di::bind_int    < _S("game time in seconds"),   60          >
+  , di::bind_int    < _S("board rows"),             8           >
+  , di::bind_int    < _S("board cols"),             8           >
+  , di::bind_int    < _S("board winning strike"),   3           >
+  , di::bind_int    < _S("board colors"),           5           >
 
   , di::singletons<
         sdl::window
@@ -56,8 +51,12 @@ typedef di::generic_module<
       , gui::viewer
       , points
       , time_ticks
-      , random_rand
     >
+
+  , di::per_requests<
+        random_rand
+    >
+
 > config;
 
 } // namespace game
