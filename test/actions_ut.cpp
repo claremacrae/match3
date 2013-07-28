@@ -38,7 +38,7 @@ TEST(actions_test, show_matches) {
     auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
     auto viewer_mock = boost::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
     show_matches action(board_mock, viewer_mock);
-    std::vector<position> positions(1);
+    std::set<position> positions{ position() };
 
     EXPECT_CALL(*board_mock, matches()).WillRepeatedly(GT::Return(positions));
     EXPECT_CALL(*viewer_mock, show_match(GT::_));
@@ -71,14 +71,13 @@ TEST(actions_test, add_points) {
     //given
     auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
     auto points_mock = boost::make_shared<GT::StrictMock<mocks::ipoints_mock>>();
-    const int matches = 2;
     const int num = 10;
-    std::vector<position> positions(matches);
+    std::set<position> positions{ position(0, 0), position(1, 1) };
     add_points<num> action(board_mock, points_mock);
 
     //expect
     EXPECT_CALL(*board_mock, matches()).WillRepeatedly(GT::Return(positions));
-    EXPECT_CALL(*points_mock, add(num)).Times(matches);
+    EXPECT_CALL(*points_mock, add(num)).Times(positions.size());
 
     //when
     action(dummy_event());

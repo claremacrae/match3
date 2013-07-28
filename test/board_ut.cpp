@@ -13,7 +13,8 @@ namespace {
 
 enum color_t
 {
-    black
+    none
+  , black
   , blue
   , green
   , yellow
@@ -190,12 +191,12 @@ TEST_F(board_test, matches) {
     b.swap(); std::cout << b;
 
     //when
-    EXPECT_EQ(m.size(), b.matches().size());
+    auto matches = b.matches();
 
     //then
+    EXPECT_EQ(m.size(), matches.size());
     for (std::size_t i = 0; i < m.size(); ++i) {
-        EXPECT_EQ(m[i].x, b.matches()[i].x);
-        EXPECT_EQ(m[i].y, b.matches()[i].y);
+        EXPECT_TRUE(matches.find(m[i]) != matches.end());
     }
 }
 

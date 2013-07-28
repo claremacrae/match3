@@ -20,7 +20,7 @@ public:
     MOCK_CONST_METHOD1(is_same_selected, bool(const game::position &));
     MOCK_METHOD1(is_same_color, bool(const game::position &));
     MOCK_METHOD0(is_swap_winning, bool());
-    MOCK_METHOD0(matches, std::vector<position>());
+    MOCK_METHOD0(matches, std::set<position>());
     MOCK_METHOD1(select, void(const game::position &));
     MOCK_METHOD1(unselect_item, void(std::size_t));
     MOCK_METHOD0(unselect_all, void());

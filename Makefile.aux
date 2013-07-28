@@ -21,7 +21,7 @@ src/%.o:
 	$(CXX) $(CXXFLAGS) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o
 
 test: clean $(OBJS) $(TEST_OBJS)
-	$(CXX) $(CXXFLAGS_COMMON) -o $(BIN)/$(TGT)_test $(shell $(FIND) $(BIN) -iname *.o ! -iname "main.o") $(LIBS) -lgtest -lgmock
+	$(CXX) $(CXXFLAGS_COMMON) -o $(BIN)/$(TGT)_test $(shell $(FIND) $(BIN) -iname *.o ! -iname "main.o") $(LD_FLAGS) -lgtest -lgmock
 
 test/%.o:
 	$(CXX) $(CXXFLAGS_COMMON) -c $(patsubst %.o, %.cpp, $@) -o $(BIN)/$(shell echo $*| $(TR) '/' '_').o

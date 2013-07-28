@@ -1,7 +1,7 @@
 #ifndef IBOARD_TZCCH1TH
 #define IBOARD_TZCCH1TH
 
-#include <vector>
+#include <set>
 #include "position.hpp"
 #include "grid.hpp"
 
@@ -17,7 +17,7 @@ public:
     virtual bool is_same_selected(const position&) const = 0;
     virtual bool is_same_color(const position&) = 0;
     virtual bool is_swap_winning() = 0;
-    virtual std::vector<position> matches() = 0;
+    virtual std::set<position> matches() = 0;
 
     virtual void select(const position&) = 0;
     virtual void unselect_item(std::size_t) = 0;

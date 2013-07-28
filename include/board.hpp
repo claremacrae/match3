@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <vector>
+#include <set>
 #include <functional>
 #include <cmath>
 #include <boost/shared_ptr.hpp>
@@ -34,7 +35,7 @@ public:
     virtual bool is_same_selected(const position&) const override;
     virtual bool is_same_color(const position&) override;
     virtual bool is_swap_winning() override;
-    virtual std::vector<position> matches() override;
+    virtual std::set<position> matches() override;
 
     virtual void select(const position&) override;
     virtual void unselect_item(std::size_t) override;
@@ -54,11 +55,10 @@ private:
     bool is_swap_winning_impl_x(const position&);
     bool is_swap_winning_impl_y(const position&);
 
-    void matches(const position&);
-    void matches_impl_x(const position&);
-    void matches_impl_y(const position&);
+    void matches(const position&, std::set<position>&);
+    void matches_impl_x(const position&, std::set<position>&);
+    void matches_impl_y(const position&, std::set<position>&);
     void scroll_column(int, int);
-    void clear_matches();
 
     int rows_size_ = 0;
     int cols_size_ = 0;

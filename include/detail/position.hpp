@@ -13,6 +13,10 @@ struct position
     int y = 0;
 };
 
+inline bool operator<(const position& lhs, const position& rhs) {
+    return lhs.x < rhs.x || lhs.y < rhs.y;
+}
+
 } // namespace game
 
 #endif

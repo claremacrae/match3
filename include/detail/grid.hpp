@@ -7,12 +7,13 @@ typedef int color_t;
 
 struct grid
 {
+    static const color_t none = 0;
+
     explicit grid(color_t c = 0)
         : color(c)
     { }
 
     color_t color = 0;
-    bool matched = false;
 };
 
 } // namespace game
