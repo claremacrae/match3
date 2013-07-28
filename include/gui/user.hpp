@@ -9,7 +9,7 @@
 namespace game {
 namespace gui {
 
-class user: public iclient
+class user : public iclient
 {
 public:
     BOOST_DI_CTOR(explicit user, boost::shared_ptr<controller_t>);
