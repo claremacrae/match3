@@ -94,8 +94,8 @@ public:
     }
 
 private:
-    time_ticks game_time_in_sec_ = 0;
     boost::shared_ptr<time_ticks> time_ticks_;
+    time_ticks game_time_in_sec_ = 0;
 };
 
 template<int Key>
