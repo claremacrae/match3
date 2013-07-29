@@ -5,7 +5,7 @@
 git clone --recursive git@github.com:krzysztof-jusiak/game.git
 ```
 
-**Compilation**
+**Compilation** (tested with gcc 4.8.1 and boost_1_52_0)
  + linux
 ```
 make -f Makefile.linux externals build run
