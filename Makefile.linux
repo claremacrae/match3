@@ -1,4 +1,4 @@
-.PHONY: run
+.PHONY: run externals
 
 BIN  		:= bin/linux
 TGT   		:= game
@@ -12,4 +12,7 @@ include Makefile.aux
 
 run:
 	cd $(BIN) && ./$(TGT)
+
+externals:
+	
 
