@@ -27,6 +27,6 @@ make CXX="ccache g++" -f Makefile.linux build -j4
 ```
 
 **Screenshots**
- + ![ScreenShot](https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/board.png)
- + ![ScreenShot](https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/game_over.png)
+![ScreenShot](https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/board.png)
+![ScreenShot](https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/game_over.png)
 
