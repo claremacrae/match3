@@ -26,3 +26,7 @@ externals\unix\make.exe -f Makefile.mingw_win externals build run
 make CXX="ccache g++" -f Makefile.linux build -j4
 ```
 
+**Screenshots**
+![ScreenShot](https://{https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/board.png})
+![ScreenShot](https://{https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/game_over.png})
+
