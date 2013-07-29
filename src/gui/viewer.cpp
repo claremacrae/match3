@@ -62,7 +62,7 @@ void viewer::scroll_grid(const position& pos, color_t color) {
     window_->draw(
         grid_images_[color]
       , grids_offset_x + (pos.x * grid_offset)
-      , grids_offset_y + (pos.y * grid_offset) - 100
+      , grids_offset_y + (pos.y * grid_offset) - grids_offset_y
       , board_layer
     );
 }

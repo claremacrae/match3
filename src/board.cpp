@@ -61,6 +61,20 @@ bool board::is_swap_winning() {
            is_swap_winning(selected_[1]);
 }
 
+std::set<position> board::matches() {
+    assert(selected_.size() == 2);
+
+    std::set<position> positions;
+    matches(selected_[0], positions);
+    matches(selected_[1], positions);
+
+    for (const auto& pos : positions) {
+        rows_[pos.x][pos.y].color = grid::none;
+    }
+
+    return positions;
+}
+
 std::set<position> board::new_randoms() {
     std::set<position> positions;
 
@@ -71,20 +85,6 @@ std::set<position> board::new_randoms() {
                 positions.insert(position(x, y));
             }
         }
-    }
-
-    return positions;
-}
-
-std::set<position> board::matches() {
-    assert(selected_.size() == 2);
-
-    std::set<position> positions;
-    matches(selected_[0], positions);
-    matches(selected_[1], positions);
-
-    for (const auto& pos : positions) {
-        rows_[pos.x][pos.y].color = grid::none;
     }
 
     return positions;
