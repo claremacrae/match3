@@ -22,6 +22,6 @@ externals:
 	$(RM) -rf $(EXTERNALS)/$(MINGW) $(EXTERNALS)/boost/$(BOOST)
 	$(WGET) -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains targetting Win32/Personal Builds/rubenvb/gcc-4.8-release/i686-w64-mingw32-gcc-4.8.0-win32_rubenvb.7z" -O "$(EXTERNALS)/i686-w64-mingw32-gcc-4.8.0-win32_rubenvb.7z"
 	$(ZIP) x "$(EXTERNALS)/i686-w64-mingw32-gcc-4.8.0-win32_rubenvb.7z" -o"$(EXTERNALS)/$(MINGW)"
-	$(WGET) -c "http://downloads.sourceforge.net/project/boost/boost/1.52.0/$(BOOST).zip" -O "$(EXTERNALS)/$(BOOST).zip"
+	$(WGET) -c "http://downloads.sourceforge.net/project/boost/boost/1.54.0/$(BOOST).zip" -O "$(EXTERNALS)/$(BOOST).zip"
 	$(ZIP) x "$(EXTERNALS)/$(BOOST).zip" -o"$(EXTERNALS)/boost"
 
