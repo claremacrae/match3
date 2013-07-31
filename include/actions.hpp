@@ -129,6 +129,7 @@ public:
 
         for (const auto& pos : board_->new_randoms()) {
             viewer_->scroll_grid(pos, board_->get_grid_color(pos));
+            board_->select(pos);
         }
 
         viewer_->render(100);

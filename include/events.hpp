@@ -48,8 +48,9 @@ struct key_pressed : event<key_pressed, SDL_KEYDOWN>
     int key = 0;
 };
 
-struct window_close : event<window_close, SDL_QUIT> { };
-struct time_tick    : event<time_tick, __LINE__> { };
+struct window_close : event<window_close,   SDL_QUIT> { };
+struct time_tick    : event<time_tick,      __LINE__> { };
+struct matches      : event<matches,        __LINE__> { };
 
 } // namespace game
 

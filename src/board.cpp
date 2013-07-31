@@ -61,12 +61,27 @@ bool board::is_swap_winning() {
            is_swap_winning(selected_[1]);
 }
 
-std::set<position> board::matches() {
-    assert(selected_.size() == 2);
+bool board::are_selected() const {
+    return !selected_.empty();
+}
 
+std::set<position> board::matches(const position& pos) {
     std::set<position> positions;
-    matches(selected_[0], positions);
-    matches(selected_[1], positions);
+    matches(pos, positions);
+
+    for (const auto& pos : positions) {
+        rows_[pos.x][pos.y].color = grid::none;
+    }
+
+    return positions;
+}
+
+std::set<position> board::matches() {
+    std::set<position> positions;
+
+    for (const auto& item : selected_) {
+        matches(item, positions);
+    }
 
     for (const auto& pos : positions) {
         rows_[pos.x][pos.y].color = grid::none;

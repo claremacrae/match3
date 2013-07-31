@@ -17,6 +17,7 @@ public:
     virtual bool is_same_selected(const position&) const = 0;
     virtual bool is_same_color(const position&) = 0;
     virtual bool is_swap_winning() = 0;
+    virtual bool are_selected() const = 0;
     virtual std::set<position> new_randoms() = 0;
     virtual std::set<position> matches() = 0;
 

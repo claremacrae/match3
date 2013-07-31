@@ -78,6 +78,17 @@ public:
     }
 };
 
+class are_selected : public guard<are_selected>
+{
+public:
+    using guard::guard;
+
+    template<typename TEvent>
+    bool operator()(const TEvent&) const {
+        return board_->are_selected();
+    }
+};
+
 class is_game_timeout : public guard<is_game_timeout>
 {
 public:
