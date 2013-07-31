@@ -136,13 +136,11 @@ color_t board::get_grid_color(const position& pos) {
     return rows_[pos.x][pos.y].color;
 }
 
-void board::scroll_column(int x, int i) {
-    for (int y = i; y > 0; --y) {
-        rows_[x][y].color = rows_[x][y - 1].color;
-    }
-}
-
 void board::scroll_down() {
+    auto scroll_column = [&](int x, int y) {
+        rows_[x][y].color = rows_[x][y - 1].color;
+    };
+
     for (int y = 0; y < get_rows(); ++y) {
         for (int x = 0; x < get_cols(); ++x) {
             if (rows_[x][y].color == grid::none) {

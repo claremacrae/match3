@@ -60,7 +60,6 @@ private:
     void matches(const position&, std::set<position>&);
     void matches_impl_x(const position&, std::set<position>&);
     void matches_impl_y(const position&, std::set<position>&);
-    void scroll_column(int, int);
 
     int rows_size_ = 0;
     int cols_size_ = 0;
