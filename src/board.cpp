@@ -22,7 +22,9 @@ board::board(
 void board::init_with_randoms() {
    for (int y = 0; y < get_rows(); ++y) {
         for (int x = 0; x < get_cols(); ++x) {
-            rows_[x][y].color = random_->get_random_number(1, colors_);
+            do {
+                rows_[x][y].color = random_->get_random_number(1, colors_);
+            } while (is_item_winning(position(x, y)));
         }
     }
 }
@@ -57,23 +59,12 @@ bool board::is_same_color(const position& pos) {
 
 bool board::is_swap_winning() {
     assert(selected_.size() == 2);
-    return is_swap_winning(selected_[0]) or
-           is_swap_winning(selected_[1]);
+    return is_item_winning(selected_[0]) or
+           is_item_winning(selected_[1]);
 }
 
 bool board::are_selected() const {
     return !selected_.empty();
-}
-
-std::set<position> board::matches(const position& pos) {
-    std::set<position> positions;
-    matches(pos, positions);
-
-    for (const auto& pos : positions) {
-        rows_[pos.x][pos.y].color = grid::none;
-    }
-
-    return positions;
 }
 
 std::set<position> board::matches() {
@@ -162,12 +153,12 @@ void board::scroll_down() {
     }
 }
 
-bool board::is_swap_winning(const position& pos) {
-    return is_swap_winning_impl_x(pos) or
-           is_swap_winning_impl_y(pos);
+bool board::is_item_winning(const position& pos) {
+    return is_item_winning_impl_x(pos) or
+           is_item_winning_impl_y(pos);
 }
 
-bool board::is_swap_winning_impl_x(const position& pos) {
+bool board::is_item_winning_impl_x(const position& pos) {
     color_t color = rows_[pos.x][pos.y].color;
     int length = 0;
 
@@ -190,7 +181,7 @@ bool board::is_swap_winning_impl_x(const position& pos) {
     return length >= get_to_win() + 1;
 }
 
-bool board::is_swap_winning_impl_y(const position& pos) {
+bool board::is_item_winning_impl_y(const position& pos) {
     color_t color = rows_[pos.x][pos.y].color;
     int length = 0;
 
@@ -214,11 +205,11 @@ bool board::is_swap_winning_impl_y(const position& pos) {
 }
 
 void board::matches(const position& pos, std::set<position>& positions) {
-    if (is_swap_winning_impl_x(pos)) {
+    if (is_item_winning_impl_x(pos)) {
         matches_impl_x(pos, positions);
     }
 
-    if (is_swap_winning_impl_y(pos)) {
+    if (is_item_winning_impl_y(pos)) {
         matches_impl_y(pos, positions);
     }
 }

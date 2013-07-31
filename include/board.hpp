@@ -53,11 +53,10 @@ public:
     virtual int get_to_win() const override;
 
 private:
-    bool is_swap_winning(const position&);
-    bool is_swap_winning_impl_x(const position&);
-    bool is_swap_winning_impl_y(const position&);
+    bool is_item_winning(const position&);
+    bool is_item_winning_impl_x(const position&);
+    bool is_item_winning_impl_y(const position&);
 
-    std::set<position> matches(const position&);
     void matches(const position&, std::set<position>&);
     void matches_impl_x(const position&, std::set<position>&);
     void matches_impl_y(const position&, std::set<position>&);
