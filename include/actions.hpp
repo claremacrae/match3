@@ -31,12 +31,11 @@ public:
 protected:
     void show_board(sdl::milliseconds_t delay = 0) {
         viewer_->clear_board();
-        for (int y = 0; y < board_->get_rows(); y++) {
-            for (int x = 0; x < board_->get_cols(); x++) {
-                position pos(x, y);
-                viewer_->show_grid(pos, board_->get_grid_color(pos));
-            }
+
+        for (const auto& pos : *board_) {
+            viewer_->show_grid(pos, board_->get_grid_color(pos));
         }
+
         viewer_->render(delay);
     }
 
@@ -124,7 +123,10 @@ public:
 
     template<class Event>
     void operator()(const Event&) {
-        board_->scroll_down();
+        for (const auto& pos : board_->scroll_down()) {
+            board_->select(pos);
+        }
+
         show_board(100);
 
         for (const auto& pos : board_->new_randoms()) {

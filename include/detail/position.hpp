@@ -17,6 +17,14 @@ inline bool operator<(const position& lhs, const position& rhs) {
     return lhs.x < rhs.x || lhs.y < rhs.y;
 }
 
+inline bool operator==(const position& lhs, const position& rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
+inline bool operator!=(const position& lhs, const position& rhs) {
+    return !(lhs == rhs);
+}
+
 } // namespace game
 
 #endif

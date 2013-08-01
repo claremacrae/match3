@@ -38,19 +38,18 @@ public:
     virtual bool are_selected() const override;
     virtual std::set<position> new_randoms() override;
     virtual std::set<position> matches() override;
+    virtual std::set<position> scroll_down() override;
 
     virtual void select(const position&) override;
     virtual void unselect_item(std::size_t) override;
     virtual void unselect_all() override;
     virtual void swap() override;
-    virtual void scroll_down() override;
 
     virtual void set(const position&, const color_t&) override;
     virtual color_t get_grid_color(const position&) override;
 
-    virtual int get_rows() const override;
-    virtual int get_cols() const override;
-    virtual int get_to_win() const override;
+    virtual const_iterator begin() const override;
+    virtual const_iterator end() const override;
 
 private:
     bool is_item_winning(const position&);
@@ -64,9 +63,9 @@ private:
     int rows_size_ = 0;
     int cols_size_ = 0;
     int to_win_size_ = 0;
-    int colors_ = 0;
-    boost::shared_ptr<irandom> random_;
     rows_t rows_;
+    boost::shared_ptr<irandom> random_;
+    std::function<int()> random;
     mutable std::vector<position> selected_;
 };
 

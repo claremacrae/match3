@@ -10,22 +10,20 @@ board::board(
   , boost::di::named<int, _S("board cols")> cols
   , boost::di::named<int, _S("board winning strike")> win
   , boost::di::named<int, _S("board colors")> colors
-  , boost::shared_ptr<irandom> i)
+  , boost::shared_ptr<irandom> r)
     : rows_size_(rows)
     , cols_size_(cols)
     , to_win_size_(win)
-    , colors_(colors)
-    , random_(i)
-    , rows_(get_rows(), row(get_cols()))
+    , rows_(rows_size_, row(cols_size_))
+    , random_(r)
+    , random(std::bind(&irandom::get_random_number, std::ref(*random_), 1, colors))
 { }
 
 void board::init_with_randoms() {
-   for (int y = 0; y < get_rows(); ++y) {
-        for (int x = 0; x < get_cols(); ++x) {
-            do {
-                rows_[x][y].color = random_->get_random_number(1, colors_);
-            } while (is_item_winning(position(x, y)));
-        }
+    for (const auto& pos : *this) {
+        do {
+            rows_[pos.x][pos.y].color = random();
+        } while (is_item_winning(pos));
     }
 }
 
@@ -33,8 +31,8 @@ bool board::is_within_board(const position& pos) const {
     int x = pos.x;
     int y = pos.y;
 
-    return x >= 0 and x < get_cols() and
-           y >= 0 and y < get_rows();
+    return x >= 0 and x < cols_size_ and
+           y >= 0 and y < rows_size_;
 }
 
 bool board::is_neighbor(const position& pos) const {
@@ -84,12 +82,10 @@ std::set<position> board::matches() {
 std::set<position> board::new_randoms() {
     std::set<position> positions;
 
-    for (int y = 0; y < get_rows(); ++y) {
-        for (int x = 0; x < get_cols(); ++x) {
-            if (rows_[x][y].color == grid::none) {
-                rows_[x][y].color = random_->get_random_number(1, colors_);
-                positions.insert(position(x, y));
-            }
+    for (const auto& pos : *this) {
+        if (rows_[pos.x][pos.y].color == grid::none) {
+            rows_[pos.x][pos.y].color = random();
+            positions.insert(pos);
         }
     }
 
@@ -125,30 +121,33 @@ void board::swap() {
 }
 
 void board::set(const position& pos, const color_t& color) {
-    assert(pos.x >= 0 and pos.x < get_cols());
-    assert(pos.y >= 0 and pos.y < get_rows());
+    assert(pos.x >= 0 and pos.x < cols_size_);
+    assert(pos.y >= 0 and pos.y < rows_size_);
     rows_[pos.x][pos.y].color = color;
 }
 
 color_t board::get_grid_color(const position& pos) {
-    assert(pos.x >= 0 and pos.x < get_cols());
-    assert(pos.y >= 0 and pos.y < get_rows());
+    assert(pos.x >= 0 and pos.x < cols_size_);
+    assert(pos.y >= 0 and pos.y < rows_size_);
     return rows_[pos.x][pos.y].color;
 }
 
-void board::scroll_down() {
+std::set<position> board::scroll_down() {
+    std::set<position> positions;
+
     auto scroll_column = [&](int x, int y) {
         rows_[x][y].color = rows_[x][y - 1].color;
+        positions.insert(position(x, y - 1));
     };
 
-    for (int y = 0; y < get_rows(); ++y) {
-        for (int x = 0; x < get_cols(); ++x) {
-            if (rows_[x][y].color == grid::none) {
-                scroll_column(x, y);
-                rows_[x][0].color = grid::none;
-            }
+    for (const auto& pos : *this) {
+        if (rows_[pos.x][pos.y].color == grid::none) {
+            scroll_column(pos.x, pos.y);
+            rows_[pos.x][0].color = grid::none;
         }
     }
+
+    return positions;
 }
 
 bool board::is_item_winning(const position& pos) {
@@ -160,7 +159,7 @@ bool board::is_item_winning_impl_x(const position& pos) {
     color_t color = rows_[pos.x][pos.y].color;
     int length = 0;
 
-    for (int x = pos.x; x < get_cols(); ++x) {
+    for (int x = pos.x; x < cols_size_; ++x) {
         if (rows_[x][pos.y].color != color) {
             break;
         }
@@ -176,14 +175,14 @@ bool board::is_item_winning_impl_x(const position& pos) {
         length++;
     }
 
-    return length >= get_to_win() + 1;
+    return length >= to_win_size_ + 1;
 }
 
 bool board::is_item_winning_impl_y(const position& pos) {
     color_t color = rows_[pos.x][pos.y].color;
     int length = 0;
 
-    for (int y = pos.y; y < get_rows(); ++y) {
+    for (int y = pos.y; y < rows_size_; ++y) {
         if (rows_[pos.x][y].color != color) {
             break;
         }
@@ -199,7 +198,7 @@ bool board::is_item_winning_impl_y(const position& pos) {
         length++;
     }
 
-    return length >= get_to_win() + 1;
+    return length >= to_win_size_ + 1;
 }
 
 void board::matches(const position& pos, std::set<position>& positions) {
@@ -215,7 +214,7 @@ void board::matches(const position& pos, std::set<position>& positions) {
 void board::matches_impl_x(const position& pos, std::set<position>& positions) {
     color_t color = rows_[pos.x][pos.y].color;
 
-    for (int x = pos.x; x < get_cols(); ++x) {
+    for (int x = pos.x; x < cols_size_; ++x) {
         if (rows_[x][pos.y].color != color) {
             break;
         }
@@ -235,7 +234,7 @@ void board::matches_impl_x(const position& pos, std::set<position>& positions) {
 void board::matches_impl_y(const position& pos, std::set<position>& positions) {
     color_t color = rows_[pos.x][pos.y].color;
 
-    for (int y = pos.y; y < get_rows(); ++y) {
+    for (int y = pos.y; y < rows_size_; ++y) {
         if (rows_[pos.x][y].color != color) {
             break;
         }
@@ -252,9 +251,13 @@ void board::matches_impl_y(const position& pos, std::set<position>& positions) {
     }
 }
 
-int board::get_rows() const { return rows_size_; }
-int board::get_cols() const { return cols_size_; }
-int board::get_to_win() const { return to_win_size_; }
+board::const_iterator board::begin() const {
+    return const_iterator(rows_size_, cols_size_, 0, 0);
+}
+
+board::const_iterator board::end() const {
+    return const_iterator(rows_size_, cols_size_, 0, cols_size_);
+}
 
 } // namespace game
 

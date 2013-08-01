@@ -21,31 +21,29 @@ enum color_t
   , purple
 };
 
-std::ostream& operator<<(std::ostream& out, board& b) {
+std::ostream& operator<<(std::ostream& out, board& ) {
     out << "    ";
-    for (int x = 0; x < b.get_cols(); ++x) {
-        out << x << ". ";
-    }
-    out << std::endl;
+    //for (int x = 0; x < b.get_cols(); ++x) {
+        //out << x << ". ";
+    //}
+    //out << std::endl;
 
-    for (int y = 0; y < b.get_rows(); ++y) {
-        out << y << ". ";
-        for (int x = 0; x < b.get_cols(); ++x) {
-            out << " " << b.get_grid_color(position(x, y)) << " ";
-        }
-        out << std::endl;
-    }
-    out << std::endl;
+    //for (int y = 0; y < b.get_rows(); ++y) {
+        //out << y << ". ";
+        //for (int x = 0; x < b.get_cols(); ++x) {
+            //out << " " << b.get_grid_color(position(x, y)) << " ";
+        //}
+        //out << std::endl;
+    //}
+    //out << std::endl;
 
     return out;
 }
 
 void fill_board(board& board, std::vector<color_t> colors) {
     int i = 0;
-    for (int y = 0; y < board.get_rows(); ++y) {
-        for (int x = 0; x < board.get_cols(); ++x) {
-            board.set(position(x, y), colors[i++]);
-        }
+    for (const auto& pos : board) {
+        board.set(pos, colors[i++]);
     }
 
     std::cout << board;
@@ -55,13 +53,12 @@ void compare_boards(board& b1, board& b2) {
     std::cout << "b1:" << std::endl << b1;
     std::cout << "b2:" << std::endl << b2;
 
-    EXPECT_EQ(b1.get_rows(), b2.get_rows());
-    EXPECT_EQ(b1.get_cols(), b2.get_cols());
+    for (const auto& pos : b1) {
+        EXPECT_EQ(b1.get_grid_color(pos), b2.get_grid_color(pos));
+    }
 
-    for (int y = 0; y < b1.get_rows(); ++y) {
-        for (int x = 0; x < b1.get_cols(); ++x) {
-            EXPECT_EQ(b1.get_grid_color(position(x, y)), b2.get_grid_color(position(x, y)));
-        }
+    for (const auto& pos : b2) {
+        EXPECT_EQ(b1.get_grid_color(pos), b2.get_grid_color(pos));
     }
 }
 
