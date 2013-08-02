@@ -7,6 +7,26 @@
 namespace GT = testing;
 
 namespace game {
+
+std::ostream& operator<<(std::ostream& out, board& b) {
+    out << "    ";
+    for (int x = 0; x < b.cols_size_; ++x) {
+        out << x << ". ";
+    }
+    out << std::endl;
+
+    for (int y = 0; y < b.rows_size_; ++y) {
+        out << y << ". ";
+        for (int x = 0; x < b.cols_size_; ++x) {
+            out << " " << b.get_grid_color(position(x, y)) << " ";
+        }
+        out << std::endl;
+    }
+    out << std::endl;
+
+    return out;
+}
+
 namespace test {
 
 namespace {
@@ -20,25 +40,6 @@ enum color_t
   , yellow
   , purple
 };
-
-std::ostream& operator<<(std::ostream& out, board& ) {
-    out << "    ";
-    //for (int x = 0; x < b.get_cols(); ++x) {
-        //out << x << ". ";
-    //}
-    //out << std::endl;
-
-    //for (int y = 0; y < b.get_rows(); ++y) {
-        //out << y << ". ";
-        //for (int x = 0; x < b.get_cols(); ++x) {
-            //out << " " << b.get_grid_color(position(x, y)) << " ";
-        //}
-        //out << std::endl;
-    //}
-    //out << std::endl;
-
-    return out;
-}
 
 void fill_board(board& board, std::vector<color_t> colors) {
     int i = 0;

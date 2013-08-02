@@ -21,6 +21,8 @@ class board : public iboard
 {
     typedef std::vector<row> rows_t;
 
+    friend std::ostream& operator<<(std::ostream&, board&);
+
 public:
     BOOST_DI_CTOR(board
       , boost::di::named<int, _S("board rows")>
