@@ -217,7 +217,7 @@ TEST_F(board_test, scroll_down) {
             blue   , none   , green  , purple
           , yellow , none   , blue   , black
           , purple , none   , yellow , purple
-          , blue   , yellow  , blue   , black
+          , blue   , yellow , blue   , black
         }
     );
 

@@ -135,9 +135,11 @@ color_t board::get_grid_color(const position& pos) {
 std::set<position> board::scroll_down() {
     std::set<position> positions;
 
-    auto scroll_column = [&](int x, int y) {
-        rows_[x][y].color = rows_[x][y - 1].color;
-        positions.insert(position(x, y - 1));
+    auto scroll_column = [&](int x, int i) {
+        for (int y = i; y > 0; --y) {
+            rows_[x][y].color = rows_[x][y - 1].color;
+            positions.insert(position(x, y - 1));
+        }
     };
 
     for (const auto& pos : *this) {

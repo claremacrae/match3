@@ -22,7 +22,7 @@ TEST(actions_test, init_board) {
     //expect
     EXPECT_CALL(*board_mock, init_with_randoms());
     EXPECT_CALL(*board_mock, begin()).WillRepeatedly(GT::Return(iboard::const_iterator(0, 0, 0, 0)));
-    EXPECT_CALL(*board_mock, end()).WillRepeatedly(GT::Return(iboard::const_iterator(0, 0, 0, 0)));
+    EXPECT_CALL(*board_mock, end()).WillRepeatedly(GT::Return(iboard::const_iterator(0, 0, 1, 0)));
     EXPECT_CALL(*board_mock, get_grid_color(GT::_)).WillRepeatedly(GT::Return(color));
 
     EXPECT_CALL(*viewer_mock, clear_board());
@@ -59,11 +59,12 @@ TEST(actions_test, scroll_board) {
     std::set<position> positions{ position() };
 
     //expect
-    EXPECT_CALL(*board_mock, scroll_down());
+    EXPECT_CALL(*board_mock, scroll_down()).WillRepeatedly(GT::Return(positions));
     EXPECT_CALL(*board_mock, begin()).WillRepeatedly(GT::Return(iboard::const_iterator(0, 0, 0, 0)));
-    EXPECT_CALL(*board_mock, end()).WillRepeatedly(GT::Return(iboard::const_iterator(0, 0, 0, 0)));
+    EXPECT_CALL(*board_mock, end()).WillRepeatedly(GT::Return(iboard::const_iterator(0, 0, 1, 0)));
     EXPECT_CALL(*board_mock, get_grid_color(GT::_)).WillRepeatedly(GT::Return(color));
     EXPECT_CALL(*board_mock, new_randoms()).WillRepeatedly(GT::Return(positions));
+    EXPECT_CALL(*board_mock, select(GT::_)).Times(2);
 
     EXPECT_CALL(*viewer_mock, clear_board()).Times(2);
     EXPECT_CALL(*viewer_mock, scroll_grid(GT::_, GT::_)).Times(1);
