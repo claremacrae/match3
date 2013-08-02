@@ -200,6 +200,7 @@ TEST_F(board_test, matches) {
 
 TEST_F(board_test, scroll_down) {
     //given
+    std::set<position> positions{ position(1, 1), position(1, 2), position(1, 3) };
     board b(4, 4, 3, 5, irandom_mock_);
 
     fill_board(b,
@@ -227,9 +228,10 @@ TEST_F(board_test, scroll_down) {
     EXPECT_EQ(3u, b.matches().size());
 
     //when
-    b.scroll_down();
+    auto results = b.scroll_down();
 
     //then
+    EXPECT_EQ(positions, results);
     compare_boards(b, expected);
 }
 

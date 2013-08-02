@@ -138,7 +138,6 @@ std::set<position> board::scroll_down() {
     auto scroll_column = [&](int x, int i) {
         for (int y = i; y > 0; --y) {
             rows_[x][y].color = rows_[x][y - 1].color;
-            positions.insert(position(x, y - 1));
         }
     };
 
@@ -146,6 +145,7 @@ std::set<position> board::scroll_down() {
         if (rows_[pos.x][pos.y].color == grid::none) {
             scroll_column(pos.x, pos.y);
             rows_[pos.x][0].color = grid::none;
+            positions.insert(pos);
         }
     }
 
