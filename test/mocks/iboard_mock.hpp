@@ -28,7 +28,6 @@ public:
     MOCK_METHOD1(unselect_item, void(std::size_t));
     MOCK_METHOD0(unselect_all, void());
     MOCK_METHOD0(swap, void());
-    MOCK_METHOD2(set, void(const game::position &, const color_t &));
     MOCK_METHOD1(get_grid_color, color_t(const game::position &));
     MOCK_CONST_METHOD0(begin, const_iterator());
     MOCK_CONST_METHOD0(end, const_iterator());

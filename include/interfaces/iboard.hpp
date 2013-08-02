@@ -72,7 +72,6 @@ public:
     virtual void unselect_all() = 0;
     virtual void swap() = 0;
 
-    virtual void set(const position&, const color_t&) = 0;
     virtual color_t get_grid_color(const position&) = 0;
 
     virtual const_iterator begin() const = 0;

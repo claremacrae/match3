@@ -28,8 +28,16 @@ public:
       , boost::di::named<int, _S("board rows")>
       , boost::di::named<int, _S("board cols")>
       , boost::di::named<int, _S("board winning strike")>
-      , boost::di::named<int, _S("board colors")> colors
+      , boost::di::named<int, _S("board colors")>
       , boost::shared_ptr<irandom>);
+
+    board(
+        boost::di::named<int, _S("board rows")>
+      , boost::di::named<int, _S("board cols")>
+      , boost::di::named<int, _S("board winning strike")>
+      , boost::di::named<int, _S("board colors")>
+      , boost::shared_ptr<irandom>
+      , std::vector<color_t>);
 
     virtual void init_with_randoms() override;
     virtual bool is_within_board(const position&) const override;
@@ -47,7 +55,6 @@ public:
     virtual void unselect_all() override;
     virtual void swap() override;
 
-    virtual void set(const position&, const color_t&) override;
     virtual color_t get_grid_color(const position&) override;
 
     virtual const_iterator begin() const override;

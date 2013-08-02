@@ -19,6 +19,21 @@ board::board(
     , random(std::bind(&irandom::get_random_number, std::ref(*random_), 1, colors))
 { }
 
+board::board(
+    boost::di::named<int, _S("board rows")> rows
+  , boost::di::named<int, _S("board cols")> cols
+  , boost::di::named<int, _S("board winning strike")> win
+  , boost::di::named<int, _S("board colors")> colors
+  , boost::shared_ptr<irandom> r
+  , std::vector<color_t> v)
+    : board(rows, cols, win, colors, r)
+{
+    int i = 0;
+    for (const auto& pos : *this) {
+        rows_[pos.x][pos.y].color = v[i++];
+    }
+}
+
 void board::init_with_randoms() {
     for (const auto& pos : *this) {
         do {
@@ -118,12 +133,6 @@ void board::swap() {
     color_t tmp = rows_[x1][y1].color;
     rows_[x1][y1].color = rows_[x2][y2].color;
     rows_[x2][y2].color = tmp;
-}
-
-void board::set(const position& pos, const color_t& color) {
-    assert(pos.x >= 0 and pos.x < cols_size_);
-    assert(pos.y >= 0 and pos.y < rows_size_);
-    rows_[pos.x][pos.y].color = color;
 }
 
 color_t board::get_grid_color(const position& pos) {

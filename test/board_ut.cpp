@@ -28,7 +28,6 @@ std::ostream& operator<<(std::ostream& out, board& b) {
 }
 
 namespace test {
-
 namespace {
 
 enum color_t
@@ -40,15 +39,6 @@ enum color_t
   , yellow
   , purple
 };
-
-void fill_board(board& board, std::vector<color_t> colors) {
-    int i = 0;
-    for (const auto& pos : board) {
-        board.set(pos, colors[i++]);
-    }
-
-    std::cout << board;
-}
 
 void compare_boards(board& b1, board& b2) {
     std::cout << "b1:" << std::endl << b1;
@@ -104,8 +94,7 @@ TEST_F(board_test, is_neighbor) {
 
 TEST_F(board_test, is_swap_winning_no) {
     //given
-    board b(4, 4, 2, 5, irandom_mock_);
-    fill_board(b,
+    board b(4, 4, 2, 5, irandom_mock_,
         {
             blue   , blue , black , purple
           , blue   , blue , green , purple
@@ -126,8 +115,7 @@ TEST_F(board_test, is_swap_winning_no) {
 
 TEST_F(board_test, is_swap_winning_yes_simple) {
     //given
-    board b(4, 4, 2, 5, irandom_mock_);
-    fill_board(b,
+    board b(4, 4, 2, 5, irandom_mock_,
         {
             blue   , blue , black , blue
           , blue   , blue , blue  , blue
@@ -148,8 +136,7 @@ TEST_F(board_test, is_swap_winning_yes_simple) {
 
 TEST_F(board_test, is_swap_winning_yes_complex) {
     //given
-    board b(4, 4, 3, 5, irandom_mock_);
-    fill_board(b,
+    board b(4, 4, 3, 5, irandom_mock_,
         {
             blue   , yellow , green  , purple
           , yellow , green  , blue   , black
@@ -170,9 +157,7 @@ TEST_F(board_test, is_swap_winning_yes_complex) {
 
 TEST_F(board_test, matches) {
     //given
-    board b(4, 4, 3, 5, irandom_mock_);
-    std::vector<position> m{position(1, 1), position(1, 2), position(1, 3)};
-    fill_board(b,
+    board b(4, 4, 3, 5, irandom_mock_,
         {
             blue   , yellow , green  , purple
           , yellow , green  , blue   , black
@@ -180,6 +165,7 @@ TEST_F(board_test, matches) {
           , blue   , blue   , green  , black
         }
     );
+    std::vector<position> m{position(1, 1), position(1, 2), position(1, 3)};
 
     b.select(position(1, 3));
     b.select(position(2, 3));
@@ -201,9 +187,7 @@ TEST_F(board_test, matches) {
 TEST_F(board_test, scroll_down) {
     //given
     std::set<position> positions{ position(1, 1), position(1, 2), position(1, 3) };
-    board b(4, 4, 3, 5, irandom_mock_);
-
-    fill_board(b,
+    board b(4, 4, 3, 5, irandom_mock_,
         {
             blue   , yellow , green  , purple
           , yellow , green  , blue   , black
@@ -212,8 +196,7 @@ TEST_F(board_test, scroll_down) {
         }
     );
 
-    board expected(4, 4, 3, 5, irandom_mock_);
-    fill_board(expected,
+    board expected(4, 4, 3, 5, irandom_mock_,
         {
             blue   , none   , green  , purple
           , yellow , none   , blue   , black
@@ -237,10 +220,7 @@ TEST_F(board_test, scroll_down) {
 
 TEST_F(board_test, new_randoms) {
     //given
-    std::vector<position> n{position(0, 0), position(0, 1)};
-    board b(4, 4, 3, 5, irandom_mock_);
-
-    fill_board(b,
+    board b(4, 4, 3, 5, irandom_mock_,
         {
             none   , yellow , green  , purple
           , none   , green  , blue   , black
@@ -248,6 +228,7 @@ TEST_F(board_test, new_randoms) {
           , blue   , blue   , green  , black
         }
     );
+    std::vector<position> n{position(0, 0), position(0, 1)};
 
     //expect
     EXPECT_CALL(*irandom_mock_, get_random_number(GT::_, GT::_)).WillRepeatedly(GT::Return(black));
