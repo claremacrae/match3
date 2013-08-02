@@ -34,6 +34,10 @@ struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP>
             , ((event.button.y - grids_offset_y) / grid_offset))
     { }
 
+    operator position() const {
+        return pos;
+    }
+
     position pos;
 };
 

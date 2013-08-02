@@ -7,89 +7,21 @@
 #include <boost/di/named.hpp>
 #include "time_ticks.hpp"
 #include "iboard.hpp"
-#include "position.hpp"
 #include "events.hpp"
+
+namespace mpl  = boost::mpl;
+namespace euml = boost::msm::front::euml;
 
 namespace game {
 
-template<typename T>
-class guard : public boost::msm::front::euml::euml_action<T>
-{
-public:
-    guard() { }
+using is_within_board       = euml::bind_guard<euml_call(&iboard::is_within_board), mpl::_1>;
+using is_neighbor           = euml::bind_guard<euml_call(&iboard::is_neighbor), mpl::_1>;
+using is_same_item          = euml::bind_guard<euml_call(&iboard::is_same_selected), mpl::_1>;
+using is_same_color         = euml::bind_guard<euml_call(&iboard::is_same_color), mpl::_1>;
+using is_swap_items_winning = euml::bind_guard<euml_call(&iboard::is_swap_winning)>;
+using are_selected          = euml::bind_guard<euml_call(&iboard::are_selected)>;
 
-    BOOST_DI_CTOR(guard
-        , boost::shared_ptr<iboard> b, int /*dummy*/)
-        : board_(b)
-    { }
-
-protected:
-    boost::shared_ptr<iboard> board_;
-};
-
-class is_within_board : public guard<is_within_board>
-{
-public:
-    using guard::guard;
-
-    bool operator()(const button_clicked& button) const {
-        return board_->is_within_board(button.pos);
-    }
-};
-
-class is_neighbor : public guard<is_neighbor>
-{
-public:
-    using guard::guard;
-
-    bool operator()(const button_clicked& button) const {
-        return board_->is_neighbor(button.pos);
-    }
-};
-
-class is_same_item : public guard<is_same_item>
-{
-public:
-    using guard::guard;
-
-    bool operator()(const button_clicked& button) const {
-        return board_->is_same_selected(button.pos);
-    }
-};
-
-class is_same_color : public guard<is_same_color>
-{
-public:
-    using guard::guard;
-
-    bool operator()(const button_clicked& button) const {
-        return board_->is_same_color(button.pos);
-    }
-};
-
-class is_swap_items_winning : public guard<is_swap_items_winning>
-{
-public:
-    using guard::guard;
-
-    template<typename Event>
-    bool operator()(const Event&) const {
-        return board_->is_swap_winning();
-    }
-};
-
-class are_selected : public guard<are_selected>
-{
-public:
-    using guard::guard;
-
-    template<typename TEvent>
-    bool operator()(const TEvent&) const {
-        return board_->are_selected();
-    }
-};
-
-class is_game_timeout : public guard<is_game_timeout>
+class is_game_timeout : public euml::euml_action<is_game_timeout>
 {
 public:
     is_game_timeout() { }
@@ -110,11 +42,9 @@ private:
 };
 
 template<int Key>
-class is_key : public guard<is_key<Key>>
+class is_key : public euml::euml_action<is_key<Key>>
 {
 public:
-    BOOST_DI_CTOR(is_key) { }
-
     bool operator()(const key_pressed& event) const {
         return event.key == Key;
     }

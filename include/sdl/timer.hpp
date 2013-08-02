@@ -21,7 +21,7 @@ private:
     static milliseconds_t do_callback(milliseconds_t, void*);
 
     callback_t callback_;
-    SDL_TimerID id_;
+    SDL_TimerID id_ = 0;
 };
 
 } // namespace sdl
