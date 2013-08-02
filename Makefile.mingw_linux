@@ -10,12 +10,16 @@ FIND   		:= find
 RM 	   		:= rm
 TR 	   		:= tr
 WGET   		:= wget
+TAR   		:= tar
+MKDIR   	:= mkdir
 
 include Makefile.aux
 
 externals:
 	$(RM) -rf $(EXTERNALS)/$(MINGW)
-	$(WGET) -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/rubenvb/gcc-4.8-release/i686-w64-mingw32-gcc-4.8.0-linux64_rubenvb.tar.xz"
+	$(WGET) -c "http://downloads.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win32/Personal%20Builds/rubenvb/gcc-4.8-release/i686-w64-mingw32-gcc-4.8.0-linux64_rubenvb.tar.xz" -O "$(EXTERNALS)/i686-w64-mingw32-gcc-4.8.0-linux64_rubenvb.tar.xz"
+	$(MKDIR) -p "$(EXTERNALS)/$(MINGW)"
+	cd $(EXTERNALS) && $(TAR) xvf i686-w64-mingw32-gcc-4.8.0-linux64_rubenvb.tar.xz -C "$(MINGW)"
 
 run:
 	cd $(BIN) && wine $(TGT)
