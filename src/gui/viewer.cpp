@@ -103,30 +103,13 @@ void viewer::show_points(int points) {
 
 void viewer::show_results(int points) {
     window_->clear();
+    std::string points_ = boost::lexical_cast<std::string>(points);
     show_text(
-        "Game Over"
-      , 115
-      , 85
+        "Points: " + points_
+      , 180 - (30 * (points_.length() - 1))
+      , 215
       , white
       , 100
-      , background_layer
-    );
-
-    show_text(
-        "Points: " + boost::lexical_cast<std::string>(points)
-      , 130
-      , 255
-      , white
-      , 100
-      , background_layer
-    );
-
-    show_text(
-        "Close the window to exit..."
-      , 190
-      , 480
-      , white
-      , 32
       , background_layer
     );
 }
