@@ -42,7 +42,6 @@ public:
       , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()
       ,                           wait_for_second_item() + button_clicked() [not is_same_item() and
                                                                              is_within_board() and
-                                                                             not is_same_color() and
                                                                              not is_neighbor()] / (unselect_all(), select_item())
       , try_swap_items()       == wait_for_second_item() + button_clicked() [not is_same_item() and
                                                                              is_within_board() and
