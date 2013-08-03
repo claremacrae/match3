@@ -27,7 +27,7 @@ TEST(actions_test, init_board) {
 
     EXPECT_CALL(*viewer_mock, clear_board());
     EXPECT_CALL(*viewer_mock, show_grid(GT::_, color));
-    EXPECT_CALL(*viewer_mock, render(GT::_));
+    EXPECT_CALL(*viewer_mock, render(GT::_)).Times(2);
 
     //when
     action(dummy_event());
