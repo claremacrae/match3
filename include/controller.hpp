@@ -36,7 +36,7 @@ public:
 
     BOOST_MSM_EUML_DECLARE_TRANSITION_TABLE((
    // +----------------------------------------------------------------------------------------------------------------------------+
-        wait_for_first_item()  == idle()                   [anonymous()] / (init_board(), show_time(), show_points())
+        wait_for_first_item()  == idle()                   [anonymous()] / (show_time(), show_points(), init_board())
 
       , wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
       , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()

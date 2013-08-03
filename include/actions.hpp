@@ -29,11 +29,14 @@ public:
     { }
 
 protected:
-    void show_board(sdl::milliseconds_t delay = 0) {
+    void show_board(sdl::milliseconds_t delay = 0, bool render = false) {
         viewer_->clear_board();
 
         for (const auto& pos : *board_) {
             viewer_->show_grid(pos, board_->get_grid_color(pos));
+            if (render) {
+                viewer_->render();
+            }
         }
 
         viewer_->render(delay);
@@ -51,7 +54,7 @@ public:
     template<class Event>
     void operator()(const Event&) {
         board_->init_with_randoms();
-        show_board();
+        show_board(0, true);
     }
 };
 
