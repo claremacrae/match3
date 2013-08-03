@@ -108,19 +108,11 @@ std::set<position> board::new_randoms() {
 }
 
 void board::select(const position& pos) {
-    if (selected_.size() == 2) {
-        selected_.clear();
-    }
     selected_.push_back(position(pos.x, pos.y));
 }
 
 void board::unselect_all() {
     selected_.clear();
-}
-
-void board::unselect_item(std::size_t item) {
-    assert(selected_.size() > item);
-    selected_.erase(selected_.begin() + item);
 }
 
 void board::swap() {

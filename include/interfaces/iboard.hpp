@@ -68,7 +68,6 @@ public:
     virtual std::set<position> scroll_down() = 0;
 
     virtual void select(const position&) = 0;
-    virtual void unselect_item(std::size_t) = 0;
     virtual void unselect_all() = 0;
     virtual void swap() = 0;
 

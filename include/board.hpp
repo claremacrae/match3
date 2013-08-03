@@ -51,7 +51,6 @@ public:
     virtual std::set<position> scroll_down() override;
 
     virtual void select(const position&) override;
-    virtual void unselect_item(std::size_t) override;
     virtual void unselect_all() override;
     virtual void swap() override;
 

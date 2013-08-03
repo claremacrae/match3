@@ -25,7 +25,6 @@ public:
     MOCK_METHOD0(matches, std::set<position>());
     MOCK_METHOD0(scroll_down, std::set<position>());
     MOCK_METHOD1(select, void(const game::position &));
-    MOCK_METHOD1(unselect_item, void(std::size_t));
     MOCK_METHOD0(unselect_all, void());
     MOCK_METHOD0(swap, void());
     MOCK_METHOD1(get_grid_color, color_t(const game::position &));

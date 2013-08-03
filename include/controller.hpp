@@ -40,9 +40,14 @@ public:
 
       , wait_for_second_item() == wait_for_first_item()  + button_clicked() [is_within_board()] / select_item()
       , wait_for_first_item()  == wait_for_second_item() + button_clicked() [is_same_item()] / unselect_all()
-      , try_swap_items()       == wait_for_second_item() + button_clicked() [is_within_board() and
+      ,                           wait_for_second_item() + button_clicked() [not is_same_item() and
+                                                                             is_within_board() and
                                                                              not is_same_color() and
-                                                                             is_neighbor()] / (select_item() , swap_items())
+                                                                             not is_neighbor()] / (unselect_all(), select_item())
+      , try_swap_items()       == wait_for_second_item() + button_clicked() [not is_same_item() and
+                                                                             is_within_board() and
+                                                                             not is_same_color() and
+                                                                             is_neighbor()] / (select_item(), swap_items())
 
       , wait_for_first_item()  == try_swap_items()         [is_swap_items_winning()] / (euml::process_(matches()))
       , wait_for_first_item()  == try_swap_items()         [not is_swap_items_winning()] / (revert_swap_items()
