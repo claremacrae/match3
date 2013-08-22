@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_AMV06IFP
 #define CONTROLLER_AMV06IFP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/msm/front/state_machine_def.hpp>
 #include <boost/msm/front/euml/euml.hpp>
 #include "sdl/msm.hpp"

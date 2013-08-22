@@ -15,9 +15,9 @@ class iwindow_mock : public iwindow
 {
 public:
     virtual ~iwindow_mock() { }
-    MOCK_CONST_METHOD1(load_image, boost::shared_ptr<SDL_Texture>(const std::string &));
-    MOCK_CONST_METHOD4(render_text, boost::shared_ptr<SDL_Texture>(const std::string &, const std::string &, SDL_Color, int));
-    MOCK_METHOD4(draw, void(boost::shared_ptr<SDL_Texture>, int, int, std::size_t));
+    MOCK_CONST_METHOD1(load_image, std::shared_ptr<SDL_Texture>(const std::string &));
+    MOCK_CONST_METHOD4(render_text, std::shared_ptr<SDL_Texture>(const std::string &, const std::string &, SDL_Color, int));
+    MOCK_METHOD4(draw, void(std::shared_ptr<SDL_Texture>, int, int, std::size_t));
     MOCK_METHOD1(fade, void(Uint8));
     MOCK_METHOD0(clear, void());
     MOCK_METHOD1(clear, void(std::size_t));

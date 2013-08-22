@@ -5,7 +5,7 @@
 namespace game {
 namespace gui {
 
-user::user(boost::shared_ptr<controller_t> c)
+user::user(std::shared_ptr<controller_t> c)
     : controller_(c)
 { }
 

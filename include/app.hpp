@@ -1,7 +1,7 @@
 #ifndef APP_F6TO27D7
 #define APP_F6TO27D7
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include "controller.hpp"
 #include "iclient.hpp"
 

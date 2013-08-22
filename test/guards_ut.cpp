@@ -1,4 +1,4 @@
-#include <boost/make_shared.hpp>
+#include <memory>
 #include <gtest/gtest.h>
 #include "guards.hpp"
 
@@ -9,7 +9,7 @@ namespace GT = ::testing;
 
 TEST(guards_test, is_game_timeout_false) {
     //given
-    auto ticks = boost::make_shared<time_ticks>(0);
+    auto ticks = std::make_shared<time_ticks>(0);
     auto game_time = 10;
     is_game_timeout guard(ticks, game_time);
 
@@ -19,7 +19,7 @@ TEST(guards_test, is_game_timeout_false) {
 
 TEST(guards_test, is_game_timeout_true) {
     //given
-    auto ticks = boost::make_shared<time_ticks>(15);
+    auto ticks = std::make_shared<time_ticks>(15);
     auto game_time = 10;
     is_game_timeout guard(ticks, game_time);
 

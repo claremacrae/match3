@@ -3,7 +3,7 @@
 
 #include <map>
 #include <vector>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/di.hpp>
 #include <mpl/string.hpp>
 #include "iwindow.hpp"

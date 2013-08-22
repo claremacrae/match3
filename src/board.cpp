@@ -10,7 +10,7 @@ board::board(
   , boost::di::named<int, _S("board cols")> cols
   , boost::di::named<int, _S("board winning strike")> win
   , boost::di::named<int, _S("board colors")> colors
-  , boost::shared_ptr<irandom> r)
+  , std::shared_ptr<irandom> r)
     : rows_size_(rows)
     , cols_size_(cols)
     , to_win_size_(win)
@@ -24,7 +24,7 @@ board::board(
   , boost::di::named<int, _S("board cols")> cols
   , boost::di::named<int, _S("board winning strike")> win
   , boost::di::named<int, _S("board colors")> colors
-  , boost::shared_ptr<irandom> r
+  , std::shared_ptr<irandom> r
   , std::vector<color_t> v)
     : board(rows, cols, win, colors, r)
 {

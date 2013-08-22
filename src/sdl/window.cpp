@@ -1,6 +1,6 @@
 #include <cassert>
 #include <stdexcept>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "sdl/window.hpp"
@@ -16,7 +16,7 @@ window::window(boost::di::named<int, _S("win width")> width
     assert(!TTF_Init() && TTF_GetError());
 
     std::string caption_ = caption;
-    window_ = boost::shared_ptr<SDL_Window>(
+    window_ = std::shared_ptr<SDL_Window>(
         SDL_CreateWindow(
             caption_.c_str()
           , SDL_WINDOWPOS_CENTERED
@@ -28,7 +28,7 @@ window::window(boost::di::named<int, _S("win width")> width
       , SDL_DestroyWindow
     );
 
-    renderer_ = boost::shared_ptr<SDL_Renderer>(
+    renderer_ = std::shared_ptr<SDL_Renderer>(
         SDL_CreateRenderer(window_.get(), RENDER_DRIVER, RENDER_FLAGS)
       , SDL_DestroyRenderer
     );
@@ -45,20 +45,20 @@ void window::quit() {
     SDL_Quit();
 }
 
-boost::shared_ptr<SDL_Texture> window::load_image(const std::string& file) const {
-    return boost::shared_ptr<SDL_Texture>(
+std::shared_ptr<SDL_Texture> window::load_image(const std::string& file) const {
+    return std::shared_ptr<SDL_Texture>(
         IMG_LoadTexture(renderer_.get(), file.c_str())
       , SDL_DestroyTexture
     );
 }
 
-boost::shared_ptr<SDL_Texture> window::render_text(const std::string& str, const std::string& font_file, SDL_Color color, int font_size) const {
-    boost::shared_ptr<TTF_Font> font(TTF_OpenFont(font_file.c_str(), font_size), TTF_CloseFont);
-    boost::shared_ptr<SDL_Surface> surface(TTF_RenderText_Blended(font.get(), str.c_str(), color), SDL_FreeSurface);
-    return boost::shared_ptr<SDL_Texture>(SDL_CreateTextureFromSurface(renderer_.get(), surface.get()), SDL_DestroyTexture);
+std::shared_ptr<SDL_Texture> window::render_text(const std::string& str, const std::string& font_file, SDL_Color color, int font_size) const {
+    std::shared_ptr<TTF_Font> font(TTF_OpenFont(font_file.c_str(), font_size), TTF_CloseFont);
+    std::shared_ptr<SDL_Surface> surface(TTF_RenderText_Blended(font.get(), str.c_str(), color), SDL_FreeSurface);
+    return std::shared_ptr<SDL_Texture>(SDL_CreateTextureFromSurface(renderer_.get(), surface.get()), SDL_DestroyTexture);
 }
 
-void window::draw(boost::shared_ptr<SDL_Texture> texture, int x, int y, std::size_t layer) {
+void window::draw(std::shared_ptr<SDL_Texture> texture, int x, int y, std::size_t layer) {
     SDL_Rect pos = {x, y, 0, 0};
     SDL_QueryTexture(texture.get(), nullptr, nullptr, &pos.w, &pos.h);
     layers_[layer].push_back(std::make_pair(texture, pos));

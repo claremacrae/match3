@@ -5,7 +5,7 @@
 namespace game {
 namespace gui {
 
-time::time(boost::shared_ptr<controller_t> c)
+time::time(std::shared_ptr<controller_t> c)
     : controller_(c)
 { }
 

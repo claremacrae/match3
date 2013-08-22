@@ -1,4 +1,4 @@
-#include <boost/make_shared.hpp>
+#include <memory>
 #include <gtest/gtest.h>
 #include "mocks/iboard_mock.hpp"
 #include "mocks/iviewer_mock.hpp"
@@ -14,8 +14,8 @@ class dummy_event { };
 
 TEST(actions_test, init_board) {
     //given
-    auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
-    auto viewer_mock = boost::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
+    auto board_mock = std::make_shared<GT::StrictMock<mocks::iboard_mock>>();
+    auto viewer_mock = std::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
     init_board action(board_mock, viewer_mock);
     const color_t color = 0;
 
@@ -35,8 +35,8 @@ TEST(actions_test, init_board) {
 
 TEST(actions_test, show_matches) {
     //given
-    auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
-    auto viewer_mock = boost::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
+    auto board_mock = std::make_shared<GT::StrictMock<mocks::iboard_mock>>();
+    auto viewer_mock = std::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
     show_matches action(board_mock, viewer_mock);
     std::set<position> positions{ position() };
 
@@ -52,8 +52,8 @@ TEST(actions_test, show_matches) {
 
 TEST(actions_test, scroll_board) {
     //given
-    auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
-    auto viewer_mock = boost::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
+    auto board_mock = std::make_shared<GT::StrictMock<mocks::iboard_mock>>();
+    auto viewer_mock = std::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
     const color_t color = 0;
     scroll_board action(board_mock, viewer_mock);
     std::set<position> positions{ position() };
@@ -77,9 +77,9 @@ TEST(actions_test, scroll_board) {
 
 TEST(actions_test, show_time) {
     //given
-    auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
-    auto viewer_mock = boost::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
-    auto ticks = boost::make_shared<time_ticks>(1);
+    auto board_mock = std::make_shared<GT::StrictMock<mocks::iboard_mock>>();
+    auto viewer_mock = std::make_shared<GT::StrictMock<mocks::iviewer_mock>>();
+    auto ticks = std::make_shared<time_ticks>(1);
     auto game_time = 10;
     show_time action(board_mock, viewer_mock, ticks, game_time);
 
@@ -96,8 +96,8 @@ TEST(actions_test, show_time) {
 
 TEST(actions_test, add_points) {
     //given
-    auto board_mock = boost::make_shared<GT::StrictMock<mocks::iboard_mock>>();
-    auto points_mock = boost::make_shared<GT::StrictMock<mocks::ipoints_mock>>();
+    auto board_mock = std::make_shared<GT::StrictMock<mocks::iboard_mock>>();
+    auto points_mock = std::make_shared<GT::StrictMock<mocks::ipoints_mock>>();
     const int num = 10;
     std::set<position> positions{ position(0, 0), position(1, 1) };
     add_points<num> action(board_mock, points_mock);
@@ -112,7 +112,7 @@ TEST(actions_test, add_points) {
 
 TEST(actions_test, sub_points) {
     //given
-    auto points_mock = boost::make_shared<GT::StrictMock<mocks::ipoints_mock>>();
+    auto points_mock = std::make_shared<GT::StrictMock<mocks::ipoints_mock>>();
     const int num = 10;
     sub_points<num> action(points_mock, 0 /*dummy*/);
 

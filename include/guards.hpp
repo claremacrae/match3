@@ -1,7 +1,7 @@
 #ifndef GUARDS_KWSYEU3M
 #define GUARDS_KWSYEU3M
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/msm/front/euml/euml.hpp>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>

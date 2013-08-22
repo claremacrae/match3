@@ -2,7 +2,7 @@
 #define VIEWER_ZTZFA603
 
 #include <map>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>

@@ -6,7 +6,7 @@
 #include <set>
 #include <functional>
 #include <cmath>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>

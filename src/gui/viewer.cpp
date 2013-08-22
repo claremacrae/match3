@@ -6,7 +6,7 @@
 namespace game {
 namespace gui {
 
-viewer::viewer(boost::shared_ptr<sdl::iwindow> window
+viewer::viewer(std::shared_ptr<sdl::iwindow> window
              , boost::di::named<int, _S("board colors")> colors)
     : window_(window)
 {

@@ -62,7 +62,7 @@ public:
         : irandom_mock_(new GT::StrictMock<mocks::irandom_mock>())
     { }
 
-    boost::shared_ptr<mocks::irandom_mock> irandom_mock_;
+    std::shared_ptr<mocks::irandom_mock> irandom_mock_;
 };
 
 TEST_F(board_test, is_within_board) {
