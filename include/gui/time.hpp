@@ -15,14 +15,14 @@ class time : public iclient
 
 public:
     BOOST_DI_CTOR(explicit time
-        , boost::shared_ptr<controller_t>
+        , std::shared_ptr<controller_t>
     );
 
     virtual void run() override;
 
 private:
-    boost::shared_ptr<controller_t> controller_;
-    boost::shared_ptr<sdl::timer> timer_;
+    std::shared_ptr<controller_t> controller_;
+    std::shared_ptr<sdl::timer> timer_;
 };
 
 } // namespace gui

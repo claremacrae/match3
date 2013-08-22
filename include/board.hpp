@@ -29,14 +29,14 @@ public:
       , boost::di::named<int, _S("board cols")>
       , boost::di::named<int, _S("board winning strike")>
       , boost::di::named<int, _S("board colors")>
-      , boost::shared_ptr<irandom>);
+      , std::shared_ptr<irandom>);
 
     board(
         boost::di::named<int, _S("board rows")>
       , boost::di::named<int, _S("board cols")>
       , boost::di::named<int, _S("board winning strike")>
       , boost::di::named<int, _S("board colors")>
-      , boost::shared_ptr<irandom>
+      , std::shared_ptr<irandom>
       , std::vector<color_t>);
 
     virtual void init_with_randoms() override;
@@ -72,7 +72,7 @@ private:
     int cols_size_ = 0;
     int to_win_size_ = 0;
     rows_t rows_;
-    boost::shared_ptr<irandom> random_;
+    std::shared_ptr<irandom> random_;
     std::function<int()> random;
     mutable std::vector<position> selected_;
 };

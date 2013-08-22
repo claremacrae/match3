@@ -43,20 +43,15 @@ typedef di::generic_module<
   , di::bind_int    < _S("board winning strike"),   3           >
   , di::bind_int    < _S("board colors"),           5           >
 
-  , di::singletons<
-        sdl::window
-      , controller_t
-      , board
-      , gui::user
-      , gui::time
-      , gui::viewer
-      , points
-      , time_ticks
-    >
-
-  , di::per_requests<
-        random_rand
-    >
+  , sdl::window
+  , controller_t
+  , board
+  , gui::user
+  , gui::time
+  , gui::viewer
+  , points
+  , time_ticks
+  , random_rand
 
 > config;
 

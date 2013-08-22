@@ -39,7 +39,7 @@ class viewer : public iviewer
 
 public:
     BOOST_DI_CTOR(viewer
-        , boost::shared_ptr<sdl::iwindow>
+        , std::shared_ptr<sdl::iwindow>
         , boost::di::named<int, _S("board colors")>);
 
     virtual void quit() override;
@@ -57,11 +57,11 @@ public:
 private:
     void show_text(const std::string&, int, int, SDL_Color, int, std::size_t);
 
-    boost::shared_ptr<sdl::iwindow> window_;
-    boost::shared_ptr<SDL_Texture> background_image_;
-    boost::shared_ptr<SDL_Texture> match_image_;
-    boost::shared_ptr<SDL_Texture> select_image_;
-    std::map<color_t, boost::shared_ptr<SDL_Texture>> grid_images_;
+    std::shared_ptr<sdl::iwindow> window_;
+    std::shared_ptr<SDL_Texture> background_image_;
+    std::shared_ptr<SDL_Texture> match_image_;
+    std::shared_ptr<SDL_Texture> select_image_;
+    std::map<color_t, std::shared_ptr<SDL_Texture>> grid_images_;
 };
 
 } // namespace gui
