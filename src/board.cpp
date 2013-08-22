@@ -10,12 +10,12 @@ board::board(
   , boost::di::named<int, _S("board cols")> cols
   , boost::di::named<int, _S("board winning strike")> win
   , boost::di::named<int, _S("board colors")> colors
-  , std::shared_ptr<irandom> r)
+  , std::unique_ptr<irandom> r)
     : rows_size_(rows)
     , cols_size_(cols)
     , to_win_size_(win)
     , rows_(rows_size_, row(cols_size_))
-    , random_(r)
+    , random_(std::move(r))
     , random(std::bind(&irandom::get_random_number, std::ref(*random_), 1, colors))
 { }
 
@@ -24,9 +24,9 @@ board::board(
   , boost::di::named<int, _S("board cols")> cols
   , boost::di::named<int, _S("board winning strike")> win
   , boost::di::named<int, _S("board colors")> colors
-  , std::shared_ptr<irandom> r
+  , std::unique_ptr<irandom> r
   , std::vector<color_t> v)
-    : board(rows, cols, win, colors, r)
+    : board(rows, cols, win, colors, std::move(r))
 {
     int i = 0;
     for (const auto& pos : *this) {

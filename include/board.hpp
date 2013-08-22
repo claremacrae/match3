@@ -29,14 +29,14 @@ public:
       , boost::di::named<int, _S("board cols")>
       , boost::di::named<int, _S("board winning strike")>
       , boost::di::named<int, _S("board colors")>
-      , std::shared_ptr<irandom>);
+      , std::unique_ptr<irandom>);
 
     board(
         boost::di::named<int, _S("board rows")>
       , boost::di::named<int, _S("board cols")>
       , boost::di::named<int, _S("board winning strike")>
       , boost::di::named<int, _S("board colors")>
-      , std::shared_ptr<irandom>
+      , std::unique_ptr<irandom>
       , std::vector<color_t>);
 
     virtual void init_with_randoms() override;
