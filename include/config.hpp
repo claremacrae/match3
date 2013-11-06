@@ -21,10 +21,9 @@ namespace di {
 template<>
 struct ctor_traits<game::app>
 {
-    static void ctor(shared_ptr<game::controller_t> //clients
-                   , shared_ptr<game::gui::time>
-                   , shared_ptr<game::gui::user>
-    );
+    BOOST_DI_CTOR_TRAITS(shared_ptr<game::controller_t> //clients
+                       , shared_ptr<game::gui::time>
+                       , shared_ptr<game::gui::user>);
 };
 
 } // namespace di
@@ -32,16 +31,16 @@ struct ctor_traits<game::app>
 
 namespace game {
 
-typedef di::generic_module<
+typedef di::injector<
 
-    di::bind_int    < _S("win width"),              755         >
-  , di::bind_int    < _S("win height"),             600         >
-  , di::bind_string < _S("win caption"),            _S("game")  >
-  , di::bind_int    < _S("game time in seconds"),   60          >
-  , di::bind_int    < _S("board rows"),             8           >
-  , di::bind_int    < _S("board cols"),             8           >
-  , di::bind_int    < _S("board winning strike"),   3           >
-  , di::bind_int    < _S("board colors"),           5           >
+    di::bind_int    < 755        >::in_name< _S("win width")             >
+  , di::bind_int    < 500        >::in_name< _S("win height")            >
+  , di::bind_string < _S("game") >::in_name< _S("win caption")           >
+  , di::bind_int    < 60         >::in_name< _S("game time in seconds")  >
+  , di::bind_int    < 8          >::in_name< _S("board rows")            >
+  , di::bind_int    < 8          >::in_name< _S("board cols")            >
+  , di::bind_int    < 3          >::in_name< _S("board winning strike")  >
+  , di::bind_int    < 5          >::in_name< _S("board colors")          >
 
   , sdl::window
   , controller_t

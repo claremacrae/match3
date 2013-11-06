@@ -28,7 +28,7 @@ public:
 
     BOOST_DI_CTOR(is_game_timeout
         , std::shared_ptr<time_ticks> t
-        , boost::di::named<time_ticks, _S("game time in seconds")> s)
+        , const boost::di::named<time_ticks, _S("game time in seconds")>& s)
         : time_ticks_(t), game_time_in_sec_(s)
     { }
 

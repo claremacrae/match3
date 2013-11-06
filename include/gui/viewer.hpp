@@ -40,7 +40,7 @@ class viewer : public iviewer
 public:
     BOOST_DI_CTOR(viewer
         , std::shared_ptr<sdl::iwindow>
-        , boost::di::named<int, _S("board colors")>);
+        , const boost::di::named<int, _S("board colors")>&);
 
     virtual void quit() override;
     virtual void render(sdl::milliseconds_t) override;

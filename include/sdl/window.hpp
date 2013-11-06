@@ -21,9 +21,9 @@ class window : public iwindow
 
 public:
     BOOST_DI_CTOR(window
-        , boost::di::named<int, _S("win width")>
-        , boost::di::named<int, _S("win height")>
-        , boost::di::named<std::string, _S("win caption")>);
+        , const boost::di::named<int, _S("win width")>&
+        , const boost::di::named<int, _S("win height")>&
+        , const boost::di::named<std::string, _S("win caption")>&);
 
     virtual ~window();
     virtual std::shared_ptr<SDL_Texture> load_image(const std::string&) const override;

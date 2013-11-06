@@ -6,24 +6,24 @@
 namespace game {
 
 board::board(
-    boost::di::named<int, _S("board rows")> rows
-  , boost::di::named<int, _S("board cols")> cols
-  , boost::di::named<int, _S("board winning strike")> win
-  , boost::di::named<int, _S("board colors")> colors
+    const boost::di::named<int, _S("board rows")>& rows
+  , const boost::di::named<int, _S("board cols")>& cols
+  , const boost::di::named<int, _S("board winning strike")>& win
+  , const boost::di::named<int, _S("board colors")>& colors
   , std::unique_ptr<irandom> r)
     : rows_size_(rows)
     , cols_size_(cols)
     , to_win_size_(win)
     , rows_(rows_size_, row(cols_size_))
     , random_(std::move(r))
-    , random(std::bind(&irandom::get_random_number, std::ref(*random_), 1, colors))
+    , random(std::bind(&irandom::get_random_number, std::ref(*random_), 1, static_cast<int>(colors)))
 { }
 
 board::board(
-    boost::di::named<int, _S("board rows")> rows
-  , boost::di::named<int, _S("board cols")> cols
-  , boost::di::named<int, _S("board winning strike")> win
-  , boost::di::named<int, _S("board colors")> colors
+    const boost::di::named<int, _S("board rows")>& rows
+  , const boost::di::named<int, _S("board cols")>& cols
+  , const boost::di::named<int, _S("board winning strike")>& win
+  , const boost::di::named<int, _S("board colors")>& colors
   , std::unique_ptr<irandom> r
   , std::vector<color_t> v)
     : board(rows, cols, win, colors, std::move(r))

@@ -9,8 +9,7 @@
 int main() {
     using namespace game;
 
-    auto game_app = boost::di::injector<config>();
-    game_app.create<app>().play();
+    config().create<app>().play();
 
     return 0;
 }
