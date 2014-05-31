@@ -6,10 +6,10 @@
 namespace match3 {
 
 board::board(
-    const boost::di::named<int, _S("board rows")>& rows
-  , const boost::di::named<int, _S("board cols")>& cols
-  , const boost::di::named<int, _S("board winning strike")>& win
-  , const boost::di::named<int, _S("board colors")>& colors
+    boost::di::named<int, _S("board rows")> rows
+  , boost::di::named<int, _S("board cols")> cols
+  , boost::di::named<int, _S("board winning strike")> win
+  , boost::di::named<int, _S("board colors")> colors
   , std::unique_ptr<irandom> r)
     : rows_size_(rows)
     , cols_size_(cols)
@@ -20,10 +20,10 @@ board::board(
 { }
 
 board::board(
-    const boost::di::named<int, _S("board rows")>& rows
-  , const boost::di::named<int, _S("board cols")>& cols
-  , const boost::di::named<int, _S("board winning strike")>& win
-  , const boost::di::named<int, _S("board colors")>& colors
+    boost::di::named<int, _S("board rows")> rows
+  , boost::di::named<int, _S("board cols")> cols
+  , boost::di::named<int, _S("board winning strike")> win
+  , boost::di::named<int, _S("board colors")> colors
   , std::unique_ptr<irandom> r
   , std::vector<color_t> v)
     : board(rows, cols, win, colors, std::move(r))

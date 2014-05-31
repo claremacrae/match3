@@ -2,7 +2,6 @@
 #define EVENTS_BCQLG30Q
 
 #include <boost/mpl/int.hpp>
-#include <boost/di/ctor.hpp>
 #include <mpl/string.hpp>
 #include <SDL.h>
 #include "position.hpp"
@@ -25,11 +24,10 @@ struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP>
 {
     button_clicked() { }
 
-    BOOST_DI_CTOR(button_clicked
-        , const SDL_Event& event
-        , int grid_offset = 38 + 5
-        , int grids_offset_x = 328
-        , int grids_offset_y = 100)
+    button_clicked(const SDL_Event& event
+                 , int grid_offset = 38 + 5
+                 , int grids_offset_x = 328
+                 , int grids_offset_y = 100)
         : pos(((event.button.x - grids_offset_x) / grid_offset)
             , ((event.button.y - grids_offset_y) / grid_offset))
     { }

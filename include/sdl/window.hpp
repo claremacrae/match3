@@ -20,10 +20,9 @@ class window : public iwindow
     typedef std::map<int, std::vector<texture_rect_t>> layers_t;
 
 public:
-    BOOST_DI_CTOR(window
-        , const boost::di::named<int, _S("win width")>&
-        , const boost::di::named<int, _S("win height")>&
-        , const boost::di::named<std::string, _S("win caption")>&);
+    window(boost::di::named<int, _S("win width")>
+         , boost::di::named<int, _S("win height")>
+         , boost::di::named<std::string, _S("win caption")>);
 
     ~window() override;
     std::shared_ptr<SDL_Texture> load_image(const std::string&) const override;

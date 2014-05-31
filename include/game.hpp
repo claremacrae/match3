@@ -12,7 +12,7 @@ class game
 public:
     template<typename... TClients>
     explicit game(std::shared_ptr<controller_t> c, TClients&&... cl)
-        : controller_(c), clients_{std::forward<TClients>(cl)...}
+        : controller_(c)//, clients_{std::forward<TClients>(cl)...}
     { }
 
     void play();

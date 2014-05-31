@@ -7,7 +7,7 @@ namespace match3 {
 namespace gui {
 
 viewer::viewer(std::shared_ptr<sdl::iwindow> window
-             , const boost::di::named<int, _S("board colors")>& colors)
+             , boost::di::named<int, _S("board colors")> colors)
     : window_(window)
 {
     window_->draw(

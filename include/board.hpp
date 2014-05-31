@@ -7,7 +7,6 @@
 #include <functional>
 #include <cmath>
 #include <memory>
-#include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>
 #include "row.hpp"
@@ -24,18 +23,17 @@ class board : public iboard
     friend std::ostream& operator<<(std::ostream&, board&);
 
 public:
-    BOOST_DI_CTOR(board
-      , const boost::di::named<int, _S("board rows")>&
-      , const boost::di::named<int, _S("board cols")>&
-      , const boost::di::named<int, _S("board winning strike")>&
-      , const boost::di::named<int, _S("board colors")>&
-      , std::unique_ptr<irandom>);
+    board(boost::di::named<int, _S("board rows")>
+        , boost::di::named<int, _S("board cols")>
+        , boost::di::named<int, _S("board winning strike")>
+        , boost::di::named<int, _S("board colors")>
+        , std::unique_ptr<irandom>);
 
     board(
-        const boost::di::named<int, _S("board rows")>&
-      , const boost::di::named<int, _S("board cols")>&
-      , const boost::di::named<int, _S("board winning strike")>&
-      , const boost::di::named<int, _S("board colors")>&
+        boost::di::named<int, _S("board rows")>
+      , boost::di::named<int, _S("board cols")>
+      , boost::di::named<int, _S("board winning strike")>
+      , boost::di::named<int, _S("board colors")>
       , std::unique_ptr<irandom>
       , std::vector<color_t>);
 

@@ -21,9 +21,10 @@ namespace di {
 template<>
 struct ctor_traits<match3::game>
 {
-    BOOST_DI_CTOR_TRAITS(std::shared_ptr<match3::controller_t> //clients
-                       , std::shared_ptr<match3::gui::time>
-                       , std::shared_ptr<match3::gui::user>);
+    //clients
+    BOOST_DI_INJECT_TRAITS(std::shared_ptr<match3::controller_t>
+                         , std::shared_ptr<match3::gui::time>
+                         , std::shared_ptr<match3::gui::user>);
 };
 
 } // namespace di
@@ -33,14 +34,14 @@ namespace match3 {
 
 typedef di::injector<
 
-    di::bind_int    < 755        >::in_name< _S("win width")             >
-  , di::bind_int    < 500        >::in_name< _S("win height")            >
-  , di::bind_string < _S("game") >::in_name< _S("win caption")           >
-  , di::bind_int    < 60         >::in_name< _S("game time in seconds")  >
-  , di::bind_int    < 8          >::in_name< _S("board rows")            >
-  , di::bind_int    < 8          >::in_name< _S("board cols")            >
-  , di::bind_int    < 3          >::in_name< _S("board winning strike")  >
-  , di::bind_int    < 5          >::in_name< _S("board colors")          >
+    di::bind_int    < 755        >::named< _S("win width")             >
+  , di::bind_int    < 500        >::named< _S("win height")            >
+  , di::bind_string < _S("game") >::named< _S("win caption")           >
+  , di::bind_int    < 60         >::named< _S("game time in seconds")  >
+  , di::bind_int    < 8          >::named< _S("board rows")            >
+  , di::bind_int    < 8          >::named< _S("board cols")            >
+  , di::bind_int    < 3          >::named< _S("board winning strike")  >
+  , di::bind_int    < 5          >::named< _S("board colors")          >
 
   , sdl::window
   , controller_t

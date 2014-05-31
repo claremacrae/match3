@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <boost/msm/front/euml/euml.hpp>
-#include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <SDL.h>
 #include "sdl/timer.hpp"
@@ -22,9 +21,8 @@ class action : public boost::msm::front::euml::euml_action<T>
 public:
     action() { }
 
-    BOOST_DI_CTOR(action
-        , std::shared_ptr<iboard> b
-        , std::shared_ptr<iviewer> v)
+    action(std::shared_ptr<iboard> b
+         , std::shared_ptr<iviewer> v)
         : board_(b), viewer_(v)
     { }
 
@@ -147,11 +145,10 @@ class show_time : public action<show_time>
 public:
     show_time() { }
 
-    BOOST_DI_CTOR(show_time
-        , std::shared_ptr<iboard> b
-        , std::shared_ptr<iviewer> v
-        , std::shared_ptr<time_ticks> t
-        , const boost::di::named<time_ticks, _S("game time in seconds")>& s)
+    show_time(std::shared_ptr<iboard> b
+            , std::shared_ptr<iviewer> v
+            , std::shared_ptr<time_ticks> t
+            , boost::di::named<time_ticks, _S("game time in seconds")> s)
         : action(b, v), time_ticks_(t), game_time_in_sec_(s)
     { }
 
@@ -175,9 +172,8 @@ class add_points : public action<add_points<Value>>
 public:
     add_points() { }
 
-    BOOST_DI_CTOR(add_points
-        , std::shared_ptr<iboard> b
-        , std::shared_ptr<ipoints> p)
+    add_points(std::shared_ptr<iboard> b
+             , std::shared_ptr<ipoints> p)
         : action_t(b, std::shared_ptr<iviewer>()), points_(p)
     { }
 
@@ -201,8 +197,7 @@ class sub_points : public action<sub_points<Value>>
 public:
     sub_points() { }
 
-    BOOST_DI_CTOR(sub_points
-        , std::shared_ptr<ipoints> p)
+    sub_points(std::shared_ptr<ipoints> p)
         : points_(p)
     { }
 
@@ -220,10 +215,9 @@ class show_points : public action<show_points>
 public:
     show_points() { }
 
-    BOOST_DI_CTOR(show_points
-        , std::shared_ptr<iboard> b
-        , std::shared_ptr<iviewer> v
-        , std::shared_ptr<ipoints> p)
+    show_points(std::shared_ptr<iboard> b
+              , std::shared_ptr<iviewer> v
+              , std::shared_ptr<ipoints> p)
         : action(b, v), points_(p)
     { }
 
@@ -242,10 +236,9 @@ class show_results : public action<show_results>
 public:
     show_results() { }
 
-    BOOST_DI_CTOR(show_results
-        , std::shared_ptr<iboard> b
-        , std::shared_ptr<iviewer> v
-        , std::shared_ptr<ipoints> p)
+    show_results(std::shared_ptr<iboard> b
+               , std::shared_ptr<iviewer> v
+               , std::shared_ptr<ipoints> p)
         : action(b, v), points_(p)
     { }
 

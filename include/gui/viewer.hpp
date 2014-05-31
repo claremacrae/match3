@@ -3,7 +3,6 @@
 
 #include <map>
 #include <memory>
-#include <boost/di/ctor.hpp>
 #include <boost/di/named.hpp>
 #include <mpl/string.hpp>
 #include "iwindow.hpp"
@@ -38,9 +37,8 @@ class viewer : public iviewer
     };
 
 public:
-    BOOST_DI_CTOR(viewer
-        , std::shared_ptr<sdl::iwindow>
-        , const boost::di::named<int, _S("board colors")>&);
+    viewer(std::shared_ptr<sdl::iwindow>
+         , boost::di::named<int, _S("board colors")>);
 
     virtual void quit() override;
     virtual void render(sdl::milliseconds_t) override;
