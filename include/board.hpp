@@ -29,13 +29,13 @@ public:
         , boost::di::named<int, _S("board colors")>
         , std::unique_ptr<irandom>);
 
-    board(
-        boost::di::named<int, _S("board rows")>
-      , boost::di::named<int, _S("board cols")>
-      , boost::di::named<int, _S("board winning strike")>
-      , boost::di::named<int, _S("board colors")>
-      , std::unique_ptr<irandom>
-      , std::vector<color_t>);
+/*    board(*/
+        //boost::di::named<int, _S("board rows")>
+      //, boost::di::named<int, _S("board cols")>
+      //, boost::di::named<int, _S("board winning strike")>
+      //, boost::di::named<int, _S("board colors")>
+      //, std::unique_ptr<irandom>
+      /*, std::vector<color_t>);*/
 
     void init_with_randoms() override;
     bool is_within_board(const position&) const override;
@@ -70,7 +70,7 @@ private:
     int cols_size_ = 0;
     int to_win_size_ = 0;
     rows_t rows_;
-    std::shared_ptr<irandom> random_;
+    std::unique_ptr<irandom> random_;
     std::function<int()> random;
     mutable std::vector<position> selected_;
 };

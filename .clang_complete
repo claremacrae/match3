@@ -4,5 +4,4 @@
 -Iexternals/SDL2
 -Iexternals/di/include
 -Iexternals/msm/include
--Iexternals/boost/boost_1_52_0
 

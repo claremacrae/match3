@@ -19,20 +19,20 @@ board::board(
     , random(std::bind(&irandom::get_random_number, std::ref(*random_), 1, static_cast<int>(colors)))
 { }
 
-board::board(
-    boost::di::named<int, _S("board rows")> rows
-  , boost::di::named<int, _S("board cols")> cols
-  , boost::di::named<int, _S("board winning strike")> win
-  , boost::di::named<int, _S("board colors")> colors
-  , std::unique_ptr<irandom> r
-  , std::vector<color_t> v)
-    : board(rows, cols, win, colors, std::move(r))
-{
-    int i = 0;
-    for (const auto& pos : *this) {
-        rows_[pos.x][pos.y].color = v[i++];
-    }
-}
+//board::board(
+    //boost::di::named<int, _S("board rows")> rows
+  //, boost::di::named<int, _S("board cols")> cols
+  //, boost::di::named<int, _S("board winning strike")> win
+  //, boost::di::named<int, _S("board colors")> colors
+  //, std::unique_ptr<irandom> r
+  //, std::vector<color_t> v)
+    //: board(rows, cols, win, colors, std::move(r))
+//{
+    //int i = 0;
+    //for (const auto& pos : *this) {
+        //rows_[pos.x][pos.y].color = v[i++];
+    //}
+//}
 
 void board::init_with_randoms() {
     for (const auto& pos : *this) {
