@@ -8,6 +8,7 @@
 #include <cmath>
 #include <memory>
 #include <boost/di/named.hpp>
+#include <boost/di/inject.hpp>
 #include <mpl/string.hpp>
 #include "row.hpp"
 #include "position.hpp"
@@ -23,19 +24,20 @@ class board : public iboard
     friend std::ostream& operator<<(std::ostream&, board&);
 
 public:
-    board(boost::di::named<int, _S("board rows")>
+    BOOST_DI_INJECT(board
+        , boost::di::named<int, _S("board rows")>
         , boost::di::named<int, _S("board cols")>
         , boost::di::named<int, _S("board winning strike")>
         , boost::di::named<int, _S("board colors")>
         , std::unique_ptr<irandom>);
 
-/*    board(*/
-        //boost::di::named<int, _S("board rows")>
-      //, boost::di::named<int, _S("board cols")>
-      //, boost::di::named<int, _S("board winning strike")>
-      //, boost::di::named<int, _S("board colors")>
-      //, std::unique_ptr<irandom>
-      /*, std::vector<color_t>);*/
+    board(
+        boost::di::named<int, _S("board rows")>
+      , boost::di::named<int, _S("board cols")>
+      , boost::di::named<int, _S("board winning strike")>
+      , boost::di::named<int, _S("board colors")>
+      , std::unique_ptr<irandom>
+      , std::vector<color_t>);
 
     void init_with_randoms() override;
     bool is_within_board(const position&) const override;
