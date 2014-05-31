@@ -1,8 +1,8 @@
-# Game
+# Match3
 
 **Download**
 ```
-git clone --recursive git@github.com:krzysztof-jusiak/game.git
+git clone --recursive git@github.com:krzysztof-jusiak/match3.git
 ```
 
 **Compilation** (tested with gcc 4.8.1 and boost_1_54_0)
@@ -27,5 +27,5 @@ make CXX="ccache g++" -f Makefile.linux build -j4
 ```
 
 **Screenshots**
-![ScreenShot](https://raw.github.com/krzysztof-jusiak/game/gh-pages/screenshots/board.png)
+![ScreenShot](https://raw.github.com/krzysztof-jusiak/match3/gh-pages/screenshots/board.png)
 

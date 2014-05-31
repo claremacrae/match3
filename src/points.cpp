@@ -1,6 +1,6 @@
 #include "points.hpp"
 
-namespace game {
+namespace match3 {
 
 void points::add(int n) {
     points_ += n;
@@ -14,5 +14,5 @@ points::operator int() const {
     return points_;
 }
 
-} // namespace game
+} // namespace match3
 

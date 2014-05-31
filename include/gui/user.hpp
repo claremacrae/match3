@@ -6,7 +6,7 @@
 #include "iclient.hpp"
 #include "iviewer.hpp"
 
-namespace game {
+namespace match3 {
 namespace gui {
 
 class user : public iclient
@@ -20,7 +20,7 @@ private:
 };
 
 } // namespace gui
-} // namespace game
+} // namespace match3
 
 #endif
 

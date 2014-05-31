@@ -13,7 +13,7 @@ namespace mpl   = boost::mpl;
 namespace front = boost::msm::front;
 namespace euml  = boost::msm::front::euml;
 
-namespace game {
+namespace match3 {
 
 class controller : public front::state_machine_def<controller>
 {
@@ -74,7 +74,7 @@ public:
 
 typedef sdl::msm<controller> controller_t;
 
-} // namespace game
+} // namespace match3
 
 #endif
 

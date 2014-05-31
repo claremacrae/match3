@@ -1,7 +1,7 @@
 #ifndef IPOINTS_SF7WXM00
 #define IPOINTS_SF7WXM00
 
-namespace game {
+namespace match3 {
 
 class ipoints
 {
@@ -12,7 +12,7 @@ public:
     virtual operator int() const = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

@@ -1,7 +1,7 @@
 #include <random>
 #include "random_mt19937.hpp"
 
-namespace game {
+namespace match3 {
 
 int random_mt19937::get_random_number(int min, int max) const {
     std::random_device rd;
@@ -10,5 +10,5 @@ int random_mt19937::get_random_number(int min, int max) const {
     return dis(gen);
 }
 
-} // namespace game
+} // namespace match3
 

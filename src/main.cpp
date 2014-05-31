@@ -1,5 +1,5 @@
 #include <boost/di.hpp>
-#include "app.hpp"
+#include "game.hpp"
 #include "config.hpp"
 
 #ifdef _WIN32
@@ -7,10 +7,7 @@
 #endif
 
 int main() {
-    using namespace game;
-
-    config().create<app>().play();
-
+    match3::config().create<match3::game>().play();
     return 0;
 }
 

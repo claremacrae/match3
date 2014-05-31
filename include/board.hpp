@@ -15,7 +15,7 @@
 #include "irandom.hpp"
 #include "iboard.hpp"
 
-namespace game {
+namespace match3 {
 
 class board : public iboard
 {
@@ -39,25 +39,25 @@ public:
       , std::unique_ptr<irandom>
       , std::vector<color_t>);
 
-    virtual void init_with_randoms() override;
-    virtual bool is_within_board(const position&) const override;
-    virtual bool is_neighbor(const position&) const override;
-    virtual bool is_same_selected(const position&) const override;
-    virtual bool is_same_color(const position&) override;
-    virtual bool is_swap_winning() override;
-    virtual bool are_selected() const override;
-    virtual std::set<position> new_randoms() override;
-    virtual std::set<position> matches() override;
-    virtual std::set<position> scroll_down() override;
+    void init_with_randoms() override;
+    bool is_within_board(const position&) const override;
+    bool is_neighbor(const position&) const override;
+    bool is_same_selected(const position&) const override;
+    bool is_same_color(const position&) override;
+    bool is_swap_winning() override;
+    bool are_selected() const override;
+    std::set<position> new_randoms() override;
+    std::set<position> matches() override;
+    std::set<position> scroll_down() override;
 
-    virtual void select(const position&) override;
-    virtual void unselect_all() override;
-    virtual void swap() override;
+    void select(const position&) override;
+    void unselect_all() override;
+    void swap() override;
 
-    virtual color_t get_grid_color(const position&) override;
+    color_t get_grid_color(const position&) override;
 
-    virtual const_iterator begin() const override;
-    virtual const_iterator end() const override;
+    const_iterator begin() const override;
+    const_iterator end() const override;
 
 private:
     bool is_item_winning(const position&);
@@ -77,7 +77,7 @@ private:
     mutable std::vector<position> selected_;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

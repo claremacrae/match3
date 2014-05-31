@@ -6,7 +6,7 @@
 #include "controller.hpp"
 #include "iclient.hpp"
 
-namespace game {
+namespace match3 {
 namespace gui {
 
 class time : public iclient
@@ -26,7 +26,7 @@ private:
 };
 
 } // namespace gui
-} // namespace game
+} // namespace match3
 
 #endif
 

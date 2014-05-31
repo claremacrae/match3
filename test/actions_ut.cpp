@@ -5,7 +5,7 @@
 #include "mocks/ipoints_mock.hpp"
 #include "actions.hpp"
 
-namespace game {
+namespace match3 {
 namespace test {
 
 namespace GT = ::testing;
@@ -124,5 +124,5 @@ TEST(actions_test, sub_points) {
 }
 
 } // namespace test
-} // namespace game
+} // namespace match3
 

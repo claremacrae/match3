@@ -2,7 +2,7 @@
 #include "gui/time.hpp"
 #include "events.hpp"
 
-namespace game {
+namespace match3 {
 namespace gui {
 
 time::time(std::shared_ptr<controller_t> c)
@@ -24,5 +24,5 @@ void time::run() {
 }
 
 } // namespace gui
-} // namespace game
+} // namespace match3
 

@@ -6,7 +6,7 @@
 #include "grid.hpp"
 #include "position.hpp"
 
-namespace game {
+namespace match3 {
 
 class iviewer
 {
@@ -25,7 +25,7 @@ public:
     virtual void fade_screen(sdl::milliseconds_t = 0) = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

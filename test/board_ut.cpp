@@ -6,7 +6,7 @@
 
 namespace GT = testing;
 
-namespace game {
+namespace match3 {
 
 std::ostream& operator<<(std::ostream& out, board& b) {
     out << "    ";
@@ -244,5 +244,5 @@ TEST_F(board_test, new_randoms) {
 }
 
 } // namespace test
-} // namespace game
+} // namespace match3
 

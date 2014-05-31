@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include "iviewer.hpp"
 
-namespace game {
+namespace match3 {
 namespace mocks {
 
 class iviewer_mock : public iviewer
@@ -28,7 +28,7 @@ public:
 };
 
 } // namespace mocks
-} // namespace game
+} // namespace match3
 
 #endif // IVIEWER_MOCK_HPP
 

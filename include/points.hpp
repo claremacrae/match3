@@ -3,20 +3,20 @@
 
 #include "interfaces/ipoints.hpp"
 
-namespace game {
+namespace match3 {
 
 class points : public ipoints
 {
 public:
-    virtual void add(int) override;
-    virtual void sub(int) override;
-    virtual operator int() const override;
+    void add(int) override;
+    void sub(int) override;
+    operator int() const override;
 
 private:
     int points_ = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

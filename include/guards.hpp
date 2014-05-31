@@ -12,7 +12,7 @@
 namespace mpl  = boost::mpl;
 namespace euml = boost::msm::front::euml;
 
-namespace game {
+namespace match3 {
 
 using is_within_board       = euml::bind_guard<euml_call(&iboard::is_within_board), mpl::_1>;
 using is_neighbor           = euml::bind_guard<euml_call(&iboard::is_neighbor), mpl::_1>;
@@ -50,7 +50,7 @@ public:
     }
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

@@ -3,7 +3,7 @@
 #include <boost/lexical_cast.hpp>
 #include "gui/viewer.hpp"
 
-namespace game {
+namespace match3 {
 namespace gui {
 
 viewer::viewer(std::shared_ptr<sdl::iwindow> window
@@ -136,5 +136,5 @@ void viewer::quit() {
 }
 
 } // namespace gui
-} // namespace game
+} // namespace match3
 

@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include "iwindow.hpp"
 
-namespace game {
+namespace match3 {
 namespace sdl {
 namespace mocks {
 
@@ -27,7 +27,7 @@ public:
 };
 
 } // namespace mocks
-} // namespace game
+} // namespace match3
 } // namespace sdl
 
 #endif // IWINDOW_MOCK_HPP

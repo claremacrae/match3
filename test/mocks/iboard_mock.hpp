@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include "iboard.hpp"
 
-namespace game {
+namespace match3 {
 namespace mocks {
 
 class iboard_mock : public iboard
@@ -33,7 +33,7 @@ public:
 };
 
 } // namespace mocks
-} // namespace game
+} // namespace match3
 
 #endif // IBOARD_MOCK_HPP
 

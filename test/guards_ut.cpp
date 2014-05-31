@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include "guards.hpp"
 
-namespace game {
+namespace match3 {
 namespace test {
 
 namespace GT = ::testing;
@@ -47,5 +47,5 @@ TEST(guards_test, is_key_true) {
 }
 
 } // namespace test
-} // namespace game
+} // namespace match3
 

@@ -4,15 +4,15 @@
 #include <random>
 #include "irandom.hpp"
 
-namespace game {
+namespace match3 {
 
 class random_rand : public irandom
 {
 public:
-    virtual int get_random_number(int, int) const override;
+    int get_random_number(int, int) const override;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

@@ -10,7 +10,7 @@
 #include "iviewer.hpp"
 #include "position.hpp"
 
-namespace game {
+namespace match3 {
 namespace gui {
 
 class viewer : public iviewer
@@ -65,7 +65,7 @@ private:
 };
 
 } // namespace gui
-} // namespace game
+} // namespace match3
 
 #endif
 

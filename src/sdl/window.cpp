@@ -5,7 +5,7 @@
 #include <SDL_ttf.h>
 #include "sdl/window.hpp"
 
-namespace game {
+namespace match3 {
 namespace sdl {
 
 window::window(const boost::di::named<int, _S("win width")>& width
@@ -96,5 +96,5 @@ void window::render_layers() {
 }
 
 } // namespace sdl
-} // namespace game
+} // namespace match3
 

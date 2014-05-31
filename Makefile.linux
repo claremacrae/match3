@@ -1,7 +1,7 @@
 .PHONY: run externals
 
 BIN  		:= bin/linux
-TGT   		:= game
+TGT   		:= match3
 CXX   		:= g++
 LD_FLAGS  	:= -Lbin/linux -lSDL2 -lSDL2_image -lSDL2_ttf-2.0 -lfreetype
 FIND  		:= find

@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include "ipoints.hpp"
 
-namespace game {
+namespace match3 {
 namespace mocks {
 
 class ipoints_mock : public ipoints
@@ -20,7 +20,7 @@ public:
 };
 
 } // namespace mocks
-} // namespace game
+} // namespace match3
 
 #endif // IPOINTS_MOCK_HPP
 

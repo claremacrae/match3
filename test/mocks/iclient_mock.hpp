@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include "iclient.hpp"
 
-namespace game {
+namespace match3 {
 namespace mocks {
 
 class iclient_mock : public iclient
@@ -18,7 +18,7 @@ public:
 };
 
 } // namespace mocks
-} // namespace game
+} // namespace match3
 
 #endif // ICLIENT_MOCK_HPP
 

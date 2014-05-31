@@ -1,17 +1,17 @@
-#ifndef APP_F6TO27D7
-#define APP_F6TO27D7
+#ifndef GAME_F6TO27D7
+#define GAME_F6TO27D7
 
 #include <memory>
 #include "controller.hpp"
 #include "iclient.hpp"
 
-namespace game {
+namespace match3 {
 
-class app
+class game
 {
 public:
     template<typename... TClients>
-    explicit app(std::shared_ptr<controller_t> c, TClients&&... cl)
+    explicit game(std::shared_ptr<controller_t> c, TClients&&... cl)
         : controller_(c), clients_{std::forward<TClients>(cl)...}
     { }
 
@@ -22,7 +22,7 @@ private:
     std::vector<std::shared_ptr<iclient>> clients_;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

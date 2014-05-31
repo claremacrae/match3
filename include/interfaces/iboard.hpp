@@ -5,7 +5,7 @@
 #include "position.hpp"
 #include "grid.hpp"
 
-namespace game {
+namespace match3 {
 
 class iboard
 {
@@ -77,7 +77,7 @@ public:
     virtual const_iterator end() const = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

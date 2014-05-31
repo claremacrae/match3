@@ -1,7 +1,7 @@
 #ifndef GRID_5TY96XWJ
 #define GRID_5TY96XWJ
 
-namespace game {
+namespace match3 {
 
 typedef int color_t;
 
@@ -16,7 +16,7 @@ struct grid
     color_t color = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

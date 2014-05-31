@@ -1,7 +1,7 @@
 #ifndef IRANDOM_S84J5C6T
 #define IRANDOM_S84J5C6T
 
-namespace game {
+namespace match3 {
 
 class irandom
 {
@@ -10,7 +10,7 @@ public:
     virtual int get_random_number(int, int) const = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

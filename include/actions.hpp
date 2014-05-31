@@ -14,7 +14,7 @@
 #include "iviewer.hpp"
 #include "events.hpp"
 
-namespace game {
+namespace match3 {
 
 template<typename T>
 class action : public boost::msm::front::euml::euml_action<T>
@@ -202,7 +202,7 @@ public:
     sub_points() { }
 
     BOOST_DI_CTOR(sub_points
-        , std::shared_ptr<ipoints> p, int /*dummy*/)
+        , std::shared_ptr<ipoints> p)
         : points_(p)
     { }
 
@@ -281,7 +281,7 @@ public:
     }
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

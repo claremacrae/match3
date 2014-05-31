@@ -7,7 +7,7 @@
 #include <gmock/gmock.h>
 #include "irandom.hpp"
 
-namespace game {
+namespace match3 {
 namespace mocks {
 
 class irandom_mock : public irandom
@@ -18,7 +18,7 @@ public:
 };
 
 } // namespace mocks
-} // namespace game
+} // namespace match3
 
 #endif // IRANDOM_MOCK_HPP
 

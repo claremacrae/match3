@@ -1,11 +1,11 @@
 #include <boost/ref.hpp>
 #include <functional>
-#include "app.hpp"
+#include "game.hpp"
 #include "gui/user.hpp"
 
-namespace game {
+namespace match3 {
 
-void app::play() {
+void game::play() {
     controller_->start();
 
     for (auto& client : clients_) {
@@ -13,5 +13,5 @@ void app::play() {
     }
 }
 
-} // namespace game
+} // namespace match3
 

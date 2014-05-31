@@ -19,17 +19,17 @@ namespace boost {
 namespace di {
 
 template<>
-struct ctor_traits<game::app>
+struct ctor_traits<match3::game>
 {
-    BOOST_DI_CTOR_TRAITS(shared_ptr<game::controller_t> //clients
-                       , shared_ptr<game::gui::time>
-                       , shared_ptr<game::gui::user>);
+    BOOST_DI_CTOR_TRAITS(std::shared_ptr<match3::controller_t> //clients
+                       , std::shared_ptr<match3::gui::time>
+                       , std::shared_ptr<match3::gui::user>);
 };
 
 } // namespace di
 } // namespace boost
 
-namespace game {
+namespace match3 {
 
 typedef di::injector<
 
@@ -54,7 +54,7 @@ typedef di::injector<
 
 > config;
 
-} // namespace game
+} // namespace match3
 
 #endif
 

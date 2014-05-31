@@ -1,7 +1,7 @@
 #ifndef ICLIENT_4IT3Y741
 #define ICLIENT_4IT3Y741
 
-namespace game {
+namespace match3 {
 
 class iclient
 {
@@ -10,7 +10,7 @@ public:
     virtual void run() = 0;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

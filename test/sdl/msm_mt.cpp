@@ -9,7 +9,7 @@ namespace mpl   = boost::mpl;
 namespace front = boost::msm::front;
 namespace euml  = boost::msm::front::euml;
 
-namespace game {
+namespace match3 {
 namespace sdl {
 namespace test {
 
@@ -61,5 +61,5 @@ TEST(msm_test, process_event_typed) {
 
 } // namespace test
 } // namespace sdl
-} // namespace game
+} // namespace match3
 

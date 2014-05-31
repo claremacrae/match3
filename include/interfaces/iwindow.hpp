@@ -4,7 +4,7 @@
 #include <memory>
 #include <SDL.h>
 
-namespace game {
+namespace match3 {
 namespace sdl {
 
 class iwindow
@@ -23,7 +23,7 @@ public:
 };
 
 } // namespace sdl
-} // namespace game
+} // namespace match3
 
 #endif
 

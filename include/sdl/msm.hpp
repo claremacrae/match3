@@ -15,7 +15,7 @@
 namespace mpl  = boost::mpl;
 namespace back = boost::msm::back;
 
-namespace game {
+namespace match3 {
 namespace sdl {
 
 template<
@@ -102,7 +102,7 @@ private:
 };
 
 } // namespace sdl
-} // namespace game
+} // namespace match3
 
 #endif
 

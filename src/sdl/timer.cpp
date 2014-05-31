@@ -1,6 +1,6 @@
 #include "sdl/timer.hpp"
 
-namespace game {
+namespace match3 {
 namespace sdl {
 
 timer::timer(milliseconds_t time, const callback_t& callback)
@@ -18,5 +18,5 @@ Uint32 timer::do_callback(milliseconds_t interval, void* data) {
 }
 
 } // namespace sdl
-} // namespace game
+} // namespace match3
 

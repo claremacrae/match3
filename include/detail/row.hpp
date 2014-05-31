@@ -4,7 +4,7 @@
 #include <vector>
 #include "grid.hpp"
 
-namespace game {
+namespace match3 {
 
 class row
 {
@@ -23,7 +23,7 @@ private:
     grids_t grids_;
 };
 
-} // namespace game
+} // namespace match3
 
 #endif
 

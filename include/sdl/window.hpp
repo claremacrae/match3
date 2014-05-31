@@ -8,7 +8,7 @@
 #include <mpl/string.hpp>
 #include "iwindow.hpp"
 
-namespace game {
+namespace match3 {
 namespace sdl {
 
 class window : public iwindow
@@ -25,16 +25,16 @@ public:
         , const boost::di::named<int, _S("win height")>&
         , const boost::di::named<std::string, _S("win caption")>&);
 
-    virtual ~window();
-    virtual std::shared_ptr<SDL_Texture> load_image(const std::string&) const override;
-    virtual std::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string&, SDL_Color, int) const override;
-    virtual void draw(std::shared_ptr<SDL_Texture>, int, int, std::size_t) override;
-    virtual void fade(Uint8) override;
-    virtual void clear() override;
-    virtual void clear(std::size_t) override;
-    virtual void render() override;
-    virtual void render_layers() override;
-    virtual void quit() override;
+    ~window() override;
+    std::shared_ptr<SDL_Texture> load_image(const std::string&) const override;
+    std::shared_ptr<SDL_Texture> render_text(const std::string&, const std::string&, SDL_Color, int) const override;
+    void draw(std::shared_ptr<SDL_Texture>, int, int, std::size_t) override;
+    void fade(Uint8) override;
+    void clear() override;
+    void clear(std::size_t) override;
+    void render() override;
+    void render_layers() override;
+    void quit() override;
 
 private:
     std::shared_ptr<SDL_Window> window_;
@@ -43,7 +43,7 @@ private:
 };
 
 } // namespace sdl
-} // namespace game
+} // namespace match3
 
 #endif
 

@@ -2,7 +2,7 @@
 #include "gui/user.hpp"
 #include "events.hpp"
 
-namespace game {
+namespace match3 {
 namespace gui {
 
 user::user(std::shared_ptr<controller_t> c)
@@ -19,5 +19,5 @@ void user::run() {
 }
 
 } // namespace gui
-} // namespace game
+} // namespace match3
 

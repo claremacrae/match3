@@ -4,7 +4,7 @@
 #include <functional>
 #include <SDL.h>
 
-namespace game {
+namespace match3 {
 namespace sdl {
 
 typedef Uint32 milliseconds_t;
@@ -25,7 +25,7 @@ private:
 };
 
 } // namespace sdl
-} // namespace game
+} // namespace match3
 
 #endif
 

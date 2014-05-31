@@ -1,7 +1,7 @@
 #ifndef POSITION_IZC7KE4U
 #define POSITION_IZC7KE4U
 
-namespace game {
+namespace match3 {
 
 struct position
 {
@@ -25,7 +25,7 @@ inline bool operator!=(const position& lhs, const position& rhs) {
     return !(lhs == rhs);
 }
 
-} // namespace game
+} // namespace match3
 
 #endif
 

@@ -3,7 +3,7 @@
 #include <functional>
 #include <cmath>
 
-namespace game {
+namespace match3 {
 
 board::board(
     const boost::di::named<int, _S("board rows")>& rows
@@ -262,5 +262,5 @@ board::const_iterator board::end() const {
     return const_iterator(rows_size_, cols_size_, 0, cols_size_);
 }
 
-} // namespace game
+} // namespace match3
 
