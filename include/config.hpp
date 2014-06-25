@@ -34,25 +34,35 @@ struct ctor_traits<match3::game>
 
 namespace match3 {
 
-typedef di::injector<
-    di::bind_int<755>::named<_S("win width")>
-  , di::bind_int<600>::named<_S("win height")>
-  , di::bind_int< 60>::named<_S("game time in seconds")>
-  , di::bind_int<  8>::named<_S("board rows")>
-  , di::bind_int<  8>::named<_S("board cols")>
-  , di::bind_int<  3>::named<_S("board winning strike")>
-  , di::bind_int<  5>::named<_S("board colors")>
-  , di::bind_string<_S("game")>::named<_S("win caption")>
-  , di::bind<gui::time>::named<_S("time")>
-  , di::bind<gui::user>::named<_S("user")>
-  , sdl::window
-  , controller_t
-  , board
-  , gui::viewer
-  , points
-  , time_ticks
-  , random_rand
-> config;
+class config
+{
+    using implementations = di::injector<
+        sdl::window
+      , controller_t
+      , board
+      , gui::viewer
+      , points
+      , time_ticks
+      , random_rand
+      , di::bind<gui::time>::named<_S("time")>
+      , di::bind<gui::user>::named<_S("user")>
+    >;
+
+public:
+    auto configure() const {
+        return di::make_injector(
+            implementations()
+          , di::bind<int>::named<_S("win width")>::to(755)
+          , di::bind<int>::named<_S("win height")>::to(600)
+          , di::bind<int>::named<_S("game time in seconds")>::to(60)
+          , di::bind<int>::named<_S("board rows")>::to(8)
+          , di::bind<int>::named<_S("board cols")>::to(8)
+          , di::bind<int>::named<_S("board winning strike")>::to(3)
+          , di::bind<int>::named<_S("board colors")>::to(5)
+          , di::bind<std::string>::named<_S("win caption")>::to("game")
+        );
+    }
+};
 
 } // namespace match3
 

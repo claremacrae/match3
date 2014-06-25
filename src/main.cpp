@@ -7,7 +7,9 @@
 #endif
 
 int main() {
-    match3::config().create<match3::game>().play();
+    auto injector = di::make_injector(match3::config());
+    injector.create<match3::game>().play();
+
     return 0;
 }
 
