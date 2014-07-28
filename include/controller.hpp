@@ -72,7 +72,7 @@ public:
     ), transition_table)
 };
 
-typedef sdl::msm<controller> controller_t;
+using controller_t = sdl::msm<controller> ;
 
 } // namespace match3
 

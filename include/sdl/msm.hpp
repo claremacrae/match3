@@ -18,11 +18,14 @@ namespace back = boost::msm::back;
 namespace match3 {
 namespace sdl {
 
+template<typename TStateMachine>
+using state_machine = back::state_machine<TStateMachine, back::use_dependency_injection>;
+
 template<
     typename TStateMachine
   , int(*sdl_push_event)(SDL_Event*) = SDL_PushEvent
 >
-class msm : public back::state_machine<TStateMachine>
+class msm : public state_machine<TStateMachine>
 {
     BOOST_MPL_HAS_XXX_TRAIT_DEF(id)
 
@@ -38,7 +41,7 @@ class msm : public back::state_machine<TStateMachine>
 public:
     template<typename... Args>
     explicit msm(Args&&... args)
-        : back::state_machine<TStateMachine>(std::forward<Args>(args)...)
+        : state_machine<TStateMachine>(std::forward<Args>(args)...)
     { }
 
     template<typename TEvent>
@@ -48,7 +51,7 @@ public:
     }
 
     void process_event(const SDL_Event& event) {
-        typedef typename back::state_machine<TStateMachine>::transition_table transition_table;
+        typedef typename state_machine<TStateMachine>::transition_table transition_table;
         for_events<typename events<transition_table>::type>(event);
     }
 
@@ -60,7 +63,7 @@ private:
     void for_events(const SDL_Event& event, typename std::enable_if<!mpl::empty<Seq>::value>::type* = 0) {
         typedef typename mpl::front<Seq>::type event_t;
         if (event.type == SDL_USEREVENT and is_same_id<event_t>(event.user.code)) {
-            back::state_machine<TStateMachine>::process_event(*static_cast<event_t*>(event.user.data1));
+            state_machine<TStateMachine>::process_event(*static_cast<event_t*>(event.user.data1));
         } else if (is_same_id<event_t>(event.type)) {
             process_event_impl<event_t>(event);
         } else {
@@ -71,13 +74,13 @@ private:
     template<typename TEvent>
     typename std::enable_if<!std::is_constructible<TEvent, const SDL_Event&>::value>::type
     process_event_impl(const SDL_Event&) {
-        back::state_machine<TStateMachine>::process_event(TEvent());
+        state_machine<TStateMachine>::process_event(TEvent());
     }
 
     template<typename TEvent>
     typename std::enable_if<std::is_constructible<TEvent, const SDL_Event&>::value>::type
     process_event_impl(const SDL_Event& event) {
-        back::state_machine<TStateMachine>::process_event(TEvent(event));
+        state_machine<TStateMachine>::process_event(TEvent(event));
     }
 
     template<typename TEvent>
