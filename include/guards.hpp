@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <boost/msm/front/euml/euml.hpp>
-#include <boost/di/named.hpp>
 #include "time_ticks.hpp"
 #include "iboard.hpp"
 #include "events.hpp"
@@ -25,8 +24,9 @@ class is_game_timeout : public euml::euml_action<is_game_timeout>
 public:
     is_game_timeout() { }
 
-    is_game_timeout(std::shared_ptr<time_ticks> t
-                  , boost::di::named<time_ticks, _S("game time in seconds")> s)
+    BOOST_DI_INJECT(is_game_timeout
+                  , std::shared_ptr<time_ticks> t
+                  , (named = game_time_in_seconds) time_ticks s)
         : time_ticks_(t), game_time_in_sec_(s)
     { }
 

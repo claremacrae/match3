@@ -6,10 +6,10 @@
 namespace match3 {
 
 board::board(
-    boost::di::named<int, _S("board rows")> rows
-  , boost::di::named<int, _S("board cols")> cols
-  , boost::di::named<int, _S("board winning strike")> win
-  , boost::di::named<int, _S("board colors")> colors
+    int rows
+  , int cols
+  , int win
+  , int colors
   , std::unique_ptr<irandom> r)
     : rows_size_(rows)
     , cols_size_(cols)
@@ -20,10 +20,10 @@ board::board(
 { }
 
 board::board(
-    boost::di::named<int, _S("board rows")> rows
-  , boost::di::named<int, _S("board cols")> cols
-  , boost::di::named<int, _S("board winning strike")> win
-  , boost::di::named<int, _S("board colors")> colors
+    int rows
+  , int cols
+  , int win
+  , int colors
   , std::unique_ptr<irandom> r
   , std::vector<color_t> v)
     : board(rows, cols, win, colors, std::move(r))

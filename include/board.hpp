@@ -7,15 +7,18 @@
 #include <functional>
 #include <cmath>
 #include <memory>
-#include <boost/di/named.hpp>
 #include <boost/di/inject.hpp>
-#include <mpl/string.hpp>
 #include "row.hpp"
 #include "position.hpp"
 #include "irandom.hpp"
 #include "iboard.hpp"
 
 namespace match3 {
+
+auto board_rows = []{};
+auto board_cols = []{};
+auto board_winning_strike = []{};
+auto board_colors = []{};
 
 class board : public iboard
 {
@@ -25,19 +28,15 @@ class board : public iboard
 
 public:
     BOOST_DI_INJECT(board
-        , boost::di::named<int, _S("board rows")>
-        , boost::di::named<int, _S("board cols")>
-        , boost::di::named<int, _S("board winning strike")>
-        , boost::di::named<int, _S("board colors")>
+        , (named = board_rows) int
+        , (named = board_cols) int
+        , (named = board_winning_strike) int
+        , (named = board_colors) int
         , std::unique_ptr<irandom>);
 
-    board(
-        boost::di::named<int, _S("board rows")>
-      , boost::di::named<int, _S("board cols")>
-      , boost::di::named<int, _S("board winning strike")>
-      , boost::di::named<int, _S("board colors")>
-      , std::unique_ptr<irandom>
-      , std::vector<color_t>);
+    board(int, int, int, int
+        , std::unique_ptr<irandom>
+        , std::vector<color_t>);
 
     void init_with_randoms() override;
     bool is_within_board(const position&) const override;

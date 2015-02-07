@@ -2,7 +2,6 @@
 #define CONFIG_2BXW6AE7
 
 #include <boost/di.hpp>
-#include <mpl/string.hpp>
 #include "sdl/window.hpp"
 #include "gui/viewer.hpp"
 #include "gui/user.hpp"
@@ -20,12 +19,11 @@ namespace boost {
 namespace di {
 
 template<>
-struct ctor_traits<match3::game>
-{
+struct ctor_traits<match3::game> {
     BOOST_DI_INJECT_TRAITS(
         std::shared_ptr<match3::controller_t>
-      , named<std::shared_ptr<match3::iclient>, _S("time")> // non blocking
-      , named<std::shared_ptr<match3::iclient>, _S("user")> // blocking
+      , (named = match3::time) std::shared_ptr<match3::iclient> // non blocking
+      , (named = match3::user) std::shared_ptr<match3::iclient> // blocking
     );
 };
 
@@ -34,32 +32,25 @@ struct ctor_traits<match3::game>
 
 namespace match3 {
 
-class config
-{
-    using implementations = di::injector<
-        sdl::window
-      , controller_t
-      , board
-      , gui::viewer
-      , points
-      , time_ticks
-      , random_rand
-      , di::bind<gui::time>::named<_S("time")>
-      , di::bind<gui::user>::named<_S("user")>
-    >;
-
+class config {
 public:
     auto configure() const {
         return di::make_injector(
-            implementations()
-          , di::bind<int>::named<_S("win width")>::to(755)
-          , di::bind<int>::named<_S("win height")>::to(600)
-          , di::bind<int>::named<_S("game time in seconds")>::to(60)
-          , di::bind<int>::named<_S("board rows")>::to(8)
-          , di::bind<int>::named<_S("board cols")>::to(8)
-          , di::bind<int>::named<_S("board winning strike")>::to(3)
-          , di::bind<int>::named<_S("board colors")>::to(5)
-          , di::bind<std::string>::named<_S("win caption")>::to("game")
+            di::bind<sdl::iwindow, sdl::window>
+          , di::bind<iboard, board>
+          , di::bind<iviewer, gui::viewer>
+          , di::bind<ipoints, points>
+          , di::bind<irandom, random_rand>
+          , di::bind<iclient, gui::time>.named(time)
+          , di::bind<iclient, gui::user>.named(user)
+          , di::bind<int>.named(win_width).to(755)
+          , di::bind<int>.named(win_height).to(600)
+          , di::bind<int>.named(game_time_in_seconds).to(60)
+          , di::bind<int>.named(board_rows).to(8)
+          , di::bind<int>.named(board_cols).to(8)
+          , di::bind<int>.named(board_winning_strike).to(3)
+          , di::bind<int>.named(board_colors).to(5)
+          , di::bind<std::string>.named(win_caption).to("game")
         );
     }
 };

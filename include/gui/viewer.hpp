@@ -3,8 +3,7 @@
 
 #include <map>
 #include <memory>
-#include <boost/di/named.hpp>
-#include <mpl/string.hpp>
+#include "board.hpp"
 #include "iwindow.hpp"
 #include "iviewer.hpp"
 #include "position.hpp"
@@ -37,8 +36,9 @@ class viewer : public iviewer
     };
 
 public:
-    viewer(std::shared_ptr<sdl::iwindow>
-         , boost::di::named<int, _S("board colors")>);
+    BOOST_DI_INJECT(viewer
+                  , std::shared_ptr<sdl::iwindow>
+                  , (named = board_colors) int);
 
     virtual void quit() override;
     virtual void render(sdl::milliseconds_t) override;

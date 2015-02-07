@@ -2,15 +2,13 @@
 #define EVENTS_BCQLG30Q
 
 #include <boost/mpl/int.hpp>
-#include <mpl/string.hpp>
 #include <SDL.h>
 #include "position.hpp"
 
 namespace match3 {
 
 template<typename T, int Id>
-struct event : boost::msm::front::euml::euml_event<T>
-{
+struct event : boost::msm::front::euml::euml_event<T> {
     typedef boost::mpl::int_<Id> id;
 };
 
@@ -20,8 +18,7 @@ class flag_game_over { };
 //events
 typedef boost::msm::front::euml::True_ anonymous;
 
-struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP>
-{
+struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP> {
     button_clicked() { }
 
     button_clicked(const SDL_Event& event
@@ -39,8 +36,7 @@ struct button_clicked : event<button_clicked, SDL_MOUSEBUTTONUP>
     position pos;
 };
 
-struct key_pressed : event<key_pressed, SDL_KEYDOWN>
-{
+struct key_pressed : event<key_pressed, SDL_KEYDOWN> {
     key_pressed() { }
 
     explicit key_pressed(const SDL_Event& event)

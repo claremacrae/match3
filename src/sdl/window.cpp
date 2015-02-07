@@ -8,9 +8,9 @@
 namespace match3 {
 namespace sdl {
 
-window::window(boost::di::named<int, _S("win width")> width
-             , boost::di::named<int, _S("win height")> height
-             , boost::di::named<std::string, _S("win caption")> caption)
+window::window(int width
+             , int height
+             , std::string caption)
 {
     assert(!SDL_Init(SDL_INIT_EVERYTHING) && SDL_GetError());
     assert(!TTF_Init() && TTF_GetError());

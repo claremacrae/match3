@@ -15,8 +15,7 @@ namespace euml  = boost::msm::front::euml;
 
 namespace match3 {
 
-class controller : public front::state_machine_def<controller>
-{
+class controller : public front::state_machine_def<controller> {
     struct idle                 : front::state<>, euml::euml_state<idle> { };
     struct wait_for_first_item  : front::state<>, euml::euml_state<wait_for_first_item> { };
     struct wait_for_second_item : front::state<>, euml::euml_state<wait_for_second_item> { };

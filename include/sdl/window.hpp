@@ -5,10 +5,14 @@
 #include <vector>
 #include <memory>
 #include <boost/di.hpp>
-#include <mpl/string.hpp>
 #include "iwindow.hpp"
 
 namespace match3 {
+
+auto win_width = []{};
+auto win_height = []{};
+auto win_caption = []{};
+
 namespace sdl {
 
 class window : public iwindow
@@ -20,9 +24,10 @@ class window : public iwindow
     typedef std::map<int, std::vector<texture_rect_t>> layers_t;
 
 public:
-    window(boost::di::named<int, _S("win width")>
-         , boost::di::named<int, _S("win height")>
-         , boost::di::named<std::string, _S("win caption")>);
+    BOOST_DI_INJECT(window
+                  , (named = win_width) int
+                  , (named = win_height) int
+                  , (named = win_caption) std::string);
 
     ~window() override;
     std::shared_ptr<SDL_Texture> load_image(const std::string&) const override;
