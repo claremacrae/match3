@@ -7,7 +7,7 @@
 #include <functional>
 #include <cmath>
 #include <memory>
-#include <boost/di/inject.hpp>
+#include <boost/di.hpp>
 #include "row.hpp"
 #include "position.hpp"
 #include "irandom.hpp"
