@@ -11,7 +11,7 @@ namespace match3 {
 class game
 {
 public:
-    explicit game(std::shared_ptr<controller_t> c, std::vector<std::shared_ptr<iclient>> clients)
+    explicit game(const std::shared_ptr<controller_t>& c, const std::vector<std::shared_ptr<iclient>>& clients)
         : controller_(c), clients_(clients)
     { }
 

@@ -13,7 +13,7 @@
 #include "random_mt19937.hpp"
 #include "random_rand.hpp"
 
-namespace di  = boost::di;
+namespace di = boost::di;
 
 namespace match3 {
 
