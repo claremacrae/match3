@@ -7,8 +7,6 @@
 
 namespace match3 {
 
-auto time = []{};
-
 namespace gui {
 
 class time : public iclient

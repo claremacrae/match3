@@ -14,8 +14,6 @@
 
 namespace match3 {
 
-auto game_time_in_seconds = []{};
-
 template<typename T>
 class action : public boost::msm::front::euml::euml_action<T>
 {
@@ -150,7 +148,7 @@ public:
                   , std::shared_ptr<iboard> b
                   , std::shared_ptr<iviewer> v
                   , std::shared_ptr<time_ticks> t
-                  , (named = game_time_in_seconds) time_ticks s)
+                  , (named = "game_time_in_seconds"_s) time_ticks s)
         : action(b, v), time_ticks_(t), game_time_in_sec_(s)
     { }
 

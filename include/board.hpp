@@ -15,11 +15,6 @@
 
 namespace match3 {
 
-auto board_rows = []{};
-auto board_cols = []{};
-auto board_winning_strike = []{};
-auto board_colors = []{};
-
 class board : public iboard
 {
     typedef std::vector<row> rows_t;
@@ -28,10 +23,10 @@ class board : public iboard
 
 public:
     BOOST_DI_INJECT(board
-        , (named = board_rows) int
-        , (named = board_cols) int
-        , (named = board_winning_strike) int
-        , (named = board_colors) int
+        , (named = "board_rows"_s) int
+        , (named = "board_cols"_s) int
+        , (named = "board_winning_strike"_s) int
+        , (named = "board_colors"_s) int
         , std::unique_ptr<irandom>);
 
     board(int, int, int, int

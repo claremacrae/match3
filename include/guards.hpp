@@ -26,7 +26,7 @@ public:
 
     BOOST_DI_INJECT(is_game_timeout
                   , std::shared_ptr<time_ticks> t
-                  , (named = game_time_in_seconds) time_ticks s)
+                  , (named = "game_time_in_seconds"_s) time_ticks s)
         : time_ticks_(t), game_time_in_sec_(s)
     { }
 

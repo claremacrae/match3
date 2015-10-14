@@ -7,8 +7,6 @@
 
 namespace match3 {
 
-auto user = []{};
-
 namespace gui {
 
 class user : public iclient

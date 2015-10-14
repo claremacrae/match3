@@ -9,10 +9,6 @@
 
 namespace match3 {
 
-auto win_width = []{};
-auto win_height = []{};
-auto win_caption = []{};
-
 namespace sdl {
 
 class window : public iwindow
@@ -25,9 +21,9 @@ class window : public iwindow
 
 public:
     BOOST_DI_INJECT(window
-                  , (named = win_width) int
-                  , (named = win_height) int
-                  , (named = win_caption) std::string);
+                  , (named = "win_width"_s) int
+                  , (named = "win_height"_s) int
+                  , (named = "win_caption"_s) std::string);
 
     ~window() override;
     std::shared_ptr<SDL_Texture> load_image(const std::string&) const override;

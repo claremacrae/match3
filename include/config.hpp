@@ -15,44 +15,25 @@
 
 namespace di  = boost::di;
 
-namespace boost {
-namespace di {
-
-template<>
-struct ctor_traits<match3::game> {
-    BOOST_DI_INJECT_TRAITS(
-        std::shared_ptr<match3::controller_t>
-      , (named = match3::time) std::shared_ptr<match3::iclient> // non blocking
-      , (named = match3::user) std::shared_ptr<match3::iclient> // blocking
-    );
-};
-
-} // namespace di
-} // namespace boost
-
 namespace match3 {
 
-class config {
-public:
-    auto configure() const {
-        return di::make_injector(
-            di::bind<sdl::iwindow, sdl::window>
-          , di::bind<iboard, board>
-          , di::bind<iviewer, gui::viewer>
-          , di::bind<ipoints, points>
-          , di::bind<irandom, random_rand>
-          , di::bind<iclient, gui::time>.named(time)
-          , di::bind<iclient, gui::user>.named(user)
-          , di::bind<int>.named(win_width).to(755)
-          , di::bind<int>.named(win_height).to(600)
-          , di::bind<int>.named(game_time_in_seconds).to(60)
-          , di::bind<int>.named(board_rows).to(8)
-          , di::bind<int>.named(board_cols).to(8)
-          , di::bind<int>.named(board_winning_strike).to(3)
-          , di::bind<int>.named(board_colors).to(5)
-          , di::bind<std::string>.named(win_caption).to("game")
-        );
-    }
+auto config() {
+    return di::make_injector(
+        di::bind<sdl::iwindow>.to<sdl::window>()
+      , di::bind<iboard>.to<board>()
+      , di::bind<iviewer>.to<gui::viewer>()
+      , di::bind<ipoints>.to<points>()
+      , di::bind<irandom>.to<random_rand>()
+      , di::bind<int>.named("win_width"_s).to(755)
+      , di::bind<int>.named("win_height"_s).to(600)
+      , di::bind<int>.named("game_time_in_seconds"_s).to(60)
+      , di::bind<int>.named("board_rows"_s).to(8)
+      , di::bind<int>.named("board_cols"_s).to(8)
+      , di::bind<int>.named("board_winning_strike"_s).to(3)
+      , di::bind<int>.named("board_colors"_s).to(5)
+      , di::bind<std::string>.named("win_caption"_s).to("game")
+      , di::bind<iclient*[]>.to<gui::time/*non blocking*/, gui::user/*blocking*/>()
+    );
 };
 
 } // namespace match3

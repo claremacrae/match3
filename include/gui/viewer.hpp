@@ -38,7 +38,7 @@ class viewer : public iviewer
 public:
     BOOST_DI_INJECT(viewer
                   , std::shared_ptr<sdl::iwindow>
-                  , (named = board_colors) int);
+                  , (named = "board_colors"_s) int);
 
     virtual void quit() override;
     virtual void render(sdl::milliseconds_t) override;

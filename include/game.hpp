@@ -2,6 +2,7 @@
 #define GAME_F6TO27D7
 
 #include <memory>
+#include <vector>
 #include "controller.hpp"
 #include "iclient.hpp"
 
@@ -10,9 +11,8 @@ namespace match3 {
 class game
 {
 public:
-    template<typename... TClients>
-    explicit game(std::shared_ptr<controller_t> c, TClients&&... cl)
-        : controller_(c), clients_{std::forward<TClients>(cl)...}
+    explicit game(std::shared_ptr<controller_t> c, std::vector<std::shared_ptr<iclient>> clients)
+        : controller_(c), clients_(clients)
     { }
 
     void play();
