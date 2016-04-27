@@ -15,10 +15,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/league.css" id="theme">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+        <link rel="stylesheet" href="lib/css/github.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -38,16 +38,22 @@
 
 		<div class="reveal">
 			<div class="slides">
+
+		  <section data-background-size="100%" data-background="images/king_logo_light.png"></section>
+
           <section data-markdown=""
                    data-separator="^====+$"
                    data-separator-vertical="^----+$"
-                   data-notes="^Note:">
+                   data-notes="^Note:"
+                   data-background-size="100%"
+                 	 data-background="images/king.png">
 					<script type="text/template">
 
 C++Now 2016
 
 # Let's make a web match-3 game in C++14
 
+https://github.com/modern-cpp-examples/match3
 
 Kris Jusiak, King
 
@@ -96,15 +102,42 @@ Combine C++ with JS
 
 ----
 
-Emscripten
+![Emscripten](images/emscripten.png)
 
 > Emscripten is an LLVM-based project that compiles C and C++ into highly-optimizable JavaScript in asm.js format
 
 ----
 
-WebAssemlby
+```cpp
+#include <iostream>
+int main() {
+  std::cout << "hello world!" << std::endl;
+}
+```
+
+```sh
+em++ hello_world.cpp -o index.html
+```
+
+```sh
+$browser index.html
+```
+
+----
+
+![Cheerp](images/cheerp.png)
+
+> Cheerp is the C++ compiler for the web
+write a web application, or port your existing one, all in C++.
+cheerp will generate JavaScript code that can run on any browser
+
+----
+
+##WebAssemlby
 
 > WebAssembly or wasm is a new portable, size- and load-time-efficient format suitable for compilation to the web
+
+---
 
 In Progress!
 
@@ -114,18 +147,27 @@ In Progress!
 
 ![Candy Crush](images/candy_crush.jpg)
 
-----
-
-##Match3 Game
-
-<img width=250 height=400 src="images/game.png" />
-
-http://modern-cpp-examples.github.io/match3
-
-
 ==============================================================================
 
 ###Core Mechanics
+
+----
+
+1. Swipe items (2 given items)
+
+2. For given items
+
+    2.1 Find matches
+
+    2.2 Remove matches
+
+    2.3 Scroll down items (which were above removed)
+
+    2.4 Generate new items
+
+    2.6 Find affected items (new or scrolled items)
+
+    2.7 For affected (new given items) items go to 2
 
 ----
 
@@ -174,11 +216,112 @@ Match can generate new matches
 
 ----
 
-* C++14 compiler (Clang-3.7+) / Emscripten (1.35.0)
-* SDL2 (SDL2_image / SDL2_ttf)
-* Range-v3
-* Experimental Boost.DI
-* Experimental Boost.MSM-lite
+* C++14 compiler
+    * Clang-3.7+
+    * GCC-6+
+    * Emscripten-1.35
+
+* SDL2
+    * SDL2_image
+    * SDL2_ttf
+
+----
+
+##Libraries
+
+----
+
+##Experimental Boost.DI
+
+---
+
+https://github.com/boost-experimental/di
+
+----
+
+```cpp
+#include <boost/di.hpp>
+
+namespace di = boost::di;
+
+struct renderer { int device; };
+struct view { view(std::string title, const renderer&) {} };
+class model {};
+struct controller { controller(model&, view&) {} };
+class user {};
+struct app { app(controller&, const user&) {} };
+
+int main() {
+  auto injector = di::make_injector();
+  injector.create<app>();
+}
+```
+
+----
+
+##Experimental Boost.MSM-lite
+
+---
+
+https://github.com/boost-experimental/msm-lite
+
+----
+
+```cpp
+#include <boost/msm-lite.hpp>
+
+namespace msm = boost::msm::lite;
+
+auto guard = [] { return true; };
+auto action = [] { std::cout << "action" << std::endl; };
+
+struct hello_world {
+  auto configure() const noexcept {
+    using namespace msm;
+    return make_transition_table(
+       *"idle"_s + event1 = "s1"_s
+      , "s1"_s + event2 [ guard ] / action = "s2"_s
+    );
+  }
+};
+```
+
+```cpp
+int main() {
+  msm::sm<hello_world> sm;
+  using namespace msm;
+  sm.process_event(event1{});
+  sm.process_event(event2{});
+}
+```
+
+----
+
+##Range-V3
+
+---
+
+https://github.com/ericniebler/range-v3
+
+----
+
+```cpp
+#include <range/v3/all.hpp>
+
+int main() {
+  using namespace ranges::view;
+
+  ranges::recursive_range_fn<int> const fibs {[&]{
+    return concat(
+      closed_ints(0,1)
+    , zip_with(std::plus<int>{}, fibs(), tail(fibs()))
+    );
+  }};
+
+  auto x = take(fibs(), 20);
+  ranges::for_each(x, [](int i) { std::cout << i << std::endl; });
+}
+```
 
 ==============================================================================
 
@@ -199,6 +342,508 @@ Match can generate new matches
     * Meta State Machine: Experimental Boost.MSM-lite
     * Logic: Range-V3
 
+----
+
+* TODO MVC diagram
+* TODO why MVC is good for apps and games
+* TODO ECS what about it
+* TODO State machine diagram
+
+==============================================================================
+
+##Implementation
+
+----
+
+```sh
+▾ src/
+  ▾ controller/
+      controller.hpp
+      logic.hpp
+  ▾ model/
+      board.hpp
+      config.hpp
+  ▾ view/
+      animations.hpp
+      icanvas.hpp
+      sdl_canvas.hpp
+      view.hpp
+    pph.hpp
+    game.hpp
+    main.cpp
+```
+
+----
+
+##Main
+
+----
+
+```cpp
+int main() {
+  auto injector = di::make_injector(configuration());
+  injector.create<match3::game>().play();
+}
+```
+
+----
+
+##DI Configuration
+
+----
+
+Experimental Boost.DI
+
+---
+
+https://github.com/boost-experimental/di
+
+----
+
+```cpp
+  di::bind<icanvas>.to<sdl_canvas>()
+```
+
+----
+
+```cpp
+  di::bind<>.to(
+    config{.win_title = "match3",
+           .win_width = 320,
+           .win_height = 480,
+           .board_width = 7,
+           .board_height = 10,
+           .board_colors = 5,
+           .max_moves = 10}
+  )
+```
+
+----
+
+```cpp
+ di::bind<board::color[]>.to({
+    3,5,1,4,3,2,2,
+    1,1,4,2,5,1,3,
+    5,3,5,4,5,3,2,
+    4,4,2,1,3,4,5,
+    5,1,1,2,4,5,1,
+    5,2,3,5,4,2,1,
+    1,5,5,1,5,5,4,
+    2,3,3,1,3,3,4,
+    3,2,2,5,4,4,1,
+    1,2,3,4,1,3,4
+  })
+```
+
+----
+
+```cpp
+  di::bind<randomize>.to([](int begin, int end) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(begin, end);
+    return dis(gen);
+  })
+```
+
+----
+
+##Game loop
+
+----
+
+```cpp
+class game {
+ public:
+  explicit game(msm::sm<controller>& c) : controller_(c) {}
+
+  void play() {
+    EM(emscripten_set_main_loop_arg(
+        play_impl, reinterpret_cast<void*>(&controller_), 0, 0))
+    (play_impl(reinterpret_cast<void*>(&controller_)));
+  }
+```
+
+----
+
+```cpp
+  static void play_impl(void* c) {
+    auto& controller_ =
+      *reinterpret_cast<msm::sm<controller>*>(c);
+
+    do {
+      auto dispatch_event = msm::make_dispatch_table<
+        SDL_Event, SDL_QUIT, SDL_FINGERMOTION>(controller_);
+      controller_.process_event(time_tick{});
+      SDL_Event event;
+      while (SDL_PollEvent(&event)) {
+        dispatch_event(event, event.type);
+      }
+    } while (EM(false && )() !controller_.is(msm::X));
+  }
+```
+
+----
+
+##Model
+
+----
+
+```cpp
+struct board {
+  using color = int;
+  std::vector<color> grids;
+};
+```
+
+----
+
+##View
+
+----
+
+```cpp
+class icanvas {
+ public:
+  virtual ~icanvas() noexcept = default;
+  virtual std::shared_ptr<void>
+  load_image(const std::string&) const = 0;
+  virtual std::shared_ptr<void>
+  create_text(
+    const std::string&, const std::string&, int) const = 0;
+  virtual void draw(
+    std::shared_ptr<void>, int x = 0, int y = 0, bool = true) = 0;
+  virtual void render() = 0;
+  virtual void clear() = 0;
+};
+```
+
+----
+
+```cpp
+class view {
+  view(icanvas&, config);
+  void set_grid(int x, int y, int c);
+  void update_grid(int x, int y);
+  auto get_position(int x, int y) const;
+  void set_text(const std::string& text, int x, int y);
+  void update() { canvas_.render(); }
+  void clear() { canvas_.clear();
+};
+```
+
+----
+
+```cpp
+class animations {
+  explicit animations(view& v);
+  void queue_animation(const std::function<void()>& f
+                     , std::chrono::milliseconds length = {});
+  void update();
+};
+```
+
+----
+
+##Controller
+
+----
+
+Experimental Boost.MSM-lite
+
+---
+
+https://github.com/boost-experimental/msm-lite
+
+----
+
+![transition table](images/transition_table.png)
+
+----
+
+Guards/Actions
+
+----
+
+```cpp
+auto is_allowed =
+  [](auto event, const view& v, const selected& s, config c) {
+  assert(!s.empty());
+  const auto _1 = s.back();
+  const auto _2 = v.get_position(event.x, event.y);
+  const auto diff = std::abs(_1 - _2);
+  const auto board_size = c.board_width * c.board_height;
+  return (_1 >= 0 && _1 < board_size) &&
+         (_2 >= 0 && _2 < board_size) &&
+         (diff == 1 || diff == c.board_width);
+};
+```
+
+----
+
+```cpp
+auto generate_new = [](board& b, const auto& m, selected& s, config c,
+                       randomize r) {
+  ranges::action::transform(b.grids,
+    [c, r](auto i) { return i ? i : r(1, c.board_colors); }
+  );
+
+  s |= ranges::action::push_front(affected(m.matches, c.board_width))
+    | ranges::action::sort | ranges::action::unique;
+};
+```
+
+----
+
+```cpp
+auto swap_items = [](const selected& s, board& b) {
+  assert(s.size() == 2);
+  const auto _1 = *s.begin();
+  const auto _2 = *(s.begin() + 1);
+  std::swap(b.grids[_1], b.grids[_2]);
+};
+```
+
+----
+
+##Logic
+
+----
+
+Range-V3
+
+---
+
+https://github.com/ericniebler/range-v3
+
+----
+
+##Row view
+
+----
+
+```cpp
+| 1 2 3 |           |  1   2   3  |
+| 3 4 5 | => n:1 -> | [3] [4] [5] |
+| 6 7 8 |           |  6   7   8  |
+```
+
+```cpp
+auto row = [](auto&& v, auto n, auto width) {
+  return v | ranges::view::drop(width * n) |
+             ranges::view::take(width);
+};
+```
+
+----
+
+##Column view
+
+----
+
+```cpp
+| 1 2 3 |           | 1 [2] 3 |
+| 3 4 5 | => n:1 -> | 3 [4] 5 |
+| 6 7 8 |           | 6 [7] 8 |
+```
+
+```cpp
+auto col = [](auto&& v, auto n, auto width) {
+  return v | ranges::view::drop(n) |
+             ranges::view::stride(int(width));
+};
+
+```
+
+----
+
+##Match N
+
+----
+
+```cpp
+| 1 3 3 3 2 1 | => color:3, n:3 -> {begin: 1, length: 3}
+| 1 2 3 3 3 3 | => color:3, n:3 -> {begin: 2, length: 4}
+```
+
+----
+
+```cpp
+auto match_n = [](auto&& v, auto color, int n = 3) {
+  const auto&& matches =
+    ranges::view::ints |
+    ranges::view::take(ranges::size(v) - n + 1) |
+    ranges::view::transform([=](auto i) {
+      return ranges::count(v | ranges::view::drop(i) |
+                               ranges::view::take(n), color) == n;
+    });
+```
+
+----
+
+```cpp
+  constexpr auto is_match = 1;
+  const auto it = ranges::find(matches, is_match);
+  const auto found = it != ranges::end(matches);
+  const auto mlength =
+    found ? ranges::count(matches, is_match) + (n - 1) : 0;
+  const auto mbegin =
+    found ? ranges::distance(ranges::begin(matches), it) : 0;
+
+  struct { decltype(mbegin) begin; decltype(mlength) length; }
+    result{mbegin, mlength};
+
+  return result;
+};
+```
+
+----
+
+##Is match
+
+----
+
+```cpp
+| 2 3 4 5 |                | 2 3  4  5 |    | 2 3  4  5 |
+| 7 7 9 3 |                | 7 7  9  3 |    | 7 7  9  3 |
+| 3 4 5 3 | => value:10 -> | 3 4 [5] 3 | => | 3 4 [5] 3 | => true
+| 1 3 5 1 |                | 1 3  5  1 |    | 1 3 [5] 1 |
+| 2 1 5 8 |                | 2 1  5  8 |    | 2 1 [5] 8 |
+```
+
+```cpp
+| 2 3 4 5 |                | 2 3 4  5  |    | 2 3 4 5 |
+| 7 7 9 3 |                | 7 7 9  3  |    | 7 7 9 3 |
+| 3 4 5 3 | => value:11 -> | 3 4 5 [3] | => | 3 4 5 3 | => false
+| 1 3 5 1 |                | 1 3 5  1  |    | 1 3 5 1 |
+| 2 1 5 8 |                | 2 1 5  8  |    | 2 1 5 8 |
+```
+
+----
+
+```cpp
+auto is_match = [](auto&& v, auto value, auto width) {
+  const auto color = v[value];
+  const auto x = value % width;
+  const auto y = value / width;
+  return match_n(row(v, y, width), color).length ||
+         match_n(col(v, x, width), color).length;
+};
+```
+
+----
+
+##Match
+
+----
+
+```cpp
+| 1 2 3 4 5 |                 | 1  2 3  4  5 |
+| 6 7 7 9 3 |                 | 6  7 7  9  3 |
+| 2 5 5 5 3 |  => value:13 -> | 2  5 5 [5] 3 | =>
+| 2 1 3 5 1 |                 | 2  1 3  5  3 |
+| 4 2 1 5 8 |                 | 4  2 1  5  8 |
+
+            | 1  2   3   4  5 |
+            | 6  7   7   9  3 |
+         => | 2 [5] [5] [5] 3 | => [11, 12, 13, 18, 23]
+            | 2  1   3  [5] 3 |
+            | 4  2   1  [5] 8 |
+```
+
+----
+
+```cpp
+auto match = [](auto&& v, auto value, auto width) {
+  const auto color = v[value];
+  const auto x = value % width;
+  const auto y = value / width;
+  const auto match_r = match_n(row(v, y, width), color);
+  const auto match_c = match_n(col(v, x, width), color);
+  const auto transform = [](auto length, auto expr) {
+    return ranges::view::ints | ranges::view::take(length) |
+           ranges::view::transform(expr);
+  };
+```
+
+----
+
+```cpp
+  std::vector<decltype(value)> result = ranges::view::concat(
+      transform(match_r.length,
+        [=](auto i) { return y * width + match_r.begin + i; }),
+      transform(match_c.length, [=](auto i) {
+        return (match_c.begin + i) * width + x;
+      }));
+  result |= ranges::action::sort | ranges::action::unique;
+  return result;
+};
+```
+
+----
+
+##Scroll
+
+----
+
+```cpp
+| 3 |                |  3  |    | 0 |
+| 0 |                | [0] |    | 0 |
+| 0 |  => value:1 -> |  0  | => | 0 |
+| 0 |                |  0  |    | 3 |
+| 4 |                |  4  |    | 4 |
+```
+
+----
+
+```cpp
+auto scroll = [](auto&& v, const auto& value, auto width) {
+  const auto&& c = col(v, value % width, width) |
+                   ranges::view::take(value / width + 1);
+  auto begin = ranges::begin(c);
+  ranges::advance(begin, value / width);
+  ranges::rotate(c, begin);
+};
+````
+
+----
+
+```cpp
+                        | 1  2   3   4  5 |
+                        | 6  7   7   9  3 |
+[11, 12, 13, 18, 23] => | 2 [5] [5] [5] 3 | =>
+                        | 2  1   3  [5] 3 |
+                        | 4  2   1  [5] 8 |
+
+    | 1  [2] [3] [4] 5 |
+    | 6  [7] [7] [9] 3 |
+ => | 2  [5] [5] [5] 3 | => [1, 2, 3, 6, 7, 8, 11, 12, 13, 18, 23]
+    | 2   1   3  [5] 3 |
+    | 4   2   1  [5] 8 |
+
+
+```
+
+----
+
+```cpp
+auto affected = [](const auto& matches, auto width) {
+  const auto&& columns =
+    matches | ranges::view::transform([=](auto m) {
+      return ranges::view::ints |
+             ranges::view::take(m / width + 1) |
+             ranges::view::transform([=](auto i) {
+               return m % width + (i * width); });
+    });
+
+  std::decay_t<decltype(matches)> result =
+    columns | ranges::view::join;
+
+  result |= ranges::action::sort | ranges::action::unique;
+  return result;
+};
+```
+
 ==============================================================================
 
 ##Compile & Run
@@ -213,7 +858,7 @@ Compile
 
 ```sh
 clang++ -std=c++14 -lSDL2 -lSDL2_image -lSDL2_ttf
-        src/main.cpp -o match3
+        -o match3 src/main.cpp
 ```
 
 Run
@@ -232,8 +877,11 @@ Compile
 
 ```sh
 em++ -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2
-     --emrun --preload-file data --use-preload-plugins src/main.cpp
-     -o index.html --shell-file data/template.html
+     --emrun # log to the console
+     --preload-file data # images and fonts
+     --use-preload-plugins # load data
+     --shell-file data/template.html # custom html template
+     -o index.html src/main.cpp
 ```
 
 Run
@@ -242,9 +890,169 @@ Run
 browser index.html
 ```
 
+----
+
+| Compiler (-O2) | Note |Time |
+| - | - | - |
+| Clang-3.8 | Without Range-V3 | 2.122s |
+| Clang-3.8 | With Range-V3 | 9.521s |
+| Emscripten-1.35 | Without Range-v3 | 2.822s |
+| Emscripten-1.35 | With Range-V3 | 9.912s |
+
 ==============================================================================
 
-##Fancy to try something crazy?
+##Test
+
+----
+
+Unit Tests
+
+----
+
+```cpp
+test $swap_items = [] {
+  board b;
+  b.grids = {1, 2};
+  selected s = {0, 1};
+  swap_items(s, b);
+  expect(ranges::equal({2, 1}, b.grids));
+};
+```
+
+----
+
+* Integration Tests
+* Functional Tests
+
+----
+
+##FakeIt
+
+---
+
+https://github.com/eranpeer/FakeIt.git
+
+----
+
+Helpers
+
+----
+
+```cpp
+template <class SM>
+void
+swipe(SM& sm, std::pair<int, int> from, std::pair<int, int> to) {
+ sm.process_event(
+  make_click_event<match3::button_down>(from.first, from.second));
+ sm.process_event(
+  make_click_event<match3::button_up>(to.first, to.second));
+};
+```
+
+----
+
+Mocks provider
+
+----
+
+Automatically creates mocks using FakeIt for abstract types
+
+---
+
+```cpp
+auto injector = di::make_injector<mocks_provider>(...);
+```
+
+----
+
+Given
+
+----
+
+
+```cpp
+  di::bind<>.to(match3::config{"", 0, 0, 7, 10, 5, 10})
+```
+
+----
+
+```cpp
+  di::bind<match3::board::color[]>.to({
+      /*0 1 2 3 4 5 6*/
+  /*0*/ 3,5,1,4,3,2,2,
+  /*1*/ 1,1,4,2,5,1,3,
+  /*2*/ 5,3,5,4,5,3,2,
+  /*3*/ 4,4,2,1,3,4,5,
+  /*4*/ 5,1,1,2,4,5,1,
+  /*5*/ 5,2,3,5,4,2,1,
+  /*6*/ 1,5,5,1,5,5,4,
+  /*7*/ 2,3,3,1,3,3,4,
+  /*8*/ 3,2,2,5,4,4,1,
+  /*9*/ 1,2,3,4,1,3,4
+  })
+```
+
+----
+
+```cpp
+  di::bind<match3::randomize>.to([](int, int) {
+    static auto i = 42; return i++;
+  })
+```
+
+----
+
+```cpp
+  using namespace fakeit;
+  auto&& canvas = mocks_provider::get_mock<match3::icanvas>();
+  When(Method(canvas, load_image)).AlwaysReturn(shared_ptr<void>{});
+  When(Method(canvas, create_text)).AlwaysReturn(shared_ptr<void>{});
+  When(Method(canvas, draw)).AlwaysDo([](...){});
+  When(Method(canvas, render)).AlwaysDo([]{});
+  When(Method(canvas, clear)).AlwaysDo([]{});
+```
+
+----
+
+```cpp
+  auto sm = injector.create<msm::sm<match3::controller>>();
+```
+
+----
+
+When
+
+----
+
+```cpp
+  swipe(sm, {3, 5}, {3, 6});
+```
+
+----
+
+Then
+
+----
+
+```cpp
+  expect(ranges::equal({/*0 1 2 3 4 5 6*/
+                        /*0*/ 3, 42, 43, 44, 45, 46, 2,
+                        /*1*/ 1, 5, 1, 4, 3, 2, 3,
+                        /*2*/ 5, 1, 4, 2, 5, 1, 2,
+                        /*3*/ 4, 3, 5, 4, 5, 3, 5,
+                        /*4*/ 5, 4, 2, 1, 3, 4, 1,
+                        /*5*/ 5, 1, 1, 2, 4, 5, 1,
+                        /*6*/ 1, 2, 3, 1, 4, 2, 4,
+                        /*7*/ 2, 3, 3, 1, 3, 3, 4,
+                        /*8*/ 3, 2, 2, 5, 4, 4, 1,
+                        /*9*/ 1, 2, 3, 4, 1, 3, 4},
+                       injector.create<match3::board&>().grids));
+};
+```
+
+==============================================================================
+
+##Let's try something crazy?
 
 ----
 
@@ -281,12 +1089,6 @@ Finger touch instead of button click
 
 ==============================================================================
 
-Testing
-
-----
-
-==============================================================================
-
 ###Debugging C++ -> JS -> Mobile -> Chrome
 
 ![Chrome Discover Devices](images/chrome-discover-usb.png)
@@ -301,6 +1103,12 @@ chrome://inspect/#devices
 
 ==============================================================================
 
+##Beat the record
+
+![Record](images/record.png)
+
+==============================================================================
+
 ##Questions?
 
 |  |  |
@@ -309,11 +1117,12 @@ chrome://inspect/#devices
 | Experimental Boost.DI | https://github.com/boost-experimental/di |
 | Experimental Boost.MSM-lite | https://github.com/boost-experimental/msm-lite |
 | Range-V3 | https://github.com/ericniebler/range-v3 |
+| FakeIt | https://github.com/eranpeer/FakeIt.git |
 
 					</script>
 				</section>
 
-		  <section data-background-size="100%" data-background="images/king_logo.png"><font style="font-size: 72px; font-weight: bold; color: black;"><br /><br /><br /><br /><br /><br />Thank you</font></section>
+		  <section data-background-size="100%" data-background="images/king_logo_light.png"><font style="font-size: 72px; font-weight: bold; color: black;"><br /><br /><br /><br /><br /><br />Thank you</font></section>
 
 			</div>
 		</div>
