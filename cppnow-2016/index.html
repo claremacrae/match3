@@ -39,13 +39,13 @@
 		<div class="reveal">
 			<div class="slides">
 
-		  <section data-background-size="100%" data-background="images/king_logo_light.png"></section>
+		  <section fullscreen-img="images/king.png" fullscreen-size="contain" data-background="images/king_logo_light.png"></section>
 
           <section data-markdown=""
                    data-separator="^====+$"
                    data-separator-vertical="^----+$"
                    data-notes="^Note:"
-                   data-background-size="100%"
+                   fullscreen-img="images/king.png" fullscreen-size="contain"
                  	 data-background="images/king.png">
 					<script type="text/template">
 
@@ -173,42 +173,49 @@ In Progress!
 
 Match 3
 
+---
+
 ![match3](images/match3.png)
-![match3x](images/match3x.png)
 
 ----
 
 Match 3 - Twice
 
+---
+
 ![match32](images/match32.png)
-![match32x](images/match32x.png)
 
 ----
 
 Match 4
 
+---
+
 ![match4](images/match4.png)
-![match4x](images/match4x.png)
 
 ----
 
 Match 5
 
+---
+
 ![match5](images/match5.png)
-![match5x](images/match5x.png)
 
 ----
 
 Match L
 
+---
+
 ![matchl](images/matchl.png)
-![matchlx](images/matchlx.png)
 
 ----
 
-Match can generate new matches
+Match can generate more matches...
 
-<img width=350 height=400 src="images/matchs.png" />
+---
+
+<img width=500 height=500 src="images/matchs.png" />
 
 ==============================================================================
 
@@ -216,18 +223,28 @@ Match can generate new matches
 
 ----
 
-* C++14 compiler
-    * Clang-3.7+
-    * GCC-6+
-    * Emscripten-1.35
+###C++14 / STL
 
-* SDL2
-    * SDL2_image
-    * SDL2_ttf
+* Clang-3.7+
+* GCC-6+
+* Emscripten-1.35
 
 ----
 
-##Libraries
+##Dependencies
+
+----
+
+##SDL2
+
+---
+
+https://www.libsdl.org
+
+---
+
+* SDL2_image
+* SDL2_ttf
 
 ----
 
@@ -329,25 +346,31 @@ int main() {
 
 ----
 
-* Dependency Injection: Experimental Boost.DI
-
-  * Model
-
-  * View
-
-    * SDL2
-
-  * Controller
-
-    * Meta State Machine: Experimental Boost.MSM-lite
-    * Logic: Range-V3
+Model-View-Controller
 
 ----
 
-* TODO MVC diagram
-* TODO why MVC is good for apps and games
-* TODO ECS what about it
-* TODO State machine diagram
+![MVC](images/mvc.png)
+
+----
+
+* Seperates business logic and view
+* Good for aplications and/or games
+* Compatible with Entity-Component-System
+
+----
+
+State Machine
+
+----
+
+![Swap](images/swap.png)
+
+----
+
+![Swap](images/match.png)
+
+----
 
 ==============================================================================
 
@@ -499,6 +522,10 @@ struct board {
 ----
 
 ##View
+
+---
+
+SDL2
 
 ----
 
@@ -1122,7 +1149,7 @@ chrome://inspect/#devices
 					</script>
 				</section>
 
-		  <section data-background-size="100%" data-background="images/king_logo_light.png"><font style="font-size: 72px; font-weight: bold; color: black;"><br /><br /><br /><br /><br /><br />Thank you</font></section>
+		  <section fullscreen-img="images/king.png" fullscreen-size="contain" data-background="images/king_logo_light.png"><font style="font-size: 72px; font-weight: bold; color: black;"><br /><br /><br /><br /><br /><br />Thank you</font></section>
 
 			</div>
 		</div>
