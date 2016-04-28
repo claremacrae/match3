@@ -346,7 +346,7 @@ int main() {
 
 ----
 
-Model-View-Controller
+###Model-View-Controller
 
 ----
 
@@ -354,13 +354,13 @@ Model-View-Controller
 
 ----
 
-* Seperates business logic and view
+* Seperates business logic from UI
 * Good for aplications and/or games
 * Compatible with Entity-Component-System
 
 ----
 
-State Machine
+###State Machine
 
 ----
 
@@ -370,11 +370,17 @@ State Machine
 
 ![Swap](images/match.png)
 
-----
-
 ==============================================================================
 
 ##Implementation
+
+----
+
+###Match-3 Game
+
+---
+
+https://github.com/modern-cpp-examples/match3
 
 ----
 
@@ -609,8 +615,8 @@ auto is_allowed =
 ----
 
 ```cpp
-auto generate_new = [](board& b, const auto& m, selected& s, config c,
-                       randomize r) {
+auto generate_new = [](board& b, const auto& m, selected& s, 
+                       config c, randomize r) {
   ranges::action::transform(b.grids,
     [c, r](auto i) { return i ? i : r(1, c.board_colors); }
   );
@@ -835,6 +841,10 @@ auto scroll = [](auto&& v, const auto& value, auto width) {
 
 ----
 
+##Affected
+
+----
+
 ```cpp
                         | 1  2   3   4  5 |
                         | 6  7   7   9  3 |
@@ -877,7 +887,7 @@ auto affected = [](const auto& matches, auto width) {
 
 ----
 
-Desktop
+###Desktop
 
 ----
 
@@ -896,7 +906,53 @@ Run
 
 ----
 
-Web
+CMake
+
+```sh
+mkdir build
+cmake ..
+make app
+```
+
+----
+
+###Web
+
+----
+
+Emscripten
+
+----
+
+```sh
+curl -o emsdk-1.35.0-portable-64bit.zip https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-1.35.0-portable-64bit.zip
+```
+
+----
+
+```sh
+# Fetch the latest registry of available tools.
+./emsdk update
+
+# Download and install the latest SDK tools.
+./emsdk install latest
+
+# Make the "latest" SDK "active"
+./emsdk activate latest
+
+# Set the current Emscripten path on Linux/Mac OS X
+source ./emsdk_env.sh
+```
+
+----
+
+```sh
+./emsdk list
+```
+
+----
+
+<img width=550 height=600 src="images/emsdk.png" />
 
 ----
 
@@ -914,7 +970,21 @@ em++ -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2
 Run
 
 ```sh
-browser index.html
+$browser index.html
+```
+
+```sh
+emrun --port 8080 index.html
+```
+
+----
+
+CMake
+
+```sh
+mkdir build
+CXX=em++ cmake ..
+make web emrun
 ```
 
 ----
@@ -928,11 +998,11 @@ browser index.html
 
 ==============================================================================
 
-##Test
+##Tests
 
 ----
 
-Unit Tests
+###Unit Tests
 
 ----
 
@@ -948,8 +1018,8 @@ test $swap_items = [] {
 
 ----
 
-* Integration Tests
-* Functional Tests
+* ###Integration Tests
+* ###Functional Tests
 
 ----
 
