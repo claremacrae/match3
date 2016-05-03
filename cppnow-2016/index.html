@@ -59,7 +59,7 @@ Kris Jusiak, King
 
 ==============================================================================
 
-##Being Cross-platform
+##Being Cross-platform?
 
 ----
 
@@ -149,7 +149,7 @@ In Progress!
 
 ==============================================================================
 
-###Core Mechanics
+##Core Mechanics
 
 ----
 
@@ -171,7 +171,7 @@ In Progress!
 
 ----
 
-Match 3
+####Match 3
 
 ---
 
@@ -179,7 +179,7 @@ Match 3
 
 ----
 
-Match 3 - Twice
+####Match 3 - Twice
 
 ---
 
@@ -187,7 +187,7 @@ Match 3 - Twice
 
 ----
 
-Match 4
+####Match 4
 
 ---
 
@@ -195,7 +195,7 @@ Match 4
 
 ----
 
-Match 5
+####Match 5
 
 ---
 
@@ -203,7 +203,7 @@ Match 5
 
 ----
 
-Match L
+####Match L
 
 ---
 
@@ -211,7 +211,7 @@ Match L
 
 ----
 
-Match can generate more matches...
+####Match can generate more matches
 
 ---
 
@@ -350,7 +350,7 @@ int main() {
 
 ----
 
-![MVC](images/mvc.png)
+<img width=450 height=400 src="images/mvc.png" />
 
 ----
 
@@ -360,15 +360,23 @@ int main() {
 
 ----
 
-###State Machine
+###Class Diagram
 
 ----
 
-![Swap](images/swap.png)
+<img src="images/cd_match3.png" />
 
 ----
 
-![Swap](images/match.png)
+###State Diagram
+
+----
+
+<img width=900 height=450 src="images/sd_swap.png" />
+
+----
+
+<img width=900 height=200 src="images/sd_match.png" />
 
 ==============================================================================
 
@@ -421,7 +429,7 @@ int main() {
 
 ----
 
-Experimental Boost.DI
+###Experimental Boost.DI
 
 ---
 
@@ -529,9 +537,13 @@ struct board {
 
 ##View
 
+----
+
+###SDL2
+
 ---
 
-SDL2
+https://www.libsdl.org
 
 ----
 
@@ -582,7 +594,7 @@ class animations {
 
 ----
 
-Experimental Boost.MSM-lite
+###Experimental Boost.MSM-lite
 
 ---
 
@@ -590,11 +602,11 @@ https://github.com/boost-experimental/msm-lite
 
 ----
 
-![transition table](images/transition_table.png)
+<img width=950 height=600 src="images/transition_table.png" />
 
 ----
 
-Guards/Actions
+###Guards/Actions
 
 ----
 
@@ -615,7 +627,7 @@ auto is_allowed =
 ----
 
 ```cpp
-auto generate_new = [](board& b, const auto& m, selected& s, 
+auto generate_new = [](board& b, const auto& m, selected& s,
                        config c, randomize r) {
   ranges::action::transform(b.grids,
     [c, r](auto i) { return i ? i : r(1, c.board_colors); }
@@ -643,7 +655,7 @@ auto swap_items = [](const selected& s, board& b) {
 
 ----
 
-Range-V3
+###Range-V3
 
 ---
 
@@ -920,13 +932,19 @@ make app
 
 ----
 
-Emscripten
+####Emscripten
 
 ----
 
-```sh
-curl -o emsdk-1.35.0-portable-64bit.zip https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-1.35.0-portable-64bit.zip
-```
+Linux / Mac OSX
+
+https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz
+
+---
+
+Windows (*Installer available)
+
+https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-1.35.0-portable-64bit.zip
 
 ----
 
@@ -939,8 +957,10 @@ curl -o emsdk-1.35.0-portable-64bit.zip https://s3.amazonaws.com/mozilla-games/e
 
 # Make the "latest" SDK "active"
 ./emsdk activate latest
+```
 
-# Set the current Emscripten path on Linux/Mac OS X
+```sh
+# Set the current Emscripten path on Linux/Mac OSX
 source ./emsdk_env.sh
 ```
 
@@ -959,7 +979,7 @@ source ./emsdk_env.sh
 Compile
 
 ```sh
-em++ -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2
+em++ -std=c++14 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2
      --emrun # log to the console
      --preload-file data # images and fonts
      --use-preload-plugins # load data
@@ -973,8 +993,11 @@ Run
 $browser index.html
 ```
 
+Or
+
 ```sh
 emrun --port 8080 index.html
+$browser localhost:8080
 ```
 
 ----
@@ -1031,7 +1054,7 @@ https://github.com/eranpeer/FakeIt.git
 
 ----
 
-Helpers
+####Helpers
 
 ----
 
@@ -1048,11 +1071,11 @@ swipe(SM& sm, std::pair<int, int> from, std::pair<int, int> to) {
 
 ----
 
-Mocks provider
+####Mocks provider
 
 ----
 
-Automatically creates mocks using FakeIt for abstract types
+> Automatically creates mocks using FakeIt for abstract types
 
 ---
 
@@ -1062,7 +1085,7 @@ auto injector = di::make_injector<mocks_provider>(...);
 
 ----
 
-Given
+####Given
 
 ----
 
@@ -1117,7 +1140,7 @@ Given
 
 ----
 
-When
+####When
 
 ----
 
@@ -1127,7 +1150,7 @@ When
 
 ----
 
-Then
+####Then
 
 ----
 
@@ -1151,15 +1174,17 @@ Then
 
 ##Let's try something crazy?
 
+<img width=250 height=400 src="images/mr_toffee.png" />
+
 ----
 
-C++ -> JS -> Mobile -> Browser
+###C++ -> JS -> Mobile -> Browser
 
 <img width=250 height=400 src="images/mobile.jpg" />
 
 ----
 
-Embedding JS in C++
+###Embedding JS in C++
 
 ----
 
@@ -1172,7 +1197,7 @@ auto is_mobile = [] {
 ```
 ----
 
-Finger touch instead of button click
+###Finger touch instead of button click
 
 ----
 
